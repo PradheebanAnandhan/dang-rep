@@ -1,0 +1,1824 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Danny Here (Portfolio Website)</title>
+  <meta name="description"
+    content="Hi there, Danny (Aathma Naban) here: creative director crafting visuals, motion & stories with intention. Check out my portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Danny Here (Portfolio Website)">
+  <meta property="og:description" content="Creative director crafting visuals, motion & stories with intention.">
+  <meta name="theme-color" content="#f4f4f4">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/avatar-duotone.png">
+  <link rel="preload" as="image" href="assets/img/hero.webp"
+    imagesrcset="assets/img/hero-900.webp 900w, assets/img/hero.webp 1805w"
+    imagesizes="(max-width: 809.98px) 125vw, 100vh">
+  <style>
+    /* Inter (SIL Open Font License), self-hosted so the page also works offline */
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url("assets/fonts/inter-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url("assets/fonts/inter-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    :root {
+      color-scheme: light;
+      --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --bg-top: #fbfbfb;
+      --bg-mid: #eeeeee;
+      --bg-bottom: #e2e2e2;
+      --ink: #000;
+      --text: #1c1c1e;
+      --muted: #8e8e93;
+      --line: #e5e5ea;
+      --win-bg: #fff;
+      --accent: #ef5350;
+      --light-red: #ff5f57;
+      --light-yellow: #febc2e;
+      --light-green: #28c840;
+      --note-active: rgb(255, 227, 144);
+      --note-link: rgb(255, 214, 214);
+      --radius-win: 16px;
+      --shadow-win: 0 0 0 1px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .10), 0 30px 80px rgba(0, 0, 0, .14);
+      --spring: cubic-bezier(.3, 1.4, .55, 1);
+      --thumb-scale: 1;
+      --dock-icon: 60px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: var(--font);
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 58%, var(--bg-bottom) 100%) fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img,
+    video,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid #0a84ff;
+      outline-offset: 3px;
+    }
+
+    /* ---------------------------------------------------------------- desktop */
+    .desktop {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      height: min(92vh, 88vw);
+      width: auto;
+      max-width: none;
+      transform: translate3d(calc(-50% + var(--px, 0px)), var(--py, 0px), 0);
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      animation: hero-in 1s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    @keyframes hero-in {
+      from {
+        opacity: 0;
+        translate: 0 24px;
+      }
+    }
+
+    /* the soft, progressive blur along the bottom edge (BlurGradient in the original) */
+    .blur-edge {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 24vh;
+      pointer-events: none;
+    }
+
+    .blur-edge span {
+      position: absolute;
+      inset: 0;
+    }
+
+    .blur-edge span:nth-child(1) {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
+    }
+
+    .blur-edge span:nth-child(2) {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      mask-image: linear-gradient(to top, #000 0%, transparent 65%);
+      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 65%);
+    }
+
+    .blur-edge span:nth-child(3) {
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      mask-image: linear-gradient(to top, #000 0%, transparent 35%);
+      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 35%);
+    }
+
+    .icons {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+    }
+
+    .icon {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      animation: icon-in .6s var(--spring) both;
+      animation-delay: calc(var(--i, 0) * 70ms + 250ms);
+    }
+
+    @keyframes icon-in {
+      from {
+        opacity: 0;
+        scale: .7;
+      }
+    }
+
+    .icon.dragging {
+      cursor: grabbing;
+      z-index: 10;
+    }
+
+    .icon-art {
+      padding: 4px;
+      border: 2px solid rgba(255, 255, 255, .2);
+      border-radius: 8px;
+      transition: background-color .2s, border-color .2s, transform .35s var(--spring);
+    }
+
+    .icon:hover .icon-art,
+    .icon:focus-visible .icon-art {
+      background: rgba(0, 0, 0, .07);
+      border-color: rgba(255, 255, 255, .55);
+    }
+
+    .icon:active .icon-art {
+      transform: scale(.96);
+    }
+
+    .icon.dragging .icon-art {
+      transform: scale(1.06);
+    }
+
+    .icon:focus-visible {
+      outline: none;
+    }
+
+    .icon-art img {
+      width: calc(var(--tw) * var(--thumb-scale));
+      height: calc(var(--th) * var(--thumb-scale));
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, .19);
+      pointer-events: none;
+    }
+
+    .icon-art svg {
+      width: calc(96px * var(--thumb-scale));
+      height: auto;
+      filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .16));
+    }
+
+    .icon-label {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -.01em;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-shadow: -1px 1px 2.5px rgba(0, 0, 0, .55), 0 0 6px rgba(0, 0, 0, .32);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+
+    .icon:focus-visible .icon-label {
+      background: #0a64d8;
+      text-shadow: none;
+    }
+
+    /* ---------------------------------------------------------------- dock */
+    .dock {
+      position: fixed;
+      left: 50%;
+      bottom: clamp(16px, 7vh, 80px);
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .27);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      animation: dock-in .7s cubic-bezier(.2, .9, .3, 1.1) .15s both;
+    }
+
+    @keyframes dock-in {
+      from {
+        opacity: 0;
+        translate: 0 40px;
+      }
+    }
+
+    .dock-item {
+      position: relative;
+      width: var(--dock-icon);
+      height: var(--dock-icon);
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      transition: transform .35s var(--spring);
+    }
+
+    .dock-item:hover,
+    .dock-item:focus-visible {
+      transform: translateY(-6px) scale(1.1);
+    }
+
+    .dock-item:active {
+      transform: translateY(-2px) scale(.98);
+    }
+
+    .dock-tile {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      corner-shape: inherit;
+      overflow: hidden;
+    }
+
+    .dock-tile>svg,
+    .dock-tile>img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .dock-avatar {
+      border-radius: 50%;
+    }
+
+    .dock-divider {
+      width: 2px;
+      height: var(--dock-icon);
+      border-radius: 64px;
+      background: rgb(229, 229, 234);
+    }
+
+    .dock-item.running::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -9px;
+      width: 4px;
+      height: 4px;
+      margin-left: -2px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .55);
+    }
+
+    .tip {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 16px);
+      transform: translate(-50%, 4px);
+      padding: 6px 12px;
+      border-radius: 64px;
+      background: #fff;
+      color: #000;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s, transform .2s;
+    }
+
+    .tip::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      margin-left: -6px;
+      border: 6px solid transparent;
+      border-top-color: #fff;
+      border-bottom: 0;
+    }
+
+    .dock-item:hover .tip,
+    .dock-item:focus-visible .tip {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* ---------------------------------------------------------------- windows */
+    .win {
+      position: fixed;
+      left: var(--l);
+      top: var(--t);
+      width: var(--w);
+      height: var(--h);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      background: var(--win-bg);
+      border-radius: var(--radius-win);
+      box-shadow: var(--shadow-win);
+      overflow: hidden;
+      outline: none;
+      transition: transform .5s var(--spring), opacity .25s ease;
+    }
+
+    .win.is-entering {
+      opacity: 0;
+      transform: scale(.8);
+      transition: none;
+    }
+
+    .win.is-leaving {
+      opacity: 0;
+      transform: scale(.85);
+      transition: transform .22s ease-in, opacity .2s ease-in;
+      pointer-events: none;
+    }
+
+    .win.is-minimizing {
+      opacity: 0;
+      transform: scale(.08);
+      transition: transform .38s cubic-bezier(.5, 0, .75, 0), opacity .38s ease-in;
+      pointer-events: none;
+    }
+
+    .win.is-max {
+      left: 12px !important;
+      top: 12px !important;
+      width: calc(100vw - 24px) !important;
+      height: calc(100vh - 24px) !important;
+    }
+
+    .win.is-animating-size {
+      transition: left .32s cubic-bezier(.2, .8, .2, 1), top .32s cubic-bezier(.2, .8, .2, 1), width .32s cubic-bezier(.2, .8, .2, 1), height .32s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .win-bar {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      height: 50px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .win-bar.is-dragging {
+      cursor: grabbing;
+    }
+
+    .lights {
+      display: flex;
+      gap: 10px;
+    }
+
+    .light {
+      position: relative;
+      width: 14px;
+      height: 14px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .12);
+    }
+
+    .light::before {
+      content: "";
+      position: absolute;
+      inset: -5px;
+    }
+
+    /* bigger hit area */
+    .light svg {
+      position: absolute;
+      inset: 0;
+      width: 14px;
+      height: 14px;
+      opacity: 0;
+      transition: opacity .12s;
+    }
+
+    .lights:hover .light svg,
+    .light:focus-visible svg {
+      opacity: 1;
+    }
+
+    .light-close {
+      background: var(--light-red);
+    }
+
+    .light-min {
+      background: var(--light-yellow);
+    }
+
+    .light-max {
+      background: var(--light-green);
+    }
+
+    .win-title {
+      font-size: 20px;
+      color: var(--muted);
+      letter-spacing: -.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .win-body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      overscroll-behavior: contain;
+      padding: 20px 20px 28px;
+      container-type: inline-size;
+    }
+
+    .p-title {
+      margin: 6px 0 16px;
+      font-size: clamp(40px, 5.2cqi, 66px);
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      color: var(--ink);
+    }
+
+    .p-desc {
+      margin: 0 0 22px;
+      font-size: 20px;
+      line-height: 1.42;
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    .p-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px 40px;
+      margin: 0 0 26px;
+    }
+
+    .p-meta dt {
+      margin-bottom: 6px;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .p-meta dd {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .p-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .p-cta-label {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .cta-btn {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      transition: transform .3s var(--spring), background-color .2s;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.12) rotate(8deg);
+      background: #e53935;
+    }
+
+    .cta-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .gallery {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .g-item {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: #f2f2f2;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .g-item img {
+      width: 100%;
+      height: auto;
+      transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .g-item:hover img {
+      transform: scale(1.015);
+    }
+
+    .gallery.cards {
+      grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+      max-width: var(--max, none);
+      margin-inline: auto;
+      gap: 14px;
+    }
+
+    .gallery.cards .g-item {
+      background: none;
+      border-radius: 12px;
+    }
+
+    .media-video {
+      display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .media-video video {
+      width: min(100%, 460px);
+      height: auto;
+      aspect-ratio: 4 / 5;
+      border-radius: 16px;
+      background: #111;
+    }
+
+    @container (max-width: 760px) {
+      .p-meta {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .gallery.cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* ---------------------------------------------------------------- notes window */
+    .notes-body {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 272px minmax(0, 1fr);
+    }
+
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+      overflow: auto;
+    }
+
+    .note-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+      padding: 16px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color .2s;
+    }
+
+    .note-card:hover {
+      background: #f4f4f6;
+    }
+
+    .note-card.is-active {
+      background: var(--note-active);
+    }
+
+    .note-card.is-link {
+      background: var(--note-link);
+      box-shadow: 0 .6px .6px -1.25px rgba(0, 0, 0, .18), 0 2.3px 2.3px -2.5px rgba(0, 0, 0, .16), 0 10px 10px -3.75px rgba(0, 0, 0, .06);
+    }
+
+    .note-card strong {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .note-card .note-sub {
+      display: flex;
+      gap: 6px;
+      font-size: 14px;
+      color: #3c3c43;
+      min-width: 0;
+    }
+
+    .note-card .note-sub span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: var(--muted);
+    }
+
+    .note-page {
+      overflow: auto;
+      overscroll-behavior: contain;
+      padding: 22px clamp(20px, 4vw, 48px) 48px;
+    }
+
+    .note-stamp {
+      margin: 0 0 18px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .note-page h2 {
+      margin: 26px 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.015em;
+      color: var(--ink);
+    }
+
+    .note-page h2:first-of-type {
+      margin-top: 4px;
+    }
+
+    .note-page p,
+    .note-page li {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .note-page p {
+      margin: 0 0 10px;
+    }
+
+    .note-page ul {
+      margin: 0 0 10px;
+      padding-left: 20px;
+    }
+
+    .note-page .muted {
+      color: var(--muted);
+    }
+
+    .note-photo {
+      float: right;
+      width: min(42%, 240px);
+      margin: 4px 0 16px 24px;
+    }
+
+    .note-photo img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .note-page .tools li b {
+      font-weight: 600;
+    }
+
+    .note-callout {
+      margin-top: 22px !important;
+      font-size: 14px !important;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .note-callout a {
+      color: #0a64d8;
+      text-underline-offset: 3px;
+    }
+
+    .note-headsup {
+      clear: both;
+      margin-top: 18px !important;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #fff8dc;
+      font-size: 14px !important;
+    }
+
+    /* ---------------------------------------------------------------- lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 56px 72px;
+      background: rgba(10, 10, 12, .88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      animation: fade-in .2s ease both;
+    }
+
+    .lightbox[hidden] {
+      display: none;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+    }
+
+    .lightbox img {
+      max-width: calc(100vw - 144px);
+      max-height: calc(100vh - 112px);
+      max-height: calc(100dvh - 112px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+      animation: zoom-in .3s var(--spring) both;
+    }
+
+    @keyframes zoom-in {
+      from {
+        transform: scale(.92);
+        opacity: 0;
+      }
+    }
+
+    .lb-btn {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+      cursor: pointer;
+      transition: background-color .2s;
+    }
+
+    .lb-btn:hover {
+      background: rgba(255, 255, 255, .24);
+    }
+
+    .lb-btn[hidden] {
+      display: none;
+    }
+
+    .lb-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .lb-close {
+      top: 14px;
+      right: 14px;
+    }
+
+    .lb-prev {
+      left: 14px;
+      top: 50%;
+      margin-top: -22px;
+    }
+
+    .lb-next {
+      right: 14px;
+      top: 50%;
+      margin-top: -22px;
+    }
+
+    .lb-count {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, .7);
+      font-size: 13px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    noscript {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      top: 16px;
+      z-index: 999;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow-win);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* ---------------------------------------------------------------- compact layouts */
+    /* phones, and tablets held upright: icons become a home-screen grid above the photo */
+    @media (max-width: 809.98px),
+    (orientation: portrait) and (max-width: 1199.98px) {
+      .hero {
+        height: min(72vh, 125vw);
+      }
+
+      .icons {
+        inset: 0 0 auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+        align-items: end;
+        justify-items: center;
+        gap: 22px 4px;
+        padding: max(28px, env(safe-area-inset-top)) 12px 0;
+      }
+
+      .icon {
+        position: relative;
+        left: auto !important;
+        top: auto !important;
+        transform: none;
+        touch-action: manipulation;
+      }
+
+      :root {
+        --thumb-scale: .82;
+      }
+
+      .icon-label {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 809.98px) {
+      :root {
+        --dock-icon: 48px;
+      }
+
+      .dock {
+        gap: 12px;
+        padding: 10px;
+        bottom: max(14px, env(safe-area-inset-bottom));
+      }
+
+      .dock-divider {
+        height: 40px;
+      }
+
+      .tip {
+        display: none;
+      }
+
+      .win,
+      .win.is-max {
+        left: 0 !important;
+        top: auto !important;
+        bottom: 0;
+        width: 100% !important;
+        height: calc(100% - max(16px, env(safe-area-inset-top))) !important;
+        border-radius: 16px 16px 0 0;
+        transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+      }
+
+      .win.is-entering {
+        transform: translateY(100%);
+        opacity: 1;
+      }
+
+      .win.is-leaving,
+      .win.is-minimizing {
+        transform: translateY(100%);
+        opacity: 1;
+        transition: transform .28s ease-in;
+      }
+
+      .win-bar {
+        cursor: default;
+      }
+
+      .win-body {
+        padding: 16px 16px calc(28px + env(safe-area-inset-bottom));
+      }
+
+      .p-desc,
+      .p-meta dt,
+      .p-meta dd,
+      .p-cta-label {
+        font-size: 17px;
+      }
+
+      .notes-body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      .notes-list {
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 10px 12px;
+      }
+
+      .note-card {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 150px;
+        padding: 10px 14px;
+      }
+
+      .note-card .note-sub span {
+        max-width: 120px;
+      }
+
+      .note-photo {
+        float: none;
+        width: 160px;
+        margin: 0 0 14px;
+      }
+
+      .lightbox {
+        padding: 56px 12px 64px;
+      }
+
+      .lightbox img {
+        max-width: calc(100vw - 24px);
+        max-height: calc(100dvh - 120px);
+      }
+
+      .lb-prev,
+      .lb-next {
+        top: auto;
+        bottom: 8px;
+        margin-top: 0;
+      }
+    }
+
+    @media (max-height: 560px) and (min-width: 810px) {
+      :root {
+        --thumb-scale: .7;
+      }
+
+      .icon-label {
+        font-size: 13px;
+      }
+    }
+
+    /* Squircle corners where supported; elsewhere a smaller plain radius reads the same
+     (same trick the original uses). */
+    .dock {
+      border-radius: 18px;
+    }
+
+    .dock-item {
+      border-radius: 12px;
+    }
+
+    .icon-art img {
+      border-radius: 8px;
+    }
+
+    @supports (corner-shape: superellipse(1.5)) {
+      .dock {
+        border-radius: 24px;
+        corner-shape: superellipse(1.5);
+      }
+
+      .dock-item {
+        border-radius: 16px;
+        corner-shape: superellipse(1.5);
+      }
+
+      .icon-art img {
+        border-radius: 10px;
+        corner-shape: superellipse(1.5);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>This portfolio runs on JavaScript. You can still see the work on <a
+      href="https://www.behance.net/dannysingle">Behance</a> or say hi on <a
+      href="https://in.linkedin.com/in/aathma-naban-058930261">LinkedIn</a>.</noscript>
+
+  <main class="desktop" id="desktop">
+    <h1 class="sr-only">Danny (Aathma Naban): creative director crafting visuals, motion &amp; stories with intention
+    </h1>
+    <img class="hero" id="hero" src="assets/img/hero.webp"
+      srcset="assets/img/hero-900.webp 900w, assets/img/hero.webp 1805w" sizes="(max-width: 809.98px) 125vw, 100vh"
+      width="1805" height="1624" alt="Danny in a black t-shirt and glasses, framed by sweeping circular strokes"
+      draggable="false">
+    <div class="blur-edge" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="icons" id="icons" role="group" aria-label="Projects"></div>
+  </main>
+
+  <nav class="dock" id="dock" aria-label="Dock">
+    <button class="dock-item" type="button" data-note="about" aria-label="About Me">
+      <span class="dock-tile dock-avatar"><img src="assets/img/avatar-duotone.png" alt="" width="256"
+          height="256"></span>
+      <span class="tip" aria-hidden="true">About Me</span>
+    </button>
+    <button class="dock-item" type="button" data-note="experience" aria-label="Notes">
+      <span class="dock-tile">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+          <defs>
+            <linearGradient id="notes-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe066" />
+              <stop offset="1" stop-color="#ffc400" />
+            </linearGradient>
+          </defs>
+          <rect width="60" height="60" fill="#fff" />
+          <rect width="60" height="19" fill="url(#notes-top)" />
+          <path d="M5 23.5h50" stroke="#c9c9c9" stroke-width="1.5" stroke-dasharray="1.5 2.5" />
+          <path d="M5 33h50M5 42h50M5 51h50" stroke="#e2e2e2" stroke-width="1.4" />
+        </svg>
+      </span>
+      <span class="tip" aria-hidden="true">Notes</span>
+    </button>
+    <span class="dock-divider" aria-hidden="true"></span>
+    <a class="dock-item" id="dock-linkedin" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <span class="dock-tile">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#0a66c2" />
+          <path fill="#fff" transform="translate(9.25 9.2) scale(1.75)"
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+        </svg>
+      </span>
+      <span class="tip" aria-hidden="true">LinkedIn</span>
+    </a>
+    <a class="dock-item" id="dock-instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+      <span class="dock-tile">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+          <defs>
+            <radialGradient id="ig-grad" cx="28%" cy="105%" r="140%">
+              <stop offset="0" stop-color="#fdf497" />
+              <stop offset=".08" stop-color="#fdf497" />
+              <stop offset=".45" stop-color="#fd5949" />
+              <stop offset=".62" stop-color="#d6249f" />
+              <stop offset=".92" stop-color="#285aeb" />
+            </radialGradient>
+          </defs>
+          <rect width="60" height="60" fill="url(#ig-grad)" />
+          <rect x="15" y="15" width="30" height="30" rx="9" fill="none" stroke="#fff" stroke-width="3.6" />
+          <circle cx="30" cy="30" r="7.2" fill="none" stroke="#fff" stroke-width="3.6" />
+          <circle cx="38.7" cy="21.3" r="2.2" fill="#fff" />
+        </svg>
+      </span>
+      <span class="tip" aria-hidden="true">Instagram</span>
+    </a>
+    <a class="dock-item" id="dock-behance" href="#" target="_blank" rel="noopener" aria-label="Behance">
+      <span class="dock-tile">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#1769ff" />
+          <path fill="#fff" transform="translate(13 13) scale(1.42)"
+            d="M16.969 16.927a2.561 2.561 0 0 0 1.901.677 2.501 2.501 0 0 0 1.531-.475c.362-.235.636-.584.779-.99h2.585a5.091 5.091 0 0 1-1.9 2.896 5.292 5.292 0 0 1-3.091.88 5.839 5.839 0 0 1-2.284-.433 4.871 4.871 0 0 1-1.723-1.211 5.657 5.657 0 0 1-1.08-1.874 7.057 7.057 0 0 1-.383-2.393c-.005-.8.129-1.595.396-2.349a5.313 5.313 0 0 1 5.088-3.604 4.87 4.87 0 0 1 2.376.563c.661.362 1.231.87 1.668 1.485a6.2 6.2 0 0 1 .943 2.133c.194.821.263 1.666.205 2.508h-7.699c-.063.79.184 1.574.688 2.187ZM6.947 4.084a8.065 8.065 0 0 1 1.928.198 4.29 4.29 0 0 1 1.49.638c.418.303.748.711.958 1.182.241.579.357 1.203.341 1.83a3.506 3.506 0 0 1-.506 1.961 3.726 3.726 0 0 1-1.503 1.287 3.588 3.588 0 0 1 2.027 1.437c.464.747.697 1.615.67 2.494a4.593 4.593 0 0 1-.423 2.032 3.945 3.945 0 0 1-1.163 1.413 5.114 5.114 0 0 1-1.683.807 7.135 7.135 0 0 1-1.928.259H0V4.084h6.947Zm-.235 12.9c.308.004.616-.029.916-.099a2.18 2.18 0 0 0 .766-.332c.228-.158.411-.371.534-.619.142-.317.208-.663.191-1.009a2.08 2.08 0 0 0-.642-1.715 2.618 2.618 0 0 0-1.696-.505h-3.54v4.279h3.471Zm13.635-5.967a2.13 2.13 0 0 0-1.654-.619 2.336 2.336 0 0 0-1.163.259 2.474 2.474 0 0 0-.738.62 2.359 2.359 0 0 0-.396.792c-.074.239-.12.485-.137.734h4.769a3.239 3.239 0 0 0-.679-1.785l-.002-.001Zm-13.813-.648a2.254 2.254 0 0 0 1.423-.433c.399-.355.607-.88.56-1.413a1.916 1.916 0 0 0-.178-.891 1.298 1.298 0 0 0-.495-.533 1.851 1.851 0 0 0-.711-.274 3.966 3.966 0 0 0-.835-.073H3.241v3.631h3.293v-.014ZM21.62 5.122h-5.976v1.527h5.976V5.122Z" />
+        </svg>
+      </span>
+      <span class="tip" aria-hidden="true">Behance</span>
+    </a>
+  </nav>
+
+  <div id="windows"></div>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+    <img id="lb-img" alt="">
+    <button class="lb-btn lb-close" type="button" data-lb="close" aria-label="Close viewer"><svg viewBox="0 0 20 20"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M5 5l10 10M15 5L5 15" />
+      </svg></button>
+    <button class="lb-btn lb-prev" type="button" data-lb="prev" aria-label="Previous image"><svg viewBox="0 0 20 20"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12.5 4.5L7 10l5.5 5.5" />
+      </svg></button>
+    <button class="lb-btn lb-next" type="button" data-lb="next" aria-label="Next image"><svg viewBox="0 0 20 20"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7.5 4.5L13 10l-5.5 5.5" />
+      </svg></button>
+    <span class="lb-count" id="lb-count"></span>
+  </div>
+
+  <script>
+    /* ==================================================================== content
+       Everything on the page comes from these three objects. Edit here, not in the markup. */
+    const PROFILE = {
+      name: "Aathma Naban",
+      nickname: "Danny",
+      tagline: "creative director crafting visuals, motion & stories with intention.",
+      company: "Kerala Jewellers",
+      city: "Chennai, India",
+      email: "", // add an address to show a "Mail" link in the About note
+      links: {
+        linkedin: "https://in.linkedin.com/in/aathma-naban-058930261",
+        instagram: "https://www.instagram.com/__.dxyzz.__/",
+        behance: "https://www.behance.net/dannysingle",
+      },
+    };
+
+    const BEHANCE_RUHA = "https://www.behance.net/gallery/249293189/brand-identity-for-a-silver-based-indian-brand";
+    const BEHANCE_DECK = "https://www.behance.net/gallery/248777327/portfolio";
+
+    // pos = icon centre relative to the photo of Danny on wide screens: [0, 0] is the photo's
+    // top-left corner and [1, 1] its bottom-right, so icons keep their place around the photo at
+    // any aspect ratio. thumb w/h are the thumbnail's pixel size.
+    const PROJECTS = [
+      {
+        id: "ruha", label: "RUHA", pos: [0.06, 0.11],
+        thumb: { src: "assets/thumbs/ruha.webp", w: 360, h: 256 },
+        title: "RUHA",
+        description: "Brand identity for RUHA, a silver jewellery line by the house of Kerala Jewellers. “RUHA Silver Collections embodies timeless elegance through refined craftsmanship and contemporary design. Inspired by modern femininity and everyday luxury, each piece is thoughtfully created to reflect grace, sophistication, and individuality.”",
+        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Brand Identity, Logo Design"], ["Softwares", "Photoshop, Illustrator"]],
+        cta: { label: "Project In Detail", href: BEHANCE_RUHA },
+        gallery: {
+          layout: "stack", items: [
+            { src: "assets/img/ruha-02-logo.webp", w: 1800, h: 1280, alt: "RUHA logo lockup: by the house of Kerala Jewellers" },
+            { src: "assets/img/ruha-03-story.webp", w: 1800, h: 1096, alt: "Colour palette and the RUHA brand story on deep red" },
+            { src: "assets/img/ruha-04-type.webp", w: 1800, h: 1078, alt: "Typography, Joliet Regular and Times New Roman, beside the RUHA logo icon" },
+            { src: "assets/img/ruha-01-imagery.webp", w: 1800, h: 1154, alt: "Campaign imagery of models wearing RUHA silver jewellery" },
+            { src: "assets/img/ruha-05-tagline.webp", w: 1800, h: 1051, alt: "RUHA logo and tagline on deep red" },
+          ]
+        },
+      },
+      {
+        id: "ruha-packaging", label: "RUHA Packaging", pos: [0.9, 0.09],
+        thumb: { src: "assets/thumbs/ruha-packaging.webp", w: 360, h: 257 },
+        title: "RUHA Packaging",
+        description: "Packaging and print for RUHA: a gift box and carry bag, business cards and a jewellery box, all carrying the cream-and-deep-red palette and the floral logo icon. The packaging and business cards were designed in Photoshop.",
+        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Packaging, Print"], ["Softwares", "Photoshop"]],
+        cta: { label: "Project In Detail", href: BEHANCE_RUHA },
+        gallery: {
+          layout: "stack", items: [
+            { src: "assets/img/pack-01-box-bag.webp", w: 1800, h: 1286, alt: "RUHA gift box and carry bag with a deep red ribbon handle" },
+            { src: "assets/img/pack-02-cards.webp", w: 1800, h: 1000, alt: "RUHA business cards, front and back" },
+            { src: "assets/img/pack-03-jewel-box.webp", w: 1800, h: 1040, alt: "Open RUHA jewellery box with a deep red lining" },
+          ]
+        },
+      },
+      {
+        id: "the-deck", label: "The Deck", pos: [-0.24, 0.35],
+        thumb: { src: "assets/thumbs/deck.webp", w: 360, h: 270 },
+        title: "The Deck",
+        description: "A custom card-based visual system crafted in Adobe Illustrator, focusing on symmetry, hierarchy, and bold minimal aesthetics. Each card represents a core tool, forming a cohesive and structured design language.",
+        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Visual System, Card Design"], ["Softwares", "Illustrator, Photoshop"]],
+        cta: { label: "Project In Detail", href: BEHANCE_DECK },
+        gallery: {
+          layout: "cards", cols: 4, items: [
+            { src: "assets/img/ace-after-effects.webp", w: 1100, h: 1693, alt: "Ace of hearts, After Effects: dynamic motion graphics and visual effects" },
+            { src: "assets/img/ace-illustrator.webp", w: 1100, h: 1693, alt: "Ace of diamonds, Illustrator: crafting vector art and detailed graphic design" },
+            { src: "assets/img/ace-photoshop.webp", w: 1100, h: 1693, alt: "Ace of clubs, Photoshop: enhancing images and delivering polished digital compositions" },
+            { src: "assets/img/ace-premiere-pro.webp", w: 1100, h: 1693, alt: "Ace of clubs, Premiere Pro: seamless video editing and sound integration" },
+          ]
+        },
+      },
+      {
+        id: "the-jack", label: "The Jack", pos: [1.19, 0.25],
+        thumb: { src: "assets/thumbs/jack.webp", w: 300, h: 462 },
+        title: "The Jack",
+        description: "Two Jacks for the deck: a masked, gilded figure, and a portrait of Danny under shafts of light. The images were created in Photoshop and the card frame was drawn in Illustrator.",
+        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Photo Manipulation, Card Design"], ["Softwares", "Photoshop, Illustrator"]],
+        cta: { label: "Project In Detail", href: BEHANCE_DECK },
+        gallery: {
+          layout: "cards", cols: 2, max: "860px", items: [
+            { src: "assets/img/jack-masked.webp", w: 1100, h: 1693, alt: "The Jack: a masked figure in a gilded headdress and red robe" },
+            { src: "assets/img/jack-danny.webp", w: 1100, h: 1693, alt: "The Jack: Danny in glasses, lit by shafts of light" },
+          ]
+        },
+      },
+      {
+        id: "experience", label: "Experience", pos: [1.08, 0.52], folder: true,
+        title: "Experience",
+        description: "Three cards from the deck, one for each side of the work: graphic design, design with video editing, and creative direction.",
+        meta: [["Currently", `Graphics & motion designer, video editor at ${PROFILE.company}`], ["Based in", PROFILE.city], ["Tools", "Photoshop, Illustrator, Premiere Pro, After Effects"], ["Open to", "Full-time roles & freelance projects"]],
+        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
+        gallery: {
+          layout: "cards", cols: 3, items: [
+            { src: "assets/img/exp-graphic-designing.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Designing, with specializations and tools" },
+            { src: "assets/img/exp-design-video.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Design and Video Editing, with specializations and tools" },
+            { src: "assets/img/exp-creative-director.webp", w: 1100, h: 1690, alt: "Card: Experience as a Creative Director, with specializations and tools" },
+          ]
+        },
+      },
+      {
+        id: "tools-expertise", label: "Tools Expertise", pos: [-0.06, 0.66],
+        thumb: { src: "assets/thumbs/tools-expertise.webp", w: 300, h: 375 },
+        title: "Tools Expertise",
+        description: "“This portfolio presents selected motion graphics work focused on clean design, cinematic lighting, and storytelling-driven visuals tailored for modern digital brands.”",
+        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Motion Graphics, Animation"], ["Softwares", "After Effects, Premiere Pro, Photoshop, Illustrator"]],
+        cta: { label: "Project In Detail", href: BEHANCE_DECK },
+        video: { src: "assets/video/tools-expertise.mp4", poster: "assets/img/tools-expertise-poster.webp", w: 720, h: 900, label: "Tools Expertise motion piece: the card deck fans out on red" },
+      },
+    ];
+
+    const NOTES = [
+      {
+        id: "about", title: "About", date: "13/05/2026", stamp: "May 13, 2026 at 6:43 PM",
+        preview: "Creative director crafting visuals…",
+        html: () => `
+      <figure class="note-photo"><img src="assets/img/portrait.webp" width="731" height="571" alt="Portrait of Danny in glasses, one hand raised, against a dark background"></figure>
+      <h2>Hi, I'm ${esc(PROFILE.nickname)}</h2>
+      <p><strong>${esc(PROFILE.name)}</strong>: ${esc(PROFILE.tagline)}</p>
+      <h2>What I do</h2>
+      <p>Graphics, motion and sportswear design. I'm a graphics and motion graphics designer and video editor at ${esc(PROFILE.company)}, ${esc(PROFILE.city.split(",")[0])}.</p>
+      <h2>Tools</h2>
+      <ul class="tools">
+        <li><b>After Effects</b>: dynamic motion graphics and visual effects</li>
+        <li><b>Illustrator</b>: crafting vector art and detailed graphic design</li>
+        <li><b>Photoshop</b>: enhancing images and delivering polished digital compositions</li>
+        <li><b>Premiere Pro</b>: seamless video editing and sound integration</li>
+      </ul>
+      <h2>Open to</h2>
+      <p>Full-time roles and freelance projects.</p>
+      ${PROFILE.email ? `<p><strong>Mail</strong><br><a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a></p>` : ""}
+      <p class="note-callout">Say hi on <a href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">LinkedIn</a> or <a href="${PROFILE.links.instagram}" target="_blank" rel="noopener">Instagram</a><br>new work goes up on <a href="${PROFILE.links.behance}" target="_blank" rel="noopener">Behance</a></p>
+      <p class="note-headsup"><strong>Heads up:</strong> the desktop icons are draggable. Move them around.</p>`,
+      },
+      {
+        id: "experience", title: "Experience", date: "05/05/2026", stamp: "May 5, 2026 at 12:37 PM",
+        preview: "Kerala Jewellers, Chennai…",
+        html: () => `
+      <h2>Experience</h2>
+      <p><strong>${esc(PROFILE.company)}</strong>, ${esc(PROFILE.city.split(",")[0])}<br><span class="muted">Graphics &amp; motion graphics designer, video editor</span></p>
+      <h2>Creative direction</h2>
+      <p>Leading creative direction for branding, social media, and marketing campaigns across digital platforms. Overseeing design and video production to ensure consistent visual identity and high-quality output. Strategizing concepts and guiding teams to deliver impactful content that drives engagement and brand growth.</p>
+      <h2>Graphic design &amp; video editing</h2>
+      <p>Creating visually engaging designs and dynamic video content for social media and marketing campaigns. Skilled in Adobe Photoshop, Illustrator, Premiere Pro, and After Effects for high-quality creative outputs. Focused on storytelling through visuals and motion to enhance brand identity and audience engagement.</p>
+      <h2>Specializations</h2>
+      <ul>
+        <li>Creative Direction &amp; Brand Strategy</li>
+        <li>Visual Storytelling &amp; Content Planning</li>
+        <li>Social Media Design &amp; Campaigns</li>
+        <li>Video Editing, Production &amp; Motion Graphics</li>
+        <li>Branding &amp; Identity Development</li>
+        <li>Ad Creatives &amp; Poster Design</li>
+      </ul>`,
+      },
+    ];
+
+    /* ==================================================================== helpers */
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    // deep links (#ruha, #note-about…); some browsers refuse history edits on file:// pages
+    const setHash = (h) => {
+      try { history.replaceState(null, "", h ? "#" + h : location.pathname + location.search); } catch { }
+    };
+    const compactIcons = matchMedia("(max-width: 809.98px), (orientation: portrait) and (max-width: 1199.98px)");
+    const phone = matchMedia("(max-width: 809.98px)");
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+    const ICON_SVG = {
+      close: '',
+      min: '',
+      max: '',
+      arrow: '<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 13.5l9-9M6 4.5h7.5V12"/></svg>',
+      folder: `<svg viewBox="0 0 96 80" aria-hidden="true">
+      <defs>
+        <linearGradient id="fold-back" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5bb8f0"/><stop offset="1" stop-color="#2f8fd6"/></linearGradient>
+        <linearGradient id="fold-front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd2fa"/><stop offset="1" stop-color="#58b3ee"/></linearGradient>
+      </defs>
+      <path d="M4 12a7 7 0 0 1 7-7h22.5c2 0 3.6.8 5 2.2L44 13h41a7 7 0 0 1 7 7v50a7 7 0 0 1-7 7H11a7 7 0 0 1-7-7z" fill="url(#fold-back)"/>
+      <rect x="4" y="21" width="88" height="56" rx="7" fill="url(#fold-front)"/>
+      <path d="M11 22h74" stroke="#fff" stroke-opacity=".45" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    };
+
+    /* ==================================================================== desktop icons */
+    let iconZ = 5;
+    function thumbSize(w, h) {
+      const maxW = 96, maxH = 118, r = w / h;
+      return r >= maxW / maxH ? [maxW, Math.round(maxW / r)] : [Math.round(maxH * r), maxH];
+    }
+
+    function renderIcons() {
+      const wrap = $("#icons");
+      PROJECTS.forEach((p, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "icon";
+        btn.dataset.id = p.id;
+        btn.setAttribute("aria-label", `Open ${p.title}`);
+        btn.style.setProperty("--i", i);
+        let art = ICON_SVG.folder;
+        if (!p.folder) {
+          const [tw, th] = thumbSize(p.thumb.w, p.thumb.h);
+          btn.style.setProperty("--tw", tw + "px");
+          btn.style.setProperty("--th", th + "px");
+          art = `<img src="${p.thumb.src}" width="${tw}" height="${th}" alt="" draggable="false">`;
+        }
+        btn.innerHTML = `<span class="icon-art">${art}</span><span class="icon-label">${esc(p.label)}</span>`;
+        wrap.append(btn);
+        makeIconDraggable(btn, () => openProject(p.id, btn));
+      });
+    }
+
+    // Click opens; press-and-drag moves the icon (wide layouts only), like a real desktop.
+    function makeIconDraggable(el, onOpen) {
+      let drag = null;
+      el.addEventListener("pointerdown", (e) => {
+        if (e.button !== 0 || compactIcons.matches) return;
+        const r = el.getBoundingClientRect();
+        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, cx: r.left + r.width / 2, cy: r.top + r.height / 2, moved: false };
+        el.setPointerCapture(e.pointerId);
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.moved) {
+          if (Math.hypot(dx, dy) < 5) return;
+          drag.moved = true;
+          el.classList.add("dragging");
+          el.style.zIndex = ++iconZ;
+        }
+        el.style.left = clamp(drag.cx + dx, 48, innerWidth - 48) + "px";
+        el.style.top = clamp(drag.cy + dy, 48, innerHeight - 48) + "px";
+      });
+      const end = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (drag.moved) {
+          el.classList.remove("dragging");
+          // swallow the click that follows the drag, then forget about it
+          el.dataset.justDragged = "1";
+          setTimeout(() => delete el.dataset.justDragged, 0);
+        }
+        drag = null;
+      };
+      el.addEventListener("pointerup", end);
+      el.addEventListener("pointercancel", end);
+      el.addEventListener("click", () => {
+        if (!el.dataset.justDragged) onOpen();
+      });
+    }
+
+    // Place icons around the photo. Must match the .hero height rule: min(92vh, 88vw).
+    const HERO_RATIO = 1805 / 1624;
+    function layoutIcons() {
+      if (compactIcons.matches) return;
+      const vw = innerWidth, vh = innerHeight;
+      const h = Math.min(vh * 0.92, vw * 0.88), w = h * HERO_RATIO;
+      const left = (vw - w) / 2, top = vh - h;
+      document.querySelectorAll(".icon").forEach((el) => {
+        const [u, v] = PROJECTS.find((p) => p.id === el.dataset.id).pos;
+        el.style.setProperty("--x", clamp(left + u * w, 64, vw - 64) + "px");
+        el.style.setProperty("--y", clamp(top + v * h, 72, vh - 200) + "px");
+        // keep icons the visitor dragged on screen
+        if (el.style.left) el.style.left = clamp(parseFloat(el.style.left), 48, vw - 48) + "px";
+        if (el.style.top) el.style.top = clamp(parseFloat(el.style.top), 48, vh - 48) + "px";
+      });
+    }
+    addEventListener("resize", layoutIcons);
+
+    compactIcons.addEventListener("change", () => {
+      document.querySelectorAll(".icon").forEach((el) => { el.style.left = ""; el.style.top = ""; });
+      layoutIcons();
+    });
+
+    /* ==================================================================== windows */
+    let zTop = 100;
+    let cascade = 0;
+    const open = new Map(); // key -> { el, opener }
+
+    function frontmost() {
+      let best = null;
+      for (const entry of open.values()) {
+        if (!best || +entry.el.style.zIndex > +best.el.style.zIndex) best = entry;
+      }
+      return best;
+    }
+
+    function focusWindow(el) {
+      el.style.zIndex = ++zTop;
+    }
+
+    function placeWindow(el, kind) {
+      const vw = innerWidth, vh = innerHeight;
+      const w = kind === "notes" ? Math.min(940, vw * 0.9) : Math.min(1340, vw * (vw < 1100 ? 0.92 : 0.7), vw - 32);
+      const h = kind === "notes" ? Math.min(660, vh * 0.78) : Math.min(820, vh * 0.72);
+      const step = 28 * (cascade++ % 5);
+      const left = clamp((vw - w) / 2 + step - 28, 16, vw - w - 16);
+      const top = clamp(vh * 0.11 + step, 16, vh - h - 16);
+      Object.entries({ "--l": left, "--t": top, "--w": w, "--h": h }).forEach(([k, v]) => el.style.setProperty(k, v + "px"));
+    }
+
+    function windowShell({ key, title, kind, bodyHTML, opener, hash }) {
+      const el = document.createElement("section");
+      el.className = "win" + (kind === "notes" ? " notes" : "");
+      el.tabIndex = -1;
+      el.setAttribute("role", "dialog");
+      el.setAttribute("aria-label", title);
+      el.dataset.key = key;
+      el.innerHTML = `
+    <header class="win-bar">
+      <div class="lights">
+        <button class="light light-close" type="button" data-act="close" aria-label="Close ${esc(title)}">${ICON_SVG.close}</button>
+        <button class="light light-min" type="button" data-act="min" aria-label="Minimise ${esc(title)}">${ICON_SVG.min}</button>
+        <button class="light light-max" type="button" data-act="max" aria-label="Zoom ${esc(title)}">${ICON_SVG.max}</button>
+      </div>
+      <span class="win-title">${esc(title)}</span>
+    </header>
+    ${bodyHTML}`;
+      placeWindow(el, kind);
+      el.style.zIndex = ++zTop;
+      $("#windows").append(el);
+
+      // zoom out of whatever was clicked, the way the original scales windows in
+      if (opener && !phone.matches) {
+        const o = opener.getBoundingClientRect(), r = el.getBoundingClientRect();
+        el.style.transformOrigin = `${o.left + o.width / 2 - r.left}px ${o.top + o.height / 2 - r.top}px`;
+      }
+      el.classList.add("is-entering");
+      el.getBoundingClientRect();
+      requestAnimationFrame(() => el.classList.remove("is-entering"));
+
+      el.addEventListener("pointerdown", () => focusWindow(el), true);
+      el.addEventListener("click", (e) => {
+        const act = e.target.closest("[data-act]")?.dataset.act;
+        if (act === "close") closeWindow(key);
+        else if (act === "min") closeWindow(key, true);
+        else if (act === "max") toggleMax(el);
+      });
+      makeWindowDraggable(el);
+      open.set(key, { el, opener, hash });
+      el.focus({ preventScroll: true });
+      setHash(hash);
+      syncDock();
+      return el;
+    }
+
+    function closeWindow(key, minimize = false) {
+      const entry = open.get(key);
+      if (!entry) return;
+      open.delete(key);
+      const { el, opener, hash } = entry;
+      el.querySelectorAll("video").forEach((v) => v.pause());
+      if (minimize && opener && opener.isConnected && !phone.matches) {
+        const o = opener.getBoundingClientRect(), r = el.getBoundingClientRect();
+        el.style.transformOrigin = `${o.left + o.width / 2 - r.left}px ${o.top + o.height / 2 - r.top}px`;
+      }
+      const done = () => el.remove();
+      if (reducedMotion.matches) done();
+      else {
+        el.classList.add(minimize ? "is-minimizing" : "is-leaving");
+        el.addEventListener("transitionend", done, { once: true });
+        setTimeout(done, 500);
+      }
+      syncDock();
+      const next = frontmost();
+      if (next) {
+        next.el.focus({ preventScroll: true });
+        setHash(next.hash);
+      } else {
+        if (opener && opener.isConnected) opener.focus({ preventScroll: true });
+        if (location.hash.slice(1) === hash) setHash("");
+      }
+    }
+
+    function toggleMax(el) {
+      if (phone.matches) return;
+      el.classList.add("is-animating-size");
+      el.classList.toggle("is-max");
+      setTimeout(() => el.classList.remove("is-animating-size"), 350);
+    }
+
+    function makeWindowDraggable(el) {
+      const bar = $(".win-bar", el);
+      let d = null;
+      bar.addEventListener("pointerdown", (e) => {
+        if (e.button !== 0 || e.target.closest(".lights") || phone.matches || el.classList.contains("is-max")) return;
+        d = { id: e.pointerId, x: e.clientX, y: e.clientY, l: parseFloat(el.style.getPropertyValue("--l")), t: parseFloat(el.style.getPropertyValue("--t")) };
+        bar.setPointerCapture(e.pointerId);
+        bar.classList.add("is-dragging");
+      });
+      bar.addEventListener("pointermove", (e) => {
+        if (!d || e.pointerId !== d.id) return;
+        const w = el.offsetWidth;
+        el.style.setProperty("--l", clamp(d.l + e.clientX - d.x, 120 - w, innerWidth - 120) + "px");
+        el.style.setProperty("--t", clamp(d.t + e.clientY - d.y, 0, innerHeight - 50) + "px");
+      });
+      const end = () => { d = null; bar.classList.remove("is-dragging"); };
+      bar.addEventListener("pointerup", end);
+      bar.addEventListener("pointercancel", end);
+      bar.addEventListener("dblclick", (e) => { if (!e.target.closest(".lights")) toggleMax(el); });
+    }
+
+    addEventListener("resize", () => {
+      for (const { el } of open.values()) {
+        const w = el.offsetWidth, h = el.offsetHeight;
+        if (w > innerWidth - 16 || h > innerHeight - 16) placeWindow(el, el.classList.contains("notes") ? "notes" : "project");
+        else {
+          el.style.setProperty("--l", clamp(parseFloat(el.style.getPropertyValue("--l")), 120 - w, innerWidth - 120) + "px");
+          el.style.setProperty("--t", clamp(parseFloat(el.style.getPropertyValue("--t")), 0, innerHeight - 50) + "px");
+        }
+      }
+    });
+
+    /* ---------------------------------------------------------------- project windows */
+    function projectBody(p) {
+      const meta = p.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+      let media = "";
+      if (p.video) {
+        const v = p.video;
+        media = `<div class="media-video"><video src="${v.src}" poster="${v.poster}" width="${v.w}" height="${v.h}" controls playsinline muted loop autoplay preload="metadata" aria-label="${esc(v.label)}"></video></div>`;
+      } else if (p.gallery) {
+        const g = p.gallery;
+        const style = g.layout === "cards" ? ` style="--cols:${g.cols}${g.max ? `;--max:${g.max}` : ""}"` : "";
+        media = `<div class="gallery ${g.layout}"${style}>${g.items.map((it, i) =>
+          `<button class="g-item" type="button" data-i="${i}" aria-label="View larger: ${esc(it.alt)}"><img src="${it.src}" width="${it.w}" height="${it.h}" alt="${esc(it.alt)}" loading="lazy" decoding="async"></button>`).join("")}</div>`;
+      }
+      return `
+    <div class="win-body">
+      <h2 class="p-title">${esc(p.title)}</h2>
+      <p class="p-desc">${esc(p.description)}</p>
+      <dl class="p-meta">${meta}</dl>
+      <div class="p-cta">
+        <span class="p-cta-label">${esc(p.cta.label)}</span>
+        <a class="cta-btn" href="${p.cta.href}" target="_blank" rel="noopener" aria-label="${esc(p.cta.label)}: ${esc(p.title)} (opens in a new tab)">${ICON_SVG.arrow}</a>
+      </div>
+      ${media}
+    </div>`;
+    }
+
+    function openProject(id, opener) {
+      const p = PROJECTS.find((x) => x.id === id);
+      if (!p) return;
+      const existing = open.get(id);
+      if (existing) {
+        focusWindow(existing.el);
+        existing.el.focus({ preventScroll: true });
+        setHash(existing.hash);
+        return;
+      }
+      const el = windowShell({ key: id, title: p.title, kind: "project", bodyHTML: projectBody(p), opener, hash: id });
+      if (p.gallery) {
+        el.addEventListener("click", (e) => {
+          const item = e.target.closest(".g-item");
+          if (item) openLightbox(p.gallery.items, +item.dataset.i, item);
+        });
+      }
+    }
+
+    /* ---------------------------------------------------------------- notes window */
+    function notesBody() {
+      const cards = NOTES.map((n) => `
+    <button class="note-card" type="button" data-note-id="${n.id}" aria-controls="note-page">
+      <strong>${esc(n.title)}</strong>
+      <span class="note-sub"><time>${n.date}</time><span>${esc(n.preview)}</span></span>
+    </button>`).join("");
+      return `
+    <div class="notes-body">
+      <nav class="notes-list" aria-label="Notes">
+        ${cards}
+        <a class="note-card is-link" href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">
+          <strong>RESUME</strong>
+          <span class="note-sub"><span>Full profile on LinkedIn ↗</span></span>
+        </a>
+      </nav>
+      <article class="note-page" id="note-page" aria-live="polite"></article>
+    </div>`;
+    }
+
+    function showNote(el, noteId) {
+      const note = NOTES.find((n) => n.id === noteId) || NOTES[0];
+      el.querySelectorAll(".note-card[data-note-id]").forEach((c) => {
+        const on = c.dataset.noteId === note.id;
+        c.classList.toggle("is-active", on);
+        c.setAttribute("aria-current", on ? "true" : "false");
+      });
+      const page = $(".note-page", el);
+      page.innerHTML = `<p class="note-stamp">${note.stamp}</p>${note.html()}`;
+      page.scrollTop = 0;
+      const entry = open.get("notes");
+      if (entry) {
+        entry.hash = "note-" + note.id;
+        setHash(entry.hash);
+      }
+    }
+
+    function openNotes(noteId, opener) {
+      const existing = open.get("notes");
+      if (existing) {
+        showNote(existing.el, noteId);
+        focusWindow(existing.el);
+        existing.el.focus({ preventScroll: true });
+        return;
+      }
+      const el = windowShell({ key: "notes", title: "Notes", kind: "notes", bodyHTML: notesBody(), opener, hash: "note-" + noteId });
+      el.addEventListener("click", (e) => {
+        const card = e.target.closest(".note-card[data-note-id]");
+        if (card) showNote(el, card.dataset.noteId);
+      });
+      showNote(el, noteId);
+    }
+
+    /* ==================================================================== dock */
+    function setupDock() {
+      $("#dock-linkedin").href = PROFILE.links.linkedin;
+      $("#dock-instagram").href = PROFILE.links.instagram;
+      $("#dock-behance").href = PROFILE.links.behance;
+      document.querySelectorAll(".dock-item[data-note]").forEach((btn) => {
+        btn.addEventListener("click", () => openNotes(btn.dataset.note, btn));
+      });
+    }
+    function syncDock() {
+      const running = open.has("notes");
+      document.querySelectorAll(".dock-item[data-note]").forEach((b) => b.classList.toggle("running", running));
+    }
+
+    /* ==================================================================== lightbox */
+    const lb = { el: $("#lightbox"), img: $("#lb-img"), count: $("#lb-count"), items: [], i: 0, returnTo: null };
+    function openLightbox(items, i, returnTo) {
+      lb.items = items;
+      lb.returnTo = returnTo;
+      lb.el.hidden = false;
+      showSlide(i);
+      $(".lb-close", lb.el).focus({ preventScroll: true });
+    }
+    function showSlide(i) {
+      lb.i = (i + lb.items.length) % lb.items.length;
+      const it = lb.items[lb.i];
+      lb.img.src = it.src;
+      lb.img.alt = it.alt;
+      lb.img.style.animation = "none";
+      lb.img.offsetWidth;
+      lb.img.style.animation = "";
+      const many = lb.items.length > 1;
+      lb.count.textContent = many ? `${lb.i + 1} / ${lb.items.length}` : "";
+      $(".lb-prev", lb.el).hidden = !many;
+      $(".lb-next", lb.el).hidden = !many;
+    }
+    function closeLightbox() {
+      lb.el.hidden = true;
+      lb.img.removeAttribute("src");
+      if (lb.returnTo?.isConnected) lb.returnTo.focus({ preventScroll: true });
+    }
+    lb.el.addEventListener("click", (e) => {
+      const act = e.target.closest("[data-lb]")?.dataset.lb;
+      if (act === "prev") showSlide(lb.i - 1);
+      else if (act === "next") showSlide(lb.i + 1);
+      else if (act === "close" || e.target === lb.el) closeLightbox();
+    });
+
+    /* ==================================================================== keyboard + hero parallax */
+    addEventListener("keydown", (e) => {
+      if (!lb.el.hidden) {
+        if (e.key === "Escape") closeLightbox();
+        else if (e.key === "ArrowLeft") showSlide(lb.i - 1);
+        else if (e.key === "ArrowRight") showSlide(lb.i + 1);
+        return;
+      }
+      if (e.key === "Escape") {
+        const top = frontmost();
+        if (top) closeWindow(top.el.dataset.key);
+      }
+    });
+
+    (function heroParallax() {
+      const hero = $("#hero");
+      let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+      const tick = () => {
+        x += (tx - x) * 0.08;
+        y += (ty - y) * 0.08;
+        hero.style.setProperty("--px", x.toFixed(2) + "px");
+        hero.style.setProperty("--py", y.toFixed(2) + "px");
+        raf = Math.abs(tx - x) > 0.05 || Math.abs(ty - y) > 0.05 ? requestAnimationFrame(tick) : 0;
+      };
+      addEventListener("pointermove", (e) => {
+        if (reducedMotion.matches || e.pointerType !== "mouse") return;
+        tx = (e.clientX / innerWidth - 0.5) * -14;
+        ty = (e.clientY / innerHeight - 0.5) * -6;
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+    })();
+
+    /* ==================================================================== boot */
+    renderIcons();
+    layoutIcons();
+    setupDock();
+    (function openFromHash() {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!id) return;
+      if (id === "about") openNotes("about");
+      else if (id.startsWith("note-")) openNotes(id.slice(5));
+      else if (PROJECTS.some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${id}"]`));
+    })();
+  </script>
+</body>
+
+</html>
