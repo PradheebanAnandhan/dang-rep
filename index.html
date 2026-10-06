@@ -1427,12 +1427,6 @@
         { src: "assets/img/pack-03-jewel-box.webp", w: 1800, h: 1040, alt: "Open RUHA jewellery box with a deep red lining" },
       ]
     };
-    const DEEPAM_THUMB = { src: "assets/thumbs/deepam.webp", w: 360, h: 273 };
-    const DEEPAM_GALLERY = {
-      layout: "stack", items: [
-        { src: "assets/img/deepam-brand-guidelines.webp", w: 1536, h: 1024, alt: "Deepam Dry Fish brand guidelines: brand story, logo and usage, colour palette, typography, photography, packaging, icons, social media style, keywords and taglines" },
-      ]
-    };
     const CAROUSEL_THUMB = { src: "assets/thumbs/instagram-carousel.webp", w: 360, h: 177 };
     const CAROUSEL_GALLERY = {
       layout: "stack", max: "640px", items: [
@@ -1441,6 +1435,11 @@
     };
     const TOOLS_VIDEO = { src: "assets/video/tools-expertise.mp4", poster: "assets/img/tools-expertise-poster.webp", w: 720, h: 900, label: "Tools Expertise motion piece: the card deck fans out on red" };
     const TOOLS_THUMB = { src: "assets/thumbs/tools-expertise.webp", w: 300, h: 375 };
+
+    // Danny's photographs for the Photography folder. Add one line per photo, e.g.
+    // { src: "assets/img/photo-01.webp", w: 1800, h: 1200, alt: "What the photo shows" },
+    const PHOTOS = [
+    ];
 
     // pos = icon centre relative to the photo of Danny on wide screens: [0, 0] is the photo's
     // top-left corner and [1, 1] its bottom-right, so icons keep their place around the photo at
@@ -1454,15 +1453,6 @@
         meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Brand Identity, Logo Design, Packaging, Print"], ["Softwares", "Photoshop, Illustrator"]],
         cta: { label: "Project In Detail", href: BEHANCE_RUHA },
         gallery: RUHA_GALLERY,
-      },
-      {
-        id: "deepam-dry-fish", label: "Deepam Dry Fish", pos: [0.9, 0.09],
-        thumb: DEEPAM_THUMB,
-        title: "Deepam Dry Fish",
-        description: "Brand identity and guidelines for Deepam Dry Fish, a coastal dry fish brand: “Authentic Coastal Taste, Preserved with Trust.” The guide covers the brand story, logo and its usage, colour palette, typography, photography style, packaging for karuvadu, nethili and fish pickle, packaging elements, icon style, social media style, brand keywords and packaging taglines.",
-        meta: [["Client", "Deepam Dry Fish"], ["Year", "2026"], ["Project type", "Brand Identity, Brand Guidelines, Packaging"], ["Deliverables", "Logo, colour & type system, packaging, social media style"]],
-        cta: { label: "More On Behance", href: PROFILE.links.behance },
-        gallery: DEEPAM_GALLERY,
       },
       {
         id: "the-deck", label: "The Deck", pos: [-0.24, 0.35],
@@ -1495,18 +1485,12 @@
         },
       },
       {
-        id: "experience", label: "Experience", pos: [1.08, 0.52], folder: true,
-        title: "Experience",
-        description: "Three cards from the deck, one for each side of the work: graphic design, design with video editing, and creative direction.",
-        meta: [["Currently", `Graphics & motion designer, video editor at ${PROFILE.company}`], ["Based in", PROFILE.city], ["Tools", "Photoshop, Illustrator, Premiere Pro, After Effects"], ["Open to", "Full-time roles & freelance projects"]],
-        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
-        gallery: {
-          layout: "cards", cols: 3, items: [
-            { src: "assets/img/exp-graphic-designing.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Designing, with specializations and tools" },
-            { src: "assets/img/exp-design-video.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Design and Video Editing, with specializations and tools" },
-            { src: "assets/img/exp-creative-director.webp", w: 1100, h: 1690, alt: "Card: Experience as a Creative Director, with specializations and tools" },
-          ]
-        },
+        id: "photography", label: "Photography", pos: [1.08, 0.52], folder: true,
+        title: "Photography",
+        description: "Photography by Danny, alongside the Instagram carousel: a bold and expressive carousel post built from collage, typography and pop culture elements, shown in the Instagram feed on mobile, on the desktop, and as printed slides.",
+        meta: [["By", `${PROFILE.nickname} (${PROFILE.name})`], ["Based in", PROFILE.city], ["Includes", "Photography, Instagram carousel"], ["Softwares", "Photoshop, Illustrator, Premiere Pro, After Effects"]],
+        cta: { label: "Instagram Carousel In Detail", href: BEHANCE_CAROUSEL },
+        gallery: { layout: "stack", max: "760px", items: [...PHOTOS, ...CAROUSEL_GALLERY.items] },
       },
       {
         id: "tools-expertise", label: "Tools Expertise", pos: [-0.06, 0.66],
@@ -1516,15 +1500,6 @@
         meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Motion Graphics, Animation"], ["Softwares", "After Effects, Premiere Pro, Photoshop, Illustrator"]],
         cta: { label: "Project In Detail", href: BEHANCE_DECK },
         video: TOOLS_VIDEO,
-      },
-      {
-        id: "instagram-carousel", label: "Instagram Carousel", pos: [1.16, 0.8],
-        thumb: CAROUSEL_THUMB,
-        title: "Instagram Carousel",
-        description: "A bold and expressive Instagram carousel post designed to showcase creativity, originality, and a strong visual style through collage, typography and pop culture elements. Shown in the Instagram feed on mobile, on the desktop, and as printed slides.",
-        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Social Media Design, Carousel Post"], ["Softwares", "Photoshop, Illustrator, Premiere Pro, After Effects"]],
-        cta: { label: "Project In Detail", href: BEHANCE_CAROUSEL },
-        gallery: CAROUSEL_GALLERY,
       },
     ];
 
@@ -1567,16 +1542,7 @@
         cta: { label: "Full Profile", href: PROFILE.links.linkedin },
       },
       {
-        id: "deepam-dry-fish", label: "Deepam Dry Fish", pos: [1.12, 0.25],
-        thumb: DEEPAM_THUMB,
-        title: "Deepam Dry Fish",
-        description: "Brand strategy for Deepam Dry Fish, a coastal dry fish brand: the positioning “Authentic Coastal Taste, Preserved with Trust.”, brand purpose, personality and core values, brand keywords, a social media style and a set of packaging taglines, all in one brand guideline.",
-        meta: [["Client", "Deepam Dry Fish"], ["Year", "2026"], ["Project type", "Brand Strategy, Brand Guidelines"], ["Includes", "Positioning, keywords, social media style, taglines"]],
-        cta: { label: "More On Behance", href: PROFILE.links.behance },
-        gallery: DEEPAM_GALLERY,
-      },
-      {
-        id: "web-ecommerce", label: "E-commerce & Web", pos: [1.08, 0.54], folder: true,
+        id: "web-ecommerce", label: "E-commerce & Web", pos: [1.12, 0.42], folder: true,
         title: "E-commerce & Web",
         description: "Website updates and landing pages for brands, focusing on a clean and modern user experience.",
         meta: [["Where", "Kerala Jewellers, freelance"], ["Platforms", "Shopify, Webflow, Framer, WordPress"], ["Work", "Website updates, landing pages, web graphics"], ["Background", "B.Tech, Information Technology"]],
@@ -1724,7 +1690,7 @@
       },
     };
     // old deep links that now live inside another project
-    const PROJECT_ALIASES = { "ruha-packaging": "ruha" };
+    const PROJECT_ALIASES = { "ruha-packaging": "ruha", "experience": "photography" };
 
     let mode = document.documentElement.dataset.mode === "marketing" ? "marketing" : "designer";
     let PROJECTS = MODES[mode].projects;
