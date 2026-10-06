@@ -10,7 +10,17 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Danny Here (Portfolio Website)">
   <meta property="og:description" content="Creative director crafting visuals, motion & stories with intention.">
-  <meta name="theme-color" content="#f4f4f4">
+  <meta name="theme-color" content="#f4f4f4" id="theme-color">
+  <script>
+    // pick the portfolio mode before first paint: ?mode=marketing, else the visitor's last choice
+    (function () {
+      var m = new URLSearchParams(location.search).get("mode");
+      if (m !== "designer" && m !== "marketing") {
+        try { m = localStorage.getItem("portfolio-mode"); } catch (e) { }
+      }
+      if (m === "marketing") document.documentElement.dataset.mode = m;
+    })();
+  </script>
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/avatar-duotone.png">
   <link rel="preload" as="image" href="assets/img/hero.webp"
@@ -53,6 +63,15 @@
       --light-green: #28c840;
       --note-active: rgb(255, 227, 144);
       --note-link: rgb(255, 214, 214);
+      --bar-bg: #fff;
+      --hover: #f4f4f6;
+      --tile-bg: #f2f2f2;
+      --sub: #3c3c43;
+      --link: #0a64d8;
+      --headsup: #fff8dc;
+      --on-accent: #fff;
+      --accent-hover: #e53935;
+      --divider: rgb(229, 229, 234);
       --radius-win: 16px;
       --shadow-win: 0 0 0 1px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .10), 0 30px 80px rgba(0, 0, 0, .14);
       --spring: cubic-bezier(.3, 1.4, .55, 1);
@@ -330,7 +349,7 @@
       width: 2px;
       height: var(--dock-icon);
       border-radius: 64px;
-      background: rgb(229, 229, 234);
+      background: var(--divider);
     }
 
     .dock-item.running::after {
@@ -437,7 +456,7 @@
       height: 50px;
       padding: 0 20px;
       border-bottom: 1px solid var(--line);
-      background: #fff;
+      background: var(--bar-bg);
       cursor: grab;
       user-select: none;
       touch-action: none;
@@ -572,13 +591,13 @@
       height: 36px;
       border-radius: 50%;
       background: var(--accent);
-      color: #fff;
+      color: var(--on-accent);
       transition: transform .3s var(--spring), background-color .2s;
     }
 
     .cta-btn:hover {
       transform: scale(1.12) rotate(8deg);
-      background: #e53935;
+      background: var(--accent-hover);
     }
 
     .cta-btn svg {
@@ -589,7 +608,8 @@
     .gallery {
       display: grid;
       gap: 10px;
-      margin-top: 28px;
+      max-width: var(--max, none);
+      margin: 28px auto 0;
     }
 
     .g-item {
@@ -597,7 +617,7 @@
       width: 100%;
       padding: 0;
       border: 0;
-      background: #f2f2f2;
+      background: var(--tile-bg);
       border-radius: 16px;
       overflow: hidden;
       cursor: zoom-in;
@@ -615,8 +635,6 @@
 
     .gallery.cards {
       grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
-      max-width: var(--max, none);
-      margin-inline: auto;
       gap: 14px;
     }
 
@@ -683,7 +701,7 @@
     }
 
     .note-card:hover {
-      background: #f4f4f6;
+      background: var(--hover);
     }
 
     .note-card.is-active {
@@ -705,7 +723,7 @@
       display: flex;
       gap: 6px;
       font-size: 14px;
-      color: #3c3c43;
+      color: var(--sub);
       min-width: 0;
     }
 
@@ -786,7 +804,7 @@
     }
 
     .note-callout a {
-      color: #0a64d8;
+      color: var(--link);
       text-underline-offset: 3px;
     }
 
@@ -795,8 +813,155 @@
       margin-top: 18px !important;
       padding: 12px 14px;
       border-radius: 10px;
-      background: #fff8dc;
+      background: var(--headsup);
       font-size: 14px !important;
+    }
+
+    .p-points {
+      margin: 0 0 26px;
+      padding-left: 22px;
+    }
+
+    .p-points li {
+      margin-bottom: 8px;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    /* ---------------------------------------------------------------- designer / marketing switch */
+    .mode-toggle {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: 64px;
+      background: rgba(255, 255, 255, .6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -.01em;
+      cursor: pointer;
+      animation: toggle-in .6s cubic-bezier(.2, .9, .3, 1.1) .3s both;
+      transition: background-color .4s, border-color .4s;
+    }
+
+    @keyframes toggle-in {
+      from {
+        opacity: 0;
+        translate: 0 -16px;
+      }
+    }
+
+    .mode-label {
+      color: var(--muted);
+      transition: color .3s;
+    }
+
+    .mode-track {
+      position: relative;
+      width: 42px;
+      height: 24px;
+      border-radius: 24px;
+      background: #000;
+      transition: background-color .3s;
+    }
+
+    .mode-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform .35s var(--spring), background-color .3s;
+    }
+
+    :root:not([data-mode="marketing"]) .mode-label[data-for="designer"],
+    :root[data-mode="marketing"] .mode-label[data-for="marketing"] {
+      color: var(--ink);
+    }
+
+    /* Marketing: a black-and-white take on the same desktop */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(ellipse 60vmax 52vmax at 50% 68%, #f4f4f4 0%, #d6d6d6 34%, #555 62%, #0b0b0b 92%);
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+
+    :root[data-mode="marketing"] {
+      color-scheme: dark;
+      --ink: #fff;
+      --text: #e6e6e6;
+      --muted: #9a9a9f;
+      --line: #2a2a2c;
+      --win-bg: #111;
+      --bar-bg: #111;
+      --hover: #1e1e20;
+      --tile-bg: #1a1a1a;
+      --sub: #c7c7cc;
+      --link: #fff;
+      --headsup: #1e1e20;
+      --accent: #fff;
+      --on-accent: #000;
+      --accent-hover: #d4d4d4;
+      --note-active: #2c2c2e;
+      --note-link: #1e1e20;
+      --divider: rgba(255, 255, 255, .35);
+      --shadow-win: 0 0 0 1px rgba(255, 255, 255, .1), 0 10px 30px rgba(0, 0, 0, .4), 0 30px 80px rgba(0, 0, 0, .5);
+    }
+
+    :root[data-mode="marketing"] body::before {
+      opacity: 1;
+    }
+
+    :root[data-mode="marketing"] .mode-toggle {
+      border-color: rgba(255, 255, 255, .14);
+      background: rgba(18, 18, 18, .7);
+    }
+
+    :root[data-mode="marketing"] .mode-track {
+      background: #fff;
+    }
+
+    :root[data-mode="marketing"] .mode-knob {
+      transform: translateX(18px);
+      background: #000;
+    }
+
+    :root[data-mode="marketing"] .icon-art svg {
+      filter: grayscale(1) drop-shadow(0 1px 4px rgba(0, 0, 0, .3));
+    }
+
+    :root[data-mode="marketing"] .dock-tile {
+      filter: grayscale(1);
+      transition: filter .3s;
+    }
+
+    :root[data-mode="marketing"] .dock-item:hover .dock-tile,
+    :root[data-mode="marketing"] .dock-item:focus-visible .dock-tile {
+      filter: none;
+    }
+
+    :root[data-mode="marketing"] .note-card.is-link {
+      box-shadow: inset 0 0 0 1px #3a3a3c;
+    }
+
+    :root[data-mode="marketing"] .note-callout a {
+      text-decoration-color: rgba(255, 255, 255, .5);
     }
 
     /* ---------------------------------------------------------------- lightbox */
@@ -937,7 +1102,8 @@
         align-items: end;
         justify-items: center;
         gap: 22px 4px;
-        padding: max(28px, env(safe-area-inset-top)) 12px 0;
+        /* leave room for the Designer / Marketing switch */
+        padding: calc(max(16px, env(safe-area-inset-top)) + 64px) 12px 0;
       }
 
       .icon {
@@ -953,7 +1119,10 @@
       }
 
       .icon-label {
+        max-width: 108px;
         font-size: 14px;
+        text-align: center;
+        white-space: normal;
       }
     }
 
@@ -1120,8 +1289,15 @@
       href="https://www.behance.net/dannysingle">Behance</a> or say hi on <a
       href="https://in.linkedin.com/in/aathma-naban-058930261">LinkedIn</a>.</noscript>
 
+  <button class="mode-toggle" id="mode-toggle" type="button" role="switch" aria-checked="false"
+    aria-label="Marketing portfolio" title="Switch between the designer and marketing portfolio">
+    <span class="mode-label" data-for="designer" aria-hidden="true">Designer</span>
+    <span class="mode-track" aria-hidden="true"><span class="mode-knob"></span></span>
+    <span class="mode-label" data-for="marketing" aria-hidden="true">Marketing</span>
+  </button>
+
   <main class="desktop" id="desktop">
-    <h1 class="sr-only">Danny (Aathma Naban): creative director crafting visuals, motion &amp; stories with intention
+    <h1 class="sr-only" id="page-heading">Danny (Aathma Naban): creative director crafting visuals, motion &amp; stories with intention
     </h1>
     <img class="hero" id="hero" src="assets/img/hero.webp"
       srcset="assets/img/hero-900.webp 900w, assets/img/hero.webp 1805w" sizes="(max-width: 809.98px) 125vw, 100vh"
@@ -1218,7 +1394,8 @@
 
   <script>
     /* ==================================================================== content
-       Everything on the page comes from these three objects. Edit here, not in the markup. */
+       Everything on the page comes from these objects. Edit here, not in the markup.
+       There are two portfolios, designer and marketing, switched by the toggle at the top. */
     const PROFILE = {
       name: "Aathma Naban",
       nickname: "Danny",
@@ -1235,42 +1412,57 @@
 
     const BEHANCE_RUHA = "https://www.behance.net/gallery/249293189/brand-identity-for-a-silver-based-indian-brand";
     const BEHANCE_DECK = "https://www.behance.net/gallery/248777327/portfolio";
+    const BEHANCE_CAROUSEL = "https://www.behance.net/gallery/256668239/instagram-carousel-design";
+
+    // Shared media, so both portfolios show the same files
+    const RUHA_GALLERY = {
+      layout: "stack", items: [
+        { src: "assets/img/ruha-02-logo.webp", w: 1800, h: 1280, alt: "RUHA logo lockup: by the house of Kerala Jewellers" },
+        { src: "assets/img/ruha-03-story.webp", w: 1800, h: 1096, alt: "Colour palette and the RUHA brand story on deep red" },
+        { src: "assets/img/ruha-04-type.webp", w: 1800, h: 1078, alt: "Typography, Joliet Regular and Times New Roman, beside the RUHA logo icon" },
+        { src: "assets/img/ruha-01-imagery.webp", w: 1800, h: 1154, alt: "Campaign imagery of models wearing RUHA silver jewellery" },
+        { src: "assets/img/ruha-05-tagline.webp", w: 1800, h: 1051, alt: "RUHA logo and tagline on deep red" },
+        { src: "assets/img/pack-01-box-bag.webp", w: 1800, h: 1286, alt: "RUHA gift box and carry bag with a deep red ribbon handle" },
+        { src: "assets/img/pack-02-cards.webp", w: 1800, h: 1000, alt: "RUHA business cards, front and back" },
+        { src: "assets/img/pack-03-jewel-box.webp", w: 1800, h: 1040, alt: "Open RUHA jewellery box with a deep red lining" },
+      ]
+    };
+    const DEEPAM_THUMB = { src: "assets/thumbs/deepam.webp", w: 360, h: 273 };
+    const DEEPAM_GALLERY = {
+      layout: "stack", items: [
+        { src: "assets/img/deepam-brand-guidelines.webp", w: 1536, h: 1024, alt: "Deepam Dry Fish brand guidelines: brand story, logo and usage, colour palette, typography, photography, packaging, icons, social media style, keywords and taglines" },
+      ]
+    };
+    const CAROUSEL_THUMB = { src: "assets/thumbs/instagram-carousel.webp", w: 360, h: 177 };
+    const CAROUSEL_GALLERY = {
+      layout: "stack", max: "640px", items: [
+        { src: "assets/img/instagram-carousel.webp", w: 870, h: 1808, alt: "Instagram carousel post design in yellow and black: the carousel on a phone in the Instagram feed, on a laptop, and the printed slides" },
+      ]
+    };
+    const TOOLS_VIDEO = { src: "assets/video/tools-expertise.mp4", poster: "assets/img/tools-expertise-poster.webp", w: 720, h: 900, label: "Tools Expertise motion piece: the card deck fans out on red" };
+    const TOOLS_THUMB = { src: "assets/thumbs/tools-expertise.webp", w: 300, h: 375 };
 
     // pos = icon centre relative to the photo of Danny on wide screens: [0, 0] is the photo's
     // top-left corner and [1, 1] its bottom-right, so icons keep their place around the photo at
-    // any aspect ratio. thumb w/h are the thumbnail's pixel size.
-    const PROJECTS = [
+    // any aspect ratio. thumb w/h are the thumbnail's pixel size. folder: true shows a folder icon.
+    const DESIGNER_PROJECTS = [
       {
         id: "ruha", label: "RUHA", pos: [0.06, 0.11],
         thumb: { src: "assets/thumbs/ruha.webp", w: 360, h: 256 },
         title: "RUHA",
-        description: "Brand identity for RUHA, a silver jewellery line by the house of Kerala Jewellers. “RUHA Silver Collections embodies timeless elegance through refined craftsmanship and contemporary design. Inspired by modern femininity and everyday luxury, each piece is thoughtfully created to reflect grace, sophistication, and individuality.”",
-        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Brand Identity, Logo Design"], ["Softwares", "Photoshop, Illustrator"]],
+        description: "Brand identity and packaging for RUHA, a silver jewellery line by the house of Kerala Jewellers. “RUHA Silver Collections embodies timeless elegance through refined craftsmanship and contemporary design. Inspired by modern femininity and everyday luxury, each piece is thoughtfully created to reflect grace, sophistication, and individuality.” The identity carries through to a gift box and carry bag, business cards and a jewellery box in the cream-and-deep-red palette.",
+        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Brand Identity, Logo Design, Packaging, Print"], ["Softwares", "Photoshop, Illustrator"]],
         cta: { label: "Project In Detail", href: BEHANCE_RUHA },
-        gallery: {
-          layout: "stack", items: [
-            { src: "assets/img/ruha-02-logo.webp", w: 1800, h: 1280, alt: "RUHA logo lockup: by the house of Kerala Jewellers" },
-            { src: "assets/img/ruha-03-story.webp", w: 1800, h: 1096, alt: "Colour palette and the RUHA brand story on deep red" },
-            { src: "assets/img/ruha-04-type.webp", w: 1800, h: 1078, alt: "Typography, Joliet Regular and Times New Roman, beside the RUHA logo icon" },
-            { src: "assets/img/ruha-01-imagery.webp", w: 1800, h: 1154, alt: "Campaign imagery of models wearing RUHA silver jewellery" },
-            { src: "assets/img/ruha-05-tagline.webp", w: 1800, h: 1051, alt: "RUHA logo and tagline on deep red" },
-          ]
-        },
+        gallery: RUHA_GALLERY,
       },
       {
-        id: "ruha-packaging", label: "RUHA Packaging", pos: [0.9, 0.09],
-        thumb: { src: "assets/thumbs/ruha-packaging.webp", w: 360, h: 257 },
-        title: "RUHA Packaging",
-        description: "Packaging and print for RUHA: a gift box and carry bag, business cards and a jewellery box, all carrying the cream-and-deep-red palette and the floral logo icon. The packaging and business cards were designed in Photoshop.",
-        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Packaging, Print"], ["Softwares", "Photoshop"]],
-        cta: { label: "Project In Detail", href: BEHANCE_RUHA },
-        gallery: {
-          layout: "stack", items: [
-            { src: "assets/img/pack-01-box-bag.webp", w: 1800, h: 1286, alt: "RUHA gift box and carry bag with a deep red ribbon handle" },
-            { src: "assets/img/pack-02-cards.webp", w: 1800, h: 1000, alt: "RUHA business cards, front and back" },
-            { src: "assets/img/pack-03-jewel-box.webp", w: 1800, h: 1040, alt: "Open RUHA jewellery box with a deep red lining" },
-          ]
-        },
+        id: "deepam-dry-fish", label: "Deepam Dry Fish", pos: [0.9, 0.09],
+        thumb: DEEPAM_THUMB,
+        title: "Deepam Dry Fish",
+        description: "Brand identity and guidelines for Deepam Dry Fish, a coastal dry fish brand: “Authentic Coastal Taste, Preserved with Trust.” The guide covers the brand story, logo and its usage, colour palette, typography, photography style, packaging for karuvadu, nethili and fish pickle, packaging elements, icon style, social media style, brand keywords and packaging taglines.",
+        meta: [["Client", "Deepam Dry Fish"], ["Year", "2026"], ["Project type", "Brand Identity, Brand Guidelines, Packaging"], ["Deliverables", "Logo, colour & type system, packaging, social media style"]],
+        cta: { label: "More On Behance", href: PROFILE.links.behance },
+        gallery: DEEPAM_GALLERY,
       },
       {
         id: "the-deck", label: "The Deck", pos: [-0.24, 0.35],
@@ -1318,16 +1510,95 @@
       },
       {
         id: "tools-expertise", label: "Tools Expertise", pos: [-0.06, 0.66],
-        thumb: { src: "assets/thumbs/tools-expertise.webp", w: 300, h: 375 },
+        thumb: TOOLS_THUMB,
         title: "Tools Expertise",
         description: "“This portfolio presents selected motion graphics work focused on clean design, cinematic lighting, and storytelling-driven visuals tailored for modern digital brands.”",
         meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Motion Graphics, Animation"], ["Softwares", "After Effects, Premiere Pro, Photoshop, Illustrator"]],
         cta: { label: "Project In Detail", href: BEHANCE_DECK },
-        video: { src: "assets/video/tools-expertise.mp4", poster: "assets/img/tools-expertise-poster.webp", w: 720, h: 900, label: "Tools Expertise motion piece: the card deck fans out on red" },
+        video: TOOLS_VIDEO,
+      },
+      {
+        id: "instagram-carousel", label: "Instagram Carousel", pos: [1.16, 0.8],
+        thumb: CAROUSEL_THUMB,
+        title: "Instagram Carousel",
+        description: "A bold and expressive Instagram carousel post designed to showcase creativity, originality, and a strong visual style through collage, typography and pop culture elements. Shown in the Instagram feed on mobile, on the desktop, and as printed slides.",
+        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Social Media Design, Carousel Post"], ["Softwares", "Photoshop, Illustrator, Premiere Pro, After Effects"]],
+        cta: { label: "Project In Detail", href: BEHANCE_CAROUSEL },
+        gallery: CAROUSEL_GALLERY,
       },
     ];
 
-    const NOTES = [
+    // The marketing portfolio, from Danny's resume. Same desktop, black-and-white theme.
+    const MARKETING_PROJECTS = [
+      {
+        id: "social-media", label: "Social Media", pos: [0.06, 0.11], folder: true,
+        title: "Social Media Management",
+        description: "Day-to-day social media for retail and business brands: content calendars, creative production, publishing schedules and performance monitoring, keeping one consistent brand identity across every platform.",
+        meta: [["Where", "Kerala Jewellers, Brihatsetu Enterprises"], ["Since", "December 2024"], ["Focus", "Content planning, scheduling, performance monitoring"], ["Tools", "Meta Business Suite, Hootsuite, Buffer, Notion, Instagram Insights"]],
+        points: [
+          "Multi-branch social media presence for Kerala Jewellers (Purasaiwalkam, Porur, Pondy Bazaar), scheduled and monitored with Hootsuite and Buffer.",
+          "Premium brand creatives for campaigns, product showcases and festival promotions.",
+          "Content calendars planned in Excel, Google Sheets and Meta Business Suite.",
+          "Posting schedules and analytics managed with Buffer at Brihatsetu Enterprises for consistent engagement.",
+          "Worked closely with marketing and store teams to keep the brand identity consistent across digital touchpoints.",
+        ],
+        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
+      },
+      {
+        id: "instagram-carousel", label: "Instagram Carousel", pos: [0.9, 0.09],
+        thumb: CAROUSEL_THUMB,
+        title: "Instagram Carousel",
+        description: "Social content with a point of view: a bold, expressive carousel post that sells a personal brand through collage, typography and pop culture elements, previewed in the Instagram feed on mobile and on the desktop.",
+        meta: [["Client", "Personal project"], ["Year", "2026"], ["Channel", "Instagram"], ["Project type", "Social Media Content, Carousel Post"]],
+        cta: { label: "Project In Detail", href: BEHANCE_CAROUSEL },
+        gallery: CAROUSEL_GALLERY,
+      },
+      {
+        id: "meta-ads", label: "Meta Ads", pos: [-0.24, 0.35], folder: true,
+        title: "Meta Ads Campaigns",
+        description: "Planning, running and optimising Meta Ads campaigns to grow brand reach and turn online attention into store visits and conversions.",
+        meta: [["Where", "Kerala Jewellers, Brihatsetu Enterprises"], ["Platform", "Meta Ads (Facebook & Instagram)"], ["Goal", "Reach, engagement and store conversions"], ["Tools", "Meta Business Suite, Google Analytics, Instagram Insights"]],
+        points: [
+          "Planned, executed and optimised Meta Ads at Kerala Jewellers to improve brand reach and drive store conversions.",
+          "Planned and executed Meta Ads campaigns at Brihatsetu Enterprises to boost reach and conversions.",
+          "Designed the ad creatives too, so campaign visuals stay on-brand.",
+          "Generated sales through tele-calling and offers built on existing customer data.",
+        ],
+        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
+      },
+      {
+        id: "deepam-dry-fish", label: "Deepam Dry Fish", pos: [1.12, 0.25],
+        thumb: DEEPAM_THUMB,
+        title: "Deepam Dry Fish",
+        description: "Brand strategy for Deepam Dry Fish, a coastal dry fish brand: the positioning “Authentic Coastal Taste, Preserved with Trust.”, brand purpose, personality and core values, brand keywords, a social media style and a set of packaging taglines, all in one brand guideline.",
+        meta: [["Client", "Deepam Dry Fish"], ["Year", "2026"], ["Project type", "Brand Strategy, Brand Guidelines"], ["Includes", "Positioning, keywords, social media style, taglines"]],
+        cta: { label: "More On Behance", href: PROFILE.links.behance },
+        gallery: DEEPAM_GALLERY,
+      },
+      {
+        id: "web-ecommerce", label: "E-commerce & Web", pos: [1.08, 0.54], folder: true,
+        title: "E-commerce & Web",
+        description: "Website updates and landing pages for brands, focusing on a clean and modern user experience.",
+        meta: [["Where", "Kerala Jewellers, freelance"], ["Platforms", "Shopify, Webflow, Framer, WordPress"], ["Work", "Website updates, landing pages, web graphics"], ["Background", "B.Tech, Information Technology"]],
+        points: [
+          "Managed website updates and landing pages through Webflow and Shopify at Kerala Jewellers.",
+          "E-commerce and website projects on Shopify, Webflow, Framer and WordPress to improve digital presence.",
+          "Web graphics designed alongside the pages, so the site and social stay visually consistent.",
+        ],
+        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
+      },
+      {
+        id: "video-content", label: "Video Content", pos: [-0.06, 0.66],
+        thumb: TOOLS_THUMB,
+        title: "Video Content",
+        description: "Promotional video content for social media and campaigns, edited in Premiere Pro, After Effects and CapCut, plus photography and videography. Shown here: the Tools Expertise motion piece.",
+        meta: [["Work", "Promotional videos, reels, motion graphics"], ["Also", "Photography & videography"], ["Softwares", "Premiere Pro, After Effects, CapCut"], ["Where", "Kerala Jewellers, freelance"]],
+        cta: { label: "Project In Detail", href: BEHANCE_DECK },
+        video: TOOLS_VIDEO,
+      },
+    ];
+
+    const DESIGNER_NOTES = [
       {
         id: "about", title: "About", date: "13/05/2026", stamp: "May 13, 2026 at 6:43 PM",
         preview: "Creative director crafting visuals…",
@@ -1348,7 +1619,7 @@
       <p>Full-time roles and freelance projects.</p>
       ${PROFILE.email ? `<p><strong>Mail</strong><br><a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a></p>` : ""}
       <p class="note-callout">Say hi on <a href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">LinkedIn</a> or <a href="${PROFILE.links.instagram}" target="_blank" rel="noopener">Instagram</a><br>new work goes up on <a href="${PROFILE.links.behance}" target="_blank" rel="noopener">Behance</a></p>
-      <p class="note-headsup"><strong>Heads up:</strong> the desktop icons are draggable. Move them around.</p>`,
+      <p class="note-headsup"><strong>Heads up:</strong> the desktop icons are draggable. Move them around. Flip the switch at the top for the marketing portfolio.</p>`,
       },
       {
         id: "experience", title: "Experience", date: "05/05/2026", stamp: "May 5, 2026 at 12:37 PM",
@@ -1371,6 +1642,93 @@
       </ul>`,
       },
     ];
+
+    const MARKETING_NOTES = [
+      {
+        id: "about", title: "About", date: "06/10/2026", stamp: "October 6, 2026 at 10:30 AM",
+        preview: "Digital creative & social media…",
+        html: () => `
+      <figure class="note-photo"><img src="assets/img/portrait.webp" width="731" height="571" alt="Portrait of Danny in glasses, one hand raised, against a dark background"></figure>
+      <h2>Hi, I'm ${esc(PROFILE.nickname)}</h2>
+      <p><strong>${esc(PROFILE.name)}</strong>: digital creative &amp; social media professional with 2 years of experience in social media management, graphic design, e-commerce website management, video editing, photography, videography and digital marketing.</p>
+      <h2>What I do</h2>
+      <p>I create engaging content, manage publishing schedules, monitor social media performance and plan Meta Ads campaigns, keeping a brand's identity consistent across every digital platform. Right now I'm the social media &amp; creative designer at ${esc(PROFILE.company)}, ${esc(PROFILE.city.split(",")[0])}.</p>
+      <h2>Skills</h2>
+      <ul class="tools">
+        <li><b>Social media &amp; digital marketing</b>: social media management, content planning &amp; calendars, campaigns, Meta Ads, content scheduling, Instagram Insights</li>
+        <li><b>Graphic design</b>: social media design, posters &amp; flyers, brochures, web graphics, branding &amp; visual identity, marketing creatives</li>
+        <li><b>Web &amp; e-commerce</b>: Shopify website management, Webflow, Framer, WordPress, landing pages</li>
+        <li><b>Professional</b>: creativity, communication, time management, team collaboration, client handling, problem solving</li>
+      </ul>
+      <h2>Languages</h2>
+      <p>Tamil, English, Malayalam, Hindi</p>
+      <h2>Open to</h2>
+      <p>Full-time roles and freelance projects.</p>
+      ${PROFILE.email ? `<p><strong>Mail</strong><br><a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a></p>` : ""}
+      <p class="note-callout">Say hi on <a href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">LinkedIn</a> or <a href="${PROFILE.links.instagram}" target="_blank" rel="noopener">Instagram</a><br>new work goes up on <a href="${PROFILE.links.behance}" target="_blank" rel="noopener">Behance</a></p>
+      <p class="note-headsup"><strong>Heads up:</strong> this is the marketing side. Flip the switch at the top for the design portfolio.</p>`,
+      },
+      {
+        id: "experience", title: "Experience", date: "06/10/2026", stamp: "October 6, 2026 at 10:32 AM",
+        preview: "Kerala Jewellers, Brihatsetu…",
+        html: () => `
+      <h2>Social Media &amp; Creative Designer</h2>
+      <p><strong>${esc(PROFILE.company)}</strong>, Purasaiwalkam, Porur, Pondy Bazaar<br><span class="muted">July 2025 to present</span></p>
+      <ul>
+        <li>Designed premium brand creatives in Photoshop, Illustrator, Premiere Pro, After Effects and CapCut for campaigns, product showcases and festival promotions.</li>
+        <li>Managed website updates and landing pages through Webflow and Shopify.</li>
+        <li>Planned, executed and optimised Meta Ads to improve brand reach and drive store conversions.</li>
+        <li>Scheduled and monitored content performance with Hootsuite and Buffer for a consistent multi-branch social media presence.</li>
+        <li>Worked closely with marketing and store teams to maintain brand identity across digital touchpoints.</li>
+        <li>Generated sales through tele-calling and offers built on existing customer data.</li>
+      </ul>
+      <h2>Social Media Manager</h2>
+      <p><strong>Brihatsetu Enterprises</strong><br><span class="muted">December 2024 to July 2025</span></p>
+      <ul>
+        <li>Created and edited social media content in Canva, Photoshop and CapCut, improving overall brand aesthetics.</li>
+        <li>Managed posting schedules and analytics with Buffer, ensuring consistent engagement.</li>
+        <li>Planned and executed Meta Ads campaigns to boost reach and conversions.</li>
+        <li>Coordinated with the team to maintain brand voice and deliver timely creatives.</li>
+      </ul>
+      <h2>Freelance Graphic Designer</h2>
+      <ul>
+        <li>Creative visuals, social media posts and branding materials for clients across industries.</li>
+      </ul>
+      <h2>Education</h2>
+      <p><strong>B.Tech, Information Technology</strong><br><span class="muted">Bharathidasan Engineering College, 2025</span></p>`,
+      },
+      {
+        id: "toolkit", title: "Toolkit", date: "06/10/2026", stamp: "October 6, 2026 at 10:35 AM",
+        preview: "Meta Business Suite, Shopify…",
+        html: () => `
+      <h2>Toolkit</h2>
+      <ul class="tools">
+        <li><b>Social media management</b>: Meta Business Suite, Hootsuite, Buffer, Notion, Canva</li>
+        <li><b>Content calendars</b>: Excel, Google Sheets, Meta Business Suite</li>
+        <li><b>Analytics</b>: Google Analytics, Instagram Insights</li>
+        <li><b>Graphic design</b>: Photoshop, Illustrator, InDesign, Canva</li>
+        <li><b>Video editing</b>: Premiere Pro, After Effects, CapCut</li>
+        <li><b>E-commerce &amp; web</b>: Shopify, Webflow, Framer, WordPress</li>
+      </ul>`,
+      },
+    ];
+
+    const MODES = {
+      designer: {
+        projects: DESIGNER_PROJECTS, notes: DESIGNER_NOTES, themeColor: "#f4f4f4",
+        heading: `${PROFILE.nickname} (${PROFILE.name}): ${PROFILE.tagline}`,
+      },
+      marketing: {
+        projects: MARKETING_PROJECTS, notes: MARKETING_NOTES, themeColor: "#0b0b0b",
+        heading: `${PROFILE.nickname} (${PROFILE.name}): digital creative & social media marketing portfolio`,
+      },
+    };
+    // old deep links that now live inside another project
+    const PROJECT_ALIASES = { "ruha-packaging": "ruha" };
+
+    let mode = document.documentElement.dataset.mode === "marketing" ? "marketing" : "designer";
+    let PROJECTS = MODES[mode].projects;
+    let NOTES = MODES[mode].notes;
 
     /* ==================================================================== helpers */
     const $ = (sel, root = document) => root.querySelector(sel);
@@ -1409,6 +1767,7 @@
 
     function renderIcons() {
       const wrap = $("#icons");
+      wrap.replaceChildren();
       PROJECTS.forEach((p, i) => {
         const btn = document.createElement("button");
         btn.type = "button";
@@ -1638,19 +1997,23 @@
         media = `<div class="media-video"><video src="${v.src}" poster="${v.poster}" width="${v.w}" height="${v.h}" controls playsinline muted loop autoplay preload="metadata" aria-label="${esc(v.label)}"></video></div>`;
       } else if (p.gallery) {
         const g = p.gallery;
-        const style = g.layout === "cards" ? ` style="--cols:${g.cols}${g.max ? `;--max:${g.max}` : ""}"` : "";
+        const vars = [g.layout === "cards" && `--cols:${g.cols}`, g.max && `--max:${g.max}`].filter(Boolean).join(";");
+      const style = vars ? ` style="${vars}"` : "";
         media = `<div class="gallery ${g.layout}"${style}>${g.items.map((it, i) =>
           `<button class="g-item" type="button" data-i="${i}" aria-label="View larger: ${esc(it.alt)}"><img src="${it.src}" width="${it.w}" height="${it.h}" alt="${esc(it.alt)}" loading="lazy" decoding="async"></button>`).join("")}</div>`;
       }
+      const points = p.points ? `<ul class="p-points">${p.points.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "";
+      const cta = p.cta ? `
+      <div class="p-cta">
+        <span class="p-cta-label">${esc(p.cta.label)}</span>
+        <a class="cta-btn" href="${p.cta.href}" target="_blank" rel="noopener" aria-label="${esc(p.cta.label)}: ${esc(p.title)} (opens in a new tab)">${ICON_SVG.arrow}</a>
+      </div>` : "";
       return `
     <div class="win-body">
       <h2 class="p-title">${esc(p.title)}</h2>
       <p class="p-desc">${esc(p.description)}</p>
       <dl class="p-meta">${meta}</dl>
-      <div class="p-cta">
-        <span class="p-cta-label">${esc(p.cta.label)}</span>
-        <a class="cta-btn" href="${p.cta.href}" target="_blank" rel="noopener" aria-label="${esc(p.cta.label)}: ${esc(p.title)} (opens in a new tab)">${ICON_SVG.arrow}</a>
-      </div>
+      ${points}${cta}
       ${media}
     </div>`;
     }
@@ -1741,6 +2104,34 @@
       document.querySelectorAll(".dock-item[data-note]").forEach((b) => b.classList.toggle("running", running));
     }
 
+    /* ==================================================================== designer / marketing switch */
+    const modeToggle = $("#mode-toggle");
+    function applyMode() {
+      document.documentElement.dataset.mode = mode;
+      modeToggle.setAttribute("aria-checked", String(mode === "marketing"));
+      $("#theme-color").content = MODES[mode].themeColor;
+      $("#page-heading").textContent = MODES[mode].heading;
+    }
+
+    function setMode(next) {
+      if (next === mode || !MODES[next]) return;
+      if (!lb.el.hidden) closeLightbox();
+      [...open.keys()].forEach((key) => closeWindow(key));
+      mode = next;
+      PROJECTS = MODES[mode].projects;
+      NOTES = MODES[mode].notes;
+      applyMode();
+      renderIcons();
+      layoutIcons();
+      try { localStorage.setItem("portfolio-mode", mode); } catch { }
+      // ?mode=marketing makes the current view shareable; designer is the default, so no param
+      const url = new URL(location.href);
+      if (mode === "marketing") url.searchParams.set("mode", mode);
+      else url.searchParams.delete("mode");
+      try { history.replaceState(null, "", url); } catch { }
+    }
+    modeToggle.addEventListener("click", () => setMode(mode === "marketing" ? "designer" : "marketing"));
+
     /* ==================================================================== lightbox */
     const lb = { el: $("#lightbox"), img: $("#lb-img"), count: $("#lb-count"), items: [], i: 0, returnTo: null };
     function openLightbox(items, i, returnTo) {
@@ -1808,15 +2199,25 @@
     })();
 
     /* ==================================================================== boot */
+    applyMode();
     renderIcons();
     layoutIcons();
     setupDock();
     (function openFromHash() {
-      const id = decodeURIComponent(location.hash.slice(1));
+      let id = decodeURIComponent(location.hash.slice(1));
       if (!id) return;
+      id = PROJECT_ALIASES[id] || id;
       if (id === "about") openNotes("about");
-      else if (id.startsWith("note-")) openNotes(id.slice(5));
-      else if (PROJECTS.some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${id}"]`));
+      else if (id.startsWith("note-")) {
+        const noteId = id.slice(5);
+        const other = Object.keys(MODES).find((m) => m !== mode && !NOTES.some((n) => n.id === noteId) && MODES[m].notes.some((n) => n.id === noteId));
+        if (other) setMode(other);
+        openNotes(noteId);
+      } else {
+        const other = Object.keys(MODES).find((m) => m !== mode && !PROJECTS.some((p) => p.id === id) && MODES[m].projects.some((p) => p.id === id));
+        if (other) setMode(other);
+        if (PROJECTS.some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${id}"]`));
+      }
     })();
   </script>
 </body>
