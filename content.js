@@ -1,7 +1,7 @@
 // Portfolio content. Edit it at /admin. Hand edits must keep the object below valid JSON.
 window.CONTENT = {
   "version": 1,
-  "updatedAt": "2026-10-20T11:57:41.586Z",
+  "updatedAt": "2026-10-20T12:35:08.891Z",
   "settings": {
     "showSwitcher": true
   },
@@ -16,7 +16,7 @@ window.CONTENT = {
       "tagline": "creative director crafting visuals, motion & stories with intention.",
       "resume": "",
       "listed": true,
-      "theme": "light"
+      "theme": "red"
     },
     {
       "id": "video-editor",
@@ -474,7 +474,7 @@ window.CONTENT = {
         "digital-marketing",
         "developer"
       ],
-      "icon": "thumb",
+      "icon": "folder",
       "thumb": {
         "src": "assets/uploads/078a4d485ab274b6.webp",
         "w": 360,
@@ -536,6 +536,16 @@ window.CONTENT = {
       ],
       "photo": null,
       "body": "## Experience\n**Kerala Jewellers**, Chennai\nGraphics & motion graphics designer, video editor\n\n## Creative direction\nLeading creative direction for branding, social media, and marketing campaigns across digital platforms. Overseeing design and video production to ensure consistent visual identity and high-quality output. Strategizing concepts and guiding teams to deliver impactful content that drives engagement and brand growth.\n\n## Graphic design & video editing\nCreating visually engaging designs and dynamic video content for social media and marketing campaigns. Skilled in Adobe Photoshop, Illustrator, Premiere Pro, and After Effects for high-quality creative outputs. Focused on storytelling through visuals and motion to enhance brand identity and audience engagement.\n\n## Specializations\n- Creative Direction & Brand Strategy\n- Visual Storytelling & Content Planning\n- Social Media Design & Campaigns\n- Video Editing, Production & Motion Graphics\n- Branding & Identity Development\n- Ad Creatives & Poster Design"
+    },
+    {
+      "id": "note",
+      "title": "New note",
+      "date": "2026-10-20T18:04",
+      "roles": [
+        "video-editor"
+      ],
+      "photo": null,
+      "body": "## Heading\nWrite something here."
     }
   ]
 };
