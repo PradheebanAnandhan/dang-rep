@@ -1790,7 +1790,7 @@
       let preview, extra = null, kind;
       if (m.type === "website") {
         kind = "Website";
-        preview = /^https?:/i.test(m.url) ? h("img", { src: "https://api.microlink.io/?url=" + encodeURIComponent(m.url) + "&screenshot=true&meta=false&embed=screenshot.url", alt: "", loading: "lazy" }) : h("span", null, "🌐");
+        preview = /^https?:/i.test(m.url) ? h("img", { src: "https://api.microlink.io/?url=" + encodeURIComponent(m.url) + "&screenshot=true&meta=false&waitForTimeout=5000&embed=screenshot.url", alt: "", loading: "lazy" }) : h("span", null, "🌐");
         extra = input(m, "url", { type: "url", class: "grow", "aria-label": "Website link", placeholder: "https://…" });
       } else if (m.type === "video") {
         kind = "Video file";
