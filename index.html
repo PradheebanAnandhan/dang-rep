@@ -36,6 +36,15 @@
       unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
     }
 
+    /* the theme colours animate when the portfolio (and with it the theme) changes */
+    @property --bg-top { syntax: "<color>"; inherits: true; initial-value: #fbfbfb; }
+    @property --bg-mid { syntax: "<color>"; inherits: true; initial-value: #eeeeee; }
+    @property --bg-bottom { syntax: "<color>"; inherits: true; initial-value: #e2e2e2; }
+    @property --glow-1 { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --glow-2 { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --glow-3 { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --glow-4 { syntax: "<color>"; inherits: true; initial-value: transparent; }
+
     :root {
       color-scheme: light;
       --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -44,20 +53,124 @@
       --bg-bottom: #e2e2e2;
       --ink: #000;
       --text: #1c1c1e;
+      --text-2: #3c3c43;
       --muted: #8e8e93;
       --line: #e5e5ea;
       --win-bg: #fff;
+      --fill: #f2f2f2;
+      --hover: #f4f4f6;
+      --link: #0a64d8;
       --accent: #ef5350;
       --light-red: #ff5f57;
       --light-yellow: #febc2e;
       --light-green: #28c840;
       --note-active: rgb(255, 227, 144);
       --note-link: rgb(255, 214, 214);
+      --note-headsup: #fff8dc;
+      --dock-bg: rgba(255, 255, 255, .27);
+      --dock-border: rgba(255, 255, 255, .2);
+      --dock-divider: rgb(229, 229, 234);
+      --dock-dot: rgba(0, 0, 0, .55);
+      --tip-bg: #fff;
+      --tip-text: #000;
+      --icon-hover: rgba(0, 0, 0, .07);
+      --seg-track: rgba(120, 120, 128, .12);
+      --seg-border: rgba(0, 0, 0, .04);
+      --seg-text: #3c3c43;
+      --seg-active: #000;
+      --seg-pill: #fff;
+      --glass: rgba(255, 255, 255, .72);
+      --glow-1: transparent;
+      --glow-2: transparent;
+      --glow-3: transparent;
+      --glow-4: transparent;
       --radius-win: 16px;
       --shadow-win: 0 0 0 1px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .10), 0 30px 80px rgba(0, 0, 0, .14);
       --spring: cubic-bezier(.3, 1.4, .55, 1);
       --thumb-scale: 1;
       --dock-icon: 60px;
+      transition: --bg-top .6s ease, --bg-mid .6s ease, --bg-bottom .6s ease,
+        --glow-1 .6s ease, --glow-2 .6s ease, --glow-3 .6s ease, --glow-4 .6s ease;
+    }
+
+    /* cinema: a spotlight behind the photo and a faint rim light, so the black strokes still read */
+    :root[data-theme="dark"],
+    :root[data-theme="midnight"] {
+      color-scheme: dark;
+      --bg-top: #1b1b1f;
+      --bg-mid: #0f0f12;
+      --bg-bottom: #060607;
+      --ink: #fff;
+      --text: #e5e5ea;
+      --text-2: rgba(235, 235, 245, .78);
+      --muted: #98989f;
+      --line: #38383a;
+      --win-bg: #1c1c1e;
+      --fill: #2c2c2e;
+      --hover: #2c2c2e;
+      --link: #64a8ff;
+      --note-active: rgba(255, 204, 0, .3);
+      --note-link: rgba(255, 105, 97, .28);
+      --note-headsup: rgba(255, 214, 10, .14);
+      --dock-bg: rgba(44, 44, 48, .55);
+      --dock-border: rgba(255, 255, 255, .12);
+      --dock-divider: rgba(255, 255, 255, .2);
+      --dock-dot: rgba(255, 255, 255, .75);
+      --tip-bg: #2c2c2e;
+      --tip-text: #fff;
+      --icon-hover: rgba(255, 255, 255, .1);
+      --seg-track: rgba(118, 118, 128, .24);
+      --seg-border: rgba(255, 255, 255, .06);
+      --seg-text: rgba(235, 235, 245, .62);
+      --seg-active: #fff;
+      --seg-pill: #5b5b60;
+      --glass: rgba(44, 44, 46, .72);
+      --glow-1: rgba(238, 238, 240, .98);
+      --glow-2: rgba(222, 222, 226, .94);
+      --glow-3: rgba(160, 160, 166, .6);
+      --glow-4: rgba(70, 70, 74, .22);
+      --hero-filter: drop-shadow(0 0 1px rgba(255, 255, 255, .45));
+      --shadow-win: 0 0 0 1px rgba(255, 255, 255, .1), 0 10px 30px rgba(0, 0, 0, .45), 0 30px 80px rgba(0, 0, 0, .6);
+    }
+
+    /* code-editor night: navy, a cool blue spotlight */
+    :root[data-theme="midnight"] {
+      --bg-top: #17254f;
+      --bg-mid: #0d1838;
+      --bg-bottom: #050a1b;
+      --win-bg: #111a31;
+      --fill: #1b2644;
+      --hover: #1b2644;
+      --line: #27324f;
+      --dock-bg: rgba(28, 40, 82, .5);
+      --tip-bg: #1b2644;
+      --seg-track: rgba(130, 150, 220, .16);
+      --seg-pill: #3d4c7c;
+      --glass: rgba(20, 30, 60, .75);
+      --glow-1: rgba(222, 230, 255, .98);
+      --glow-2: rgba(176, 196, 252, .92);
+      --glow-3: rgba(92, 120, 214, .56);
+      --glow-4: rgba(30, 50, 125, .22);
+      --hero-filter: drop-shadow(0 0 1px rgba(170, 196, 255, .5));
+      --shadow-win: 0 0 0 1px rgba(170, 196, 255, .12), 0 10px 30px rgba(0, 0, 10, .45), 0 30px 80px rgba(0, 0, 10, .6);
+    }
+
+    /* crimson → wine (the reds of Danny's card deck and RUHA); the dark spotlight's falloff, lit white
+       and fading into the red; windows stay light */
+    :root[data-theme="red"] {
+      --bg-top: #d22a3d;
+      --bg-mid: #b41d30;
+      --bg-bottom: #7e1322;
+      --dock-divider: rgba(255, 255, 255, .45);
+      --seg-track: rgba(0, 0, 0, .14);
+      --seg-border: rgba(255, 255, 255, .12);
+      --seg-text: rgba(255, 255, 255, .88);
+      --glass: rgba(255, 255, 255, .8);
+      --glow-1: rgba(255, 255, 255, .98);
+      --glow-2: rgba(252, 236, 238, .94);
+      --glow-3: rgba(232, 150, 160, .6);
+      --glow-4: rgba(170, 40, 58, .22);
+      --hero-filter: drop-shadow(0 0 1px rgba(255, 255, 255, .45));
     }
 
     *,
@@ -109,6 +222,21 @@
       overflow: hidden;
     }
 
+    /* the photo is black ink on transparency, so on dark or coloured themes it needs light behind it:
+       a stage spotlight sized to the same box as .hero (light theme: all glow stops transparent) */
+    .desktop::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      height: min(92vh, 88vw);
+      aspect-ratio: 1805 / 1624;
+      transform: translateX(-50%);
+      background: radial-gradient(closest-side at 50% 52%, var(--glow-1) 0, var(--glow-2) 38%, var(--glow-3) 66%, var(--glow-4) 86%, transparent 100%);
+      animation: fade-in 1s ease both;
+      pointer-events: none;
+    }
+
     .hero {
       position: absolute;
       left: 50%;
@@ -120,6 +248,8 @@
       pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
+      filter: var(--hero-filter, none);
+      transition: filter .6s ease;
       animation: hero-in 1s cubic-bezier(.2, .8, .2, 1) both;
     }
 
@@ -205,6 +335,10 @@
       z-index: 10;
     }
 
+    .icons.is-switched .icon {
+      animation-delay: calc(var(--i, 0) * 45ms);
+    }
+
     .icon-art {
       padding: 4px;
       border: 2px solid rgba(255, 255, 255, .2);
@@ -214,7 +348,7 @@
 
     .icon:hover .icon-art,
     .icon:focus-visible .icon-art {
-      background: rgba(0, 0, 0, .07);
+      background: var(--icon-hover);
       border-color: rgba(255, 255, 255, .55);
     }
 
@@ -273,8 +407,9 @@
       align-items: center;
       gap: 20px;
       padding: 15px;
-      border: 1px solid rgba(255, 255, 255, .2);
-      background: rgba(255, 255, 255, .27);
+      border: 1px solid var(--dock-border);
+      background: var(--dock-bg);
+      transition: background-color .6s ease, border-color .6s ease;
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
       animation: dock-in .7s cubic-bezier(.2, .9, .3, 1.1) .15s both;
@@ -330,7 +465,7 @@
       width: 2px;
       height: var(--dock-icon);
       border-radius: 64px;
-      background: rgb(229, 229, 234);
+      background: var(--dock-divider);
     }
 
     .dock-item.running::after {
@@ -342,7 +477,7 @@
       height: 4px;
       margin-left: -2px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, .55);
+      background: var(--dock-dot);
     }
 
     .tip {
@@ -352,8 +487,8 @@
       transform: translate(-50%, 4px);
       padding: 6px 12px;
       border-radius: 64px;
-      background: #fff;
-      color: #000;
+      background: var(--tip-bg);
+      color: var(--tip-text);
       font-size: 14px;
       font-weight: 500;
       white-space: nowrap;
@@ -370,7 +505,7 @@
       top: 100%;
       margin-left: -6px;
       border: 6px solid transparent;
-      border-top-color: #fff;
+      border-top-color: var(--tip-bg);
       border-bottom: 0;
     }
 
@@ -437,7 +572,7 @@
       height: 50px;
       padding: 0 20px;
       border-bottom: 1px solid var(--line);
-      background: #fff;
+      background: var(--win-bg);
       cursor: grab;
       user-select: none;
       touch-action: none;
@@ -597,7 +732,7 @@
       width: 100%;
       padding: 0;
       border: 0;
-      background: #f2f2f2;
+      background: var(--fill);
       border-radius: 16px;
       overflow: hidden;
       cursor: zoom-in;
@@ -615,7 +750,7 @@
 
     .gallery.cards {
       grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
-      max-width: var(--max, none);
+      max-width: calc(var(--cols, 3) * 430px);
       margin-inline: auto;
       gap: 14px;
     }
@@ -628,15 +763,58 @@
     .media-video {
       display: flex;
       justify-content: center;
-      margin-top: 28px;
     }
 
-    .media-video video {
-      width: min(100%, 460px);
+    .media-video video,
+    .media-embed {
+      width: 100%;
       height: auto;
-      aspect-ratio: 4 / 5;
       border-radius: 16px;
       background: #111;
+    }
+
+    .media-video.is-portrait video,
+    .media-embed.is-portrait {
+      width: min(100%, 460px);
+    }
+
+    .gallery.cards .media-video video,
+    .gallery.cards .media-embed {
+      width: 100%;
+    }
+
+    .media-embed {
+      justify-self: center;
+      overflow: hidden;
+    }
+
+    .media-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .media-link {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: var(--fill);
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .media-link:hover {
+      background: var(--hover);
+    }
+
+    .p-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 44px;
     }
 
     @container (max-width: 760px) {
@@ -646,7 +824,7 @@
       }
 
       .gallery.cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(var(--cols-narrow, 2), minmax(0, 1fr));
       }
     }
 
@@ -683,7 +861,7 @@
     }
 
     .note-card:hover {
-      background: #f4f4f6;
+      background: var(--hover);
     }
 
     .note-card.is-active {
@@ -705,7 +883,7 @@
       display: flex;
       gap: 6px;
       font-size: 14px;
-      color: #3c3c43;
+      color: var(--text-2);
       min-width: 0;
     }
 
@@ -786,7 +964,7 @@
     }
 
     .note-callout a {
-      color: #0a64d8;
+      color: var(--link);
       text-underline-offset: 3px;
     }
 
@@ -795,8 +973,127 @@
       margin-top: 18px !important;
       padding: 12px 14px;
       border-radius: 10px;
-      background: #fff8dc;
+      background: var(--note-headsup);
       font-size: 14px !important;
+    }
+
+    .note-page p a,
+    .note-page li a {
+      color: var(--link);
+      text-underline-offset: 3px;
+    }
+
+    /* ---------------------------------------------------------------- portfolio switcher */
+    .switcher {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      display: flex;
+      max-width: calc(100vw - 32px);
+      padding: 4px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      border: 1px solid var(--seg-border);
+      border-radius: 14px;
+      background: var(--seg-track);
+      transition: background-color .6s ease, border-color .6s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: switcher-in .7s cubic-bezier(.2, .9, .3, 1.1) .1s both;
+    }
+
+    .switcher::-webkit-scrollbar {
+      display: none;
+    }
+
+    .switcher[hidden] {
+      display: none;
+    }
+
+    @keyframes switcher-in {
+      from {
+        opacity: 0;
+        translate: 0 -16px;
+      }
+    }
+
+    .switcher a {
+      position: relative;
+      z-index: 1;
+      flex: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      color: var(--seg-text);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -.01em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color .3s;
+    }
+
+    .switcher a:hover,
+    .switcher a[aria-current="page"] {
+      color: var(--seg-active);
+    }
+
+    .switcher a:focus-visible {
+      outline-offset: -2px;
+    }
+
+    .switcher-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 0;
+      width: 0;
+      border-radius: 10px;
+      background: var(--seg-pill);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .12), 0 2px 5px rgba(0, 0, 0, .06);
+      transition: transform .42s cubic-bezier(.22, 1, .36, 1), width .42s cubic-bezier(.22, 1, .36, 1), background-color .6s ease;
+    }
+
+    .empty-note {
+      position: absolute;
+      left: 50%;
+      top: 104px;
+      transform: translateX(-50%);
+      z-index: 3;
+      margin: 0;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+      color: var(--text);
+      font-size: 15px;
+      white-space: nowrap;
+      animation: fade-in .4s ease .3s both;
+    }
+
+    .empty-note[hidden],
+    .dock[hidden] {
+      display: none;
+    }
+
+    .preview-badge {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 999;
+      padding: 6px 12px;
+      border-radius: 64px;
+      background: #febc2e;
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+      pointer-events: none;
     }
 
     /* ---------------------------------------------------------------- lightbox */
@@ -908,7 +1205,8 @@
       border: 0;
     }
 
-    noscript {
+    noscript,
+    .load-error {
       position: fixed;
       left: 16px;
       right: 16px;
@@ -916,7 +1214,7 @@
       z-index: 999;
       padding: 14px 16px;
       border-radius: 12px;
-      background: #fff;
+      background: var(--win-bg);
       box-shadow: var(--shadow-win);
       font-size: 15px;
       line-height: 1.5;
@@ -926,7 +1224,8 @@
     /* phones, and tablets held upright: icons become a home-screen grid above the photo */
     @media (max-width: 809.98px),
     (orientation: portrait) and (max-width: 1199.98px) {
-      .hero {
+      .hero,
+      .desktop::before {
         height: min(72vh, 125vw);
       }
 
@@ -938,6 +1237,10 @@
         justify-items: center;
         gap: 22px 4px;
         padding: max(28px, env(safe-area-inset-top)) 12px 0;
+      }
+
+      body.has-switcher .icons {
+        padding-top: calc(max(12px, env(safe-area-inset-top)) + 64px);
       }
 
       .icon {
@@ -974,6 +1277,23 @@
 
       .tip {
         display: none;
+      }
+
+      .switcher {
+        top: max(12px, env(safe-area-inset-top));
+        max-width: calc(100vw - 24px);
+      }
+
+      .switcher a {
+        padding: 7px 12px;
+        font-size: 13px;
+      }
+
+      .preview-badge {
+        top: auto;
+        left: 50%;
+        bottom: calc(max(14px, env(safe-area-inset-bottom)) + 80px);
+        transform: translateX(-50%);
       }
 
       .win,
@@ -1091,6 +1411,17 @@
         corner-shape: superellipse(1.5);
       }
 
+      .switcher {
+        border-radius: 18px;
+        corner-shape: superellipse(1.5);
+      }
+
+      .switcher a,
+      .switcher-pill {
+        border-radius: 13px;
+        corner-shape: superellipse(1.5);
+      }
+
       .dock-item {
         border-radius: 16px;
         corner-shape: superellipse(1.5);
@@ -1113,6 +1444,52 @@
       }
     }
   </style>
+  <script src="content.js"></script>
+  <script>
+    /* ==================================================================== content
+       Everything on the page comes from content.js (edit it at /admin), or from the admin's unpublished
+       draft when the URL has ?preview. Runs in <head> so the portfolio's theme is set before the first paint. */
+    const params = new URLSearchParams(location.search);
+    const PREVIEW = params.has("preview") ? (() => {
+      try { return JSON.parse(localStorage.getItem("portfolio-preview")); } catch { return null; }
+    })() : null;
+    const C = PREVIEW?.content || window.CONTENT || null;
+    const BLOBS = PREVIEW?.blobs || {}; // repo path -> object URL of a not-yet-published upload
+
+    const arr = (v) => (Array.isArray(v) ? v : []);
+    const PROFILE = { name: "", nickname: "", ...C?.profile };
+    const ROLES = arr(C?.roles).filter((r) => r && typeof r.id === "string" && r.id);
+    if (!ROLES.length) ROLES.push({ id: "main", label: "Portfolio" });
+    let role = pickRole();
+
+    // An item shows in a portfolio when its roles list has that portfolio's id; [] = hidden draft.
+    const inRole = (item) => arr(item?.roles).includes(role.id);
+    const roleProjects = () => arr(C?.projects).filter((p) => p && p.id && inRole(p));
+    const roleNotes = () => arr(C?.notes).filter((n) => n && n.id && inRole(n));
+    const roleLinks = () => arr(C?.links).filter((l) => l && l.url && inRole(l));
+    const tagline = () => role.tagline || ROLES[0].tagline || "";
+
+    function pickRole() {
+      const seg = /^https?:$/.test(location.protocol) ? location.pathname.split("/")[1] : "";
+      const id = ROLES.some((r) => r.id === seg) ? seg : params.get("role");
+      return ROLES.find((r) => r.id === id) || ROLES[0];
+    }
+
+    // Each portfolio has its own link: /designer, /video-editor… (vercel.json rewrites them to this page).
+    function roleHref(id) {
+      if (!/^https?:$/.test(location.protocol)) return `?role=${encodeURIComponent(id)}${PREVIEW ? "&preview" : ""}`;
+      return (id === ROLES[0].id ? "/" : "/" + id) + (PREVIEW ? "?preview" : "");
+    }
+
+    // Each portfolio picks a theme in /admin.
+    const THEMES = { light: "#f4f4f4", dark: "#0f0f12", midnight: "#0d1838", red: "#b41d30" }; // theme -> browser UI colour
+    function applyTheme() {
+      const theme = THEMES[role.theme] ? role.theme : "light";
+      document.documentElement.dataset.theme = theme;
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEMES[theme]);
+    }
+    applyTheme();
+  </script>
 </head>
 
 <body>
@@ -1120,8 +1497,10 @@
       href="https://www.behance.net/dannysingle">Behance</a> or say hi on <a
       href="https://in.linkedin.com/in/aathma-naban-058930261">LinkedIn</a>.</noscript>
 
+  <nav class="switcher" id="switcher" aria-label="Portfolios" hidden></nav>
+
   <main class="desktop" id="desktop">
-    <h1 class="sr-only">Danny (Aathma Naban): creative director crafting visuals, motion &amp; stories with intention
+    <h1 class="sr-only" id="h1">Danny (Aathma Naban): creative director crafting visuals, motion &amp; stories with intention
     </h1>
     <img class="hero" id="hero" src="assets/img/hero.webp"
       srcset="assets/img/hero-900.webp 900w, assets/img/hero.webp 1805w" sizes="(max-width: 809.98px) 125vw, 100vh"
@@ -1129,15 +1508,17 @@
       draggable="false">
     <div class="blur-edge" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="icons" id="icons" role="group" aria-label="Projects"></div>
+    <p class="empty-note" id="empty" hidden>New work for this portfolio is on its way.</p>
   </main>
+  <p class="preview-badge" id="preview-badge" hidden>Preview: not published</p>
 
   <nav class="dock" id="dock" aria-label="Dock">
-    <button class="dock-item" type="button" data-note="about" aria-label="About Me">
+    <button class="dock-item" type="button" data-note-index="0" aria-label="About Me">
       <span class="dock-tile dock-avatar"><img src="assets/img/avatar-duotone.png" alt="" width="256"
           height="256"></span>
       <span class="tip" aria-hidden="true">About Me</span>
     </button>
-    <button class="dock-item" type="button" data-note="experience" aria-label="Notes">
+    <button class="dock-item" type="button" data-note-index="1" aria-label="Notes">
       <span class="dock-tile">
         <svg viewBox="0 0 60 60" aria-hidden="true">
           <defs>
@@ -1154,47 +1535,7 @@
       </span>
       <span class="tip" aria-hidden="true">Notes</span>
     </button>
-    <span class="dock-divider" aria-hidden="true"></span>
-    <a class="dock-item" id="dock-linkedin" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <span class="dock-tile">
-        <svg viewBox="0 0 60 60" aria-hidden="true">
-          <rect width="60" height="60" fill="#0a66c2" />
-          <path fill="#fff" transform="translate(9.25 9.2) scale(1.75)"
-            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
-        </svg>
-      </span>
-      <span class="tip" aria-hidden="true">LinkedIn</span>
-    </a>
-    <a class="dock-item" id="dock-instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram">
-      <span class="dock-tile">
-        <svg viewBox="0 0 60 60" aria-hidden="true">
-          <defs>
-            <radialGradient id="ig-grad" cx="28%" cy="105%" r="140%">
-              <stop offset="0" stop-color="#fdf497" />
-              <stop offset=".08" stop-color="#fdf497" />
-              <stop offset=".45" stop-color="#fd5949" />
-              <stop offset=".62" stop-color="#d6249f" />
-              <stop offset=".92" stop-color="#285aeb" />
-            </radialGradient>
-          </defs>
-          <rect width="60" height="60" fill="url(#ig-grad)" />
-          <rect x="15" y="15" width="30" height="30" rx="9" fill="none" stroke="#fff" stroke-width="3.6" />
-          <circle cx="30" cy="30" r="7.2" fill="none" stroke="#fff" stroke-width="3.6" />
-          <circle cx="38.7" cy="21.3" r="2.2" fill="#fff" />
-        </svg>
-      </span>
-      <span class="tip" aria-hidden="true">Instagram</span>
-    </a>
-    <a class="dock-item" id="dock-behance" href="#" target="_blank" rel="noopener" aria-label="Behance">
-      <span class="dock-tile">
-        <svg viewBox="0 0 60 60" aria-hidden="true">
-          <rect width="60" height="60" fill="#1769ff" />
-          <path fill="#fff" transform="translate(13 13) scale(1.42)"
-            d="M16.969 16.927a2.561 2.561 0 0 0 1.901.677 2.501 2.501 0 0 0 1.531-.475c.362-.235.636-.584.779-.99h2.585a5.091 5.091 0 0 1-1.9 2.896 5.292 5.292 0 0 1-3.091.88 5.839 5.839 0 0 1-2.284-.433 4.871 4.871 0 0 1-1.723-1.211 5.657 5.657 0 0 1-1.08-1.874 7.057 7.057 0 0 1-.383-2.393c-.005-.8.129-1.595.396-2.349a5.313 5.313 0 0 1 5.088-3.604 4.87 4.87 0 0 1 2.376.563c.661.362 1.231.87 1.668 1.485a6.2 6.2 0 0 1 .943 2.133c.194.821.263 1.666.205 2.508h-7.699c-.063.79.184 1.574.688 2.187ZM6.947 4.084a8.065 8.065 0 0 1 1.928.198 4.29 4.29 0 0 1 1.49.638c.418.303.748.711.958 1.182.241.579.357 1.203.341 1.83a3.506 3.506 0 0 1-.506 1.961 3.726 3.726 0 0 1-1.503 1.287 3.588 3.588 0 0 1 2.027 1.437c.464.747.697 1.615.67 2.494a4.593 4.593 0 0 1-.423 2.032 3.945 3.945 0 0 1-1.163 1.413 5.114 5.114 0 0 1-1.683.807 7.135 7.135 0 0 1-1.928.259H0V4.084h6.947Zm-.235 12.9c.308.004.616-.029.916-.099a2.18 2.18 0 0 0 .766-.332c.228-.158.411-.371.534-.619.142-.317.208-.663.191-1.009a2.08 2.08 0 0 0-.642-1.715 2.618 2.618 0 0 0-1.696-.505h-3.54v4.279h3.471Zm13.635-5.967a2.13 2.13 0 0 0-1.654-.619 2.336 2.336 0 0 0-1.163.259 2.474 2.474 0 0 0-.738.62 2.359 2.359 0 0 0-.396.792c-.074.239-.12.485-.137.734h4.769a3.239 3.239 0 0 0-.679-1.785l-.002-.001Zm-13.813-.648a2.254 2.254 0 0 0 1.423-.433c.399-.355.607-.88.56-1.413a1.916 1.916 0 0 0-.178-.891 1.298 1.298 0 0 0-.495-.533 1.851 1.851 0 0 0-.711-.274 3.966 3.966 0 0 0-.835-.073H3.241v3.631h3.293v-.014ZM21.62 5.122h-5.976v1.527h5.976V5.122Z" />
-        </svg>
-      </span>
-      <span class="tip" aria-hidden="true">Behance</span>
-    </a>
+    <span class="dock-divider" id="dock-divider" aria-hidden="true"></span>
   </nav>
 
   <div id="windows"></div>
@@ -1217,165 +1558,24 @@
   </div>
 
   <script>
-    /* ==================================================================== content
-       Everything on the page comes from these three objects. Edit here, not in the markup. */
-    const PROFILE = {
-      name: "Aathma Naban",
-      nickname: "Danny",
-      tagline: "creative director crafting visuals, motion & stories with intention.",
-      company: "Kerala Jewellers",
-      city: "Chennai, India",
-      email: "", // add an address to show a "Mail" link in the About note
-      links: {
-        linkedin: "https://in.linkedin.com/in/aathma-naban-058930261",
-        instagram: "https://www.instagram.com/__.dxyzz.__/",
-        behance: "https://www.behance.net/dannysingle",
-      },
-    };
-
-    const BEHANCE_RUHA = "https://www.behance.net/gallery/249293189/brand-identity-for-a-silver-based-indian-brand";
-    const BEHANCE_DECK = "https://www.behance.net/gallery/248777327/portfolio";
-
-    // pos = icon centre relative to the photo of Danny on wide screens: [0, 0] is the photo's
-    // top-left corner and [1, 1] its bottom-right, so icons keep their place around the photo at
-    // any aspect ratio. thumb w/h are the thumbnail's pixel size.
-    const PROJECTS = [
-      {
-        id: "ruha", label: "RUHA", pos: [0.06, 0.11],
-        thumb: { src: "assets/thumbs/ruha.webp", w: 360, h: 256 },
-        title: "RUHA",
-        description: "Brand identity for RUHA, a silver jewellery line by the house of Kerala Jewellers. “RUHA Silver Collections embodies timeless elegance through refined craftsmanship and contemporary design. Inspired by modern femininity and everyday luxury, each piece is thoughtfully created to reflect grace, sophistication, and individuality.”",
-        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Brand Identity, Logo Design"], ["Softwares", "Photoshop, Illustrator"]],
-        cta: { label: "Project In Detail", href: BEHANCE_RUHA },
-        gallery: {
-          layout: "stack", items: [
-            { src: "assets/img/ruha-02-logo.webp", w: 1800, h: 1280, alt: "RUHA logo lockup: by the house of Kerala Jewellers" },
-            { src: "assets/img/ruha-03-story.webp", w: 1800, h: 1096, alt: "Colour palette and the RUHA brand story on deep red" },
-            { src: "assets/img/ruha-04-type.webp", w: 1800, h: 1078, alt: "Typography, Joliet Regular and Times New Roman, beside the RUHA logo icon" },
-            { src: "assets/img/ruha-01-imagery.webp", w: 1800, h: 1154, alt: "Campaign imagery of models wearing RUHA silver jewellery" },
-            { src: "assets/img/ruha-05-tagline.webp", w: 1800, h: 1051, alt: "RUHA logo and tagline on deep red" },
-          ]
-        },
-      },
-      {
-        id: "ruha-packaging", label: "RUHA Packaging", pos: [0.9, 0.09],
-        thumb: { src: "assets/thumbs/ruha-packaging.webp", w: 360, h: 257 },
-        title: "RUHA Packaging",
-        description: "Packaging and print for RUHA: a gift box and carry bag, business cards and a jewellery box, all carrying the cream-and-deep-red palette and the floral logo icon. The packaging and business cards were designed in Photoshop.",
-        meta: [["Client", "Kerala Jewellers"], ["Year", "2026"], ["Project type", "Packaging, Print"], ["Softwares", "Photoshop"]],
-        cta: { label: "Project In Detail", href: BEHANCE_RUHA },
-        gallery: {
-          layout: "stack", items: [
-            { src: "assets/img/pack-01-box-bag.webp", w: 1800, h: 1286, alt: "RUHA gift box and carry bag with a deep red ribbon handle" },
-            { src: "assets/img/pack-02-cards.webp", w: 1800, h: 1000, alt: "RUHA business cards, front and back" },
-            { src: "assets/img/pack-03-jewel-box.webp", w: 1800, h: 1040, alt: "Open RUHA jewellery box with a deep red lining" },
-          ]
-        },
-      },
-      {
-        id: "the-deck", label: "The Deck", pos: [-0.24, 0.35],
-        thumb: { src: "assets/thumbs/deck.webp", w: 360, h: 270 },
-        title: "The Deck",
-        description: "A custom card-based visual system crafted in Adobe Illustrator, focusing on symmetry, hierarchy, and bold minimal aesthetics. Each card represents a core tool, forming a cohesive and structured design language.",
-        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Visual System, Card Design"], ["Softwares", "Illustrator, Photoshop"]],
-        cta: { label: "Project In Detail", href: BEHANCE_DECK },
-        gallery: {
-          layout: "cards", cols: 4, items: [
-            { src: "assets/img/ace-after-effects.webp", w: 1100, h: 1693, alt: "Ace of hearts, After Effects: dynamic motion graphics and visual effects" },
-            { src: "assets/img/ace-illustrator.webp", w: 1100, h: 1693, alt: "Ace of diamonds, Illustrator: crafting vector art and detailed graphic design" },
-            { src: "assets/img/ace-photoshop.webp", w: 1100, h: 1693, alt: "Ace of clubs, Photoshop: enhancing images and delivering polished digital compositions" },
-            { src: "assets/img/ace-premiere-pro.webp", w: 1100, h: 1693, alt: "Ace of clubs, Premiere Pro: seamless video editing and sound integration" },
-          ]
-        },
-      },
-      {
-        id: "the-jack", label: "The Jack", pos: [1.19, 0.25],
-        thumb: { src: "assets/thumbs/jack.webp", w: 300, h: 462 },
-        title: "The Jack",
-        description: "Two Jacks for the deck: a masked, gilded figure, and a portrait of Danny under shafts of light. The images were created in Photoshop and the card frame was drawn in Illustrator.",
-        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Photo Manipulation, Card Design"], ["Softwares", "Photoshop, Illustrator"]],
-        cta: { label: "Project In Detail", href: BEHANCE_DECK },
-        gallery: {
-          layout: "cards", cols: 2, max: "860px", items: [
-            { src: "assets/img/jack-masked.webp", w: 1100, h: 1693, alt: "The Jack: a masked figure in a gilded headdress and red robe" },
-            { src: "assets/img/jack-danny.webp", w: 1100, h: 1693, alt: "The Jack: Danny in glasses, lit by shafts of light" },
-          ]
-        },
-      },
-      {
-        id: "experience", label: "Experience", pos: [1.08, 0.52], folder: true,
-        title: "Experience",
-        description: "Three cards from the deck, one for each side of the work: graphic design, design with video editing, and creative direction.",
-        meta: [["Currently", `Graphics & motion designer, video editor at ${PROFILE.company}`], ["Based in", PROFILE.city], ["Tools", "Photoshop, Illustrator, Premiere Pro, After Effects"], ["Open to", "Full-time roles & freelance projects"]],
-        cta: { label: "Full Profile", href: PROFILE.links.linkedin },
-        gallery: {
-          layout: "cards", cols: 3, items: [
-            { src: "assets/img/exp-graphic-designing.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Designing, with specializations and tools" },
-            { src: "assets/img/exp-design-video.webp", w: 1100, h: 1690, alt: "Card: Experience in Graphic Design and Video Editing, with specializations and tools" },
-            { src: "assets/img/exp-creative-director.webp", w: 1100, h: 1690, alt: "Card: Experience as a Creative Director, with specializations and tools" },
-          ]
-        },
-      },
-      {
-        id: "tools-expertise", label: "Tools Expertise", pos: [-0.06, 0.66],
-        thumb: { src: "assets/thumbs/tools-expertise.webp", w: 300, h: 375 },
-        title: "Tools Expertise",
-        description: "“This portfolio presents selected motion graphics work focused on clean design, cinematic lighting, and storytelling-driven visuals tailored for modern digital brands.”",
-        meta: [["Client", "Personal project"], ["Year", "2026"], ["Project type", "Motion Graphics, Animation"], ["Softwares", "After Effects, Premiere Pro, Photoshop, Illustrator"]],
-        cta: { label: "Project In Detail", href: BEHANCE_DECK },
-        video: { src: "assets/video/tools-expertise.mp4", poster: "assets/img/tools-expertise-poster.webp", w: 720, h: 900, label: "Tools Expertise motion piece: the card deck fans out on red" },
-      },
-    ];
-
-    const NOTES = [
-      {
-        id: "about", title: "About", date: "13/05/2026", stamp: "May 13, 2026 at 6:43 PM",
-        preview: "Creative director crafting visuals…",
-        html: () => `
-      <figure class="note-photo"><img src="assets/img/portrait.webp" width="731" height="571" alt="Portrait of Danny in glasses, one hand raised, against a dark background"></figure>
-      <h2>Hi, I'm ${esc(PROFILE.nickname)}</h2>
-      <p><strong>${esc(PROFILE.name)}</strong>: ${esc(PROFILE.tagline)}</p>
-      <h2>What I do</h2>
-      <p>Graphics, motion and sportswear design. I'm a graphics and motion graphics designer and video editor at ${esc(PROFILE.company)}, ${esc(PROFILE.city.split(",")[0])}.</p>
-      <h2>Tools</h2>
-      <ul class="tools">
-        <li><b>After Effects</b>: dynamic motion graphics and visual effects</li>
-        <li><b>Illustrator</b>: crafting vector art and detailed graphic design</li>
-        <li><b>Photoshop</b>: enhancing images and delivering polished digital compositions</li>
-        <li><b>Premiere Pro</b>: seamless video editing and sound integration</li>
-      </ul>
-      <h2>Open to</h2>
-      <p>Full-time roles and freelance projects.</p>
-      ${PROFILE.email ? `<p><strong>Mail</strong><br><a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a></p>` : ""}
-      <p class="note-callout">Say hi on <a href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">LinkedIn</a> or <a href="${PROFILE.links.instagram}" target="_blank" rel="noopener">Instagram</a><br>new work goes up on <a href="${PROFILE.links.behance}" target="_blank" rel="noopener">Behance</a></p>
-      <p class="note-headsup"><strong>Heads up:</strong> the desktop icons are draggable. Move them around.</p>`,
-      },
-      {
-        id: "experience", title: "Experience", date: "05/05/2026", stamp: "May 5, 2026 at 12:37 PM",
-        preview: "Kerala Jewellers, Chennai…",
-        html: () => `
-      <h2>Experience</h2>
-      <p><strong>${esc(PROFILE.company)}</strong>, ${esc(PROFILE.city.split(",")[0])}<br><span class="muted">Graphics &amp; motion graphics designer, video editor</span></p>
-      <h2>Creative direction</h2>
-      <p>Leading creative direction for branding, social media, and marketing campaigns across digital platforms. Overseeing design and video production to ensure consistent visual identity and high-quality output. Strategizing concepts and guiding teams to deliver impactful content that drives engagement and brand growth.</p>
-      <h2>Graphic design &amp; video editing</h2>
-      <p>Creating visually engaging designs and dynamic video content for social media and marketing campaigns. Skilled in Adobe Photoshop, Illustrator, Premiere Pro, and After Effects for high-quality creative outputs. Focused on storytelling through visuals and motion to enhance brand identity and audience engagement.</p>
-      <h2>Specializations</h2>
-      <ul>
-        <li>Creative Direction &amp; Brand Strategy</li>
-        <li>Visual Storytelling &amp; Content Planning</li>
-        <li>Social Media Design &amp; Campaigns</li>
-        <li>Video Editing, Production &amp; Motion Graphics</li>
-        <li>Branding &amp; Identity Development</li>
-        <li>Ad Creatives &amp; Poster Design</li>
-      </ul>`,
-      },
-    ];
+    if (!C) {
+      document.body.insertAdjacentHTML("beforeend", '<p class="load-error">The portfolio could not load. Please refresh the page.</p>');
+      throw new Error("content.js did not load");
+    }
 
     /* ==================================================================== helpers */
     const $ = (sel, root = document) => root.querySelector(sel);
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const num = (v, fallback) => (Number.isFinite(+v) && +v > 0 ? Math.round(+v) : fallback);
+    // only web, mail and same-site links; blob: only for the admin's preview
+    function safeUrl(u) {
+      u = String(u ?? "").trim();
+      if (/^(https?:|mailto:)/i.test(u) || (PREVIEW && /^blob:/i.test(u))) return u;
+      if (!u || /^[a-z][a-z0-9+.-]*:/i.test(u) || /^[\\/]{2}/.test(u)) return "";
+      return u;
+    }
+    const asset = (u) => safeUrl(BLOBS[u] || u);
     // deep links (#ruha, #note-about…); some browsers refuse history edits on file:// pages
     const setHash = (h) => {
       try { history.replaceState(null, "", h ? "#" + h : location.pathname + location.search); } catch { }
@@ -1400,7 +1600,192 @@
     </svg>`,
     };
 
+    // dock tiles for CONTENT.links, 60×60 like the app icons
+    const LINK_TYPES = {
+      linkedin: { label: "LinkedIn", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#0a66c2" />
+          <path fill="#fff" transform="translate(9.25 9.2) scale(1.75)"
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+        </svg>` },
+      instagram: { label: "Instagram", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <defs>
+            <radialGradient id="ig-grad" cx="28%" cy="105%" r="140%">
+              <stop offset="0" stop-color="#fdf497" />
+              <stop offset=".08" stop-color="#fdf497" />
+              <stop offset=".45" stop-color="#fd5949" />
+              <stop offset=".62" stop-color="#d6249f" />
+              <stop offset=".92" stop-color="#285aeb" />
+            </radialGradient>
+          </defs>
+          <rect width="60" height="60" fill="url(#ig-grad)" />
+          <rect x="15" y="15" width="30" height="30" rx="9" fill="none" stroke="#fff" stroke-width="3.6" />
+          <circle cx="30" cy="30" r="7.2" fill="none" stroke="#fff" stroke-width="3.6" />
+          <circle cx="38.7" cy="21.3" r="2.2" fill="#fff" />
+        </svg>` },
+      behance: { label: "Behance", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#1769ff" />
+          <path fill="#fff" transform="translate(13 13) scale(1.42)"
+            d="M16.969 16.927a2.561 2.561 0 0 0 1.901.677 2.501 2.501 0 0 0 1.531-.475c.362-.235.636-.584.779-.99h2.585a5.091 5.091 0 0 1-1.9 2.896 5.292 5.292 0 0 1-3.091.88 5.839 5.839 0 0 1-2.284-.433 4.871 4.871 0 0 1-1.723-1.211 5.657 5.657 0 0 1-1.08-1.874 7.057 7.057 0 0 1-.383-2.393c-.005-.8.129-1.595.396-2.349a5.313 5.313 0 0 1 5.088-3.604 4.87 4.87 0 0 1 2.376.563c.661.362 1.231.87 1.668 1.485a6.2 6.2 0 0 1 .943 2.133c.194.821.263 1.666.205 2.508h-7.699c-.063.79.184 1.574.688 2.187ZM6.947 4.084a8.065 8.065 0 0 1 1.928.198 4.29 4.29 0 0 1 1.49.638c.418.303.748.711.958 1.182.241.579.357 1.203.341 1.83a3.506 3.506 0 0 1-.506 1.961 3.726 3.726 0 0 1-1.503 1.287 3.588 3.588 0 0 1 2.027 1.437c.464.747.697 1.615.67 2.494a4.593 4.593 0 0 1-.423 2.032 3.945 3.945 0 0 1-1.163 1.413 5.114 5.114 0 0 1-1.683.807 7.135 7.135 0 0 1-1.928.259H0V4.084h6.947Zm-.235 12.9c.308.004.616-.029.916-.099a2.18 2.18 0 0 0 .766-.332c.228-.158.411-.371.534-.619.142-.317.208-.663.191-1.009a2.08 2.08 0 0 0-.642-1.715 2.618 2.618 0 0 0-1.696-.505h-3.54v4.279h3.471Zm13.635-5.967a2.13 2.13 0 0 0-1.654-.619 2.336 2.336 0 0 0-1.163.259 2.474 2.474 0 0 0-.738.62 2.359 2.359 0 0 0-.396.792c-.074.239-.12.485-.137.734h4.769a3.239 3.239 0 0 0-.679-1.785l-.002-.001Zm-13.813-.648a2.254 2.254 0 0 0 1.423-.433c.399-.355.607-.88.56-1.413a1.916 1.916 0 0 0-.178-.891 1.298 1.298 0 0 0-.495-.533 1.851 1.851 0 0 0-.711-.274 3.966 3.966 0 0 0-.835-.073H3.241v3.631h3.293v-.014ZM21.62 5.122h-5.976v1.527h5.976V5.122Z" />
+        </svg>` },
+      github: {
+        label: "GitHub", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#181717" />
+          <path fill="#fff" transform="translate(12 12) scale(1.5)"
+            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+        </svg>`,
+      },
+      youtube: {
+        label: "YouTube", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#ff0033" />
+          <rect x="11" y="17" width="38" height="26" rx="8" fill="#fff" />
+          <path d="M26.5 23.5v13l11-6.5z" fill="#ff0033" />
+        </svg>`,
+      },
+      dribbble: {
+        label: "Dribbble", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <rect width="60" height="60" fill="#ea4c89" />
+          <g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round">
+            <circle cx="30" cy="30" r="15" />
+            <path d="M22.5 17c5 5.5 9 13 11 26.5M15.5 27c8 1 17-.5 23-6.5M17.5 38.5c5-7 13-9.5 26.5-6" />
+          </g>
+        </svg>`,
+      },
+      website: {
+        label: "Website", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <defs>
+            <linearGradient id="web-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3ea4ff" />
+              <stop offset="1" stop-color="#0a6cdb" />
+            </linearGradient>
+          </defs>
+          <rect width="60" height="60" fill="url(#web-grad)" />
+          <g fill="none" stroke="#fff" stroke-width="2.6">
+            <circle cx="30" cy="30" r="15" />
+            <ellipse cx="30" cy="30" rx="6.5" ry="15" />
+            <path d="M15 30h30M17.5 22h25M17.5 38h25" />
+          </g>
+        </svg>`,
+      },
+      email: {
+        label: "Email", svg: `<svg viewBox="0 0 60 60" aria-hidden="true">
+          <defs>
+            <linearGradient id="mail-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1fa2ff" />
+              <stop offset="1" stop-color="#1570ef" />
+            </linearGradient>
+          </defs>
+          <rect width="60" height="60" fill="url(#mail-grad)" />
+          <rect x="13" y="18" width="34" height="24" rx="3.5" fill="#fff" />
+          <path d="M14.5 20l15.5 12 15.5-12" fill="none" stroke="#1570ef" stroke-width="2.4" stroke-linejoin="round" />
+        </svg>`,
+      },
+    };
+    const linkLabel = (l) => l.label || (LINK_TYPES[l.type] || LINK_TYPES.website).label;
+    const linkHref = (l) => (l.type === "email" && !/^mailto:/i.test(l.url) ? safeUrl("mailto:" + l.url.trim()) : asset(l.url));
+
+    /* ==================================================================== note text
+       A tiny markdown: ## heading, - list, > heads-up box, **bold**, [text](link), blank line = new paragraph.
+       {name} {nickname} {role} {tagline} are filled in for the portfolio being shown. */
+    const fillVars = (text) => String(text ?? "").replace(/\{(name|nickname|role|tagline)\}/g, (_, k) =>
+      k === "role" ? role.label : k === "tagline" ? tagline() : PROFILE[k] || "");
+
+    function inlineMd(s) {
+      let out = "", last = 0;
+      for (const m of s.matchAll(/\*\*(.+?)\*\*|\[([^\]\n]+)\]\(([^)\s]+)\)/g)) {
+        out += esc(s.slice(last, m.index));
+        if (m[1] !== undefined) out += `<strong>${inlineMd(m[1])}</strong>`;
+        else {
+          const href = safeUrl(m[3]);
+          out += href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(m[2])}</a>` : esc(m[0]);
+        }
+        last = m.index + m[0].length;
+      }
+      return out + esc(s.slice(last));
+    }
+
+    function noteHTML(text) {
+      const out = [];
+      let block = null;
+      const flush = () => {
+        if (!block) return;
+        out.push(block.kind === "ul"
+          ? `<ul>${block.lines.map((l) => `<li>${l}</li>`).join("")}</ul>`
+          : `<p${block.kind === "quote" ? ' class="note-headsup"' : ""}>${block.lines.join("<br>")}</p>`);
+        block = null;
+      };
+      for (const raw of fillVars(text).split(/\r?\n/)) {
+        const line = raw.trim();
+        if (!line) { flush(); continue; }
+        if (line.startsWith("## ")) { flush(); out.push(`<h2>${inlineMd(line.slice(3))}</h2>`); continue; }
+        const kind = line.startsWith("- ") ? "ul" : line.startsWith("> ") ? "quote" : "p";
+        if (block && block.kind !== kind) flush();
+        (block ||= { kind, lines: [] }).lines.push(inlineMd(kind === "p" ? line : line.slice(2)));
+      }
+      flush();
+      return out.join("\n");
+    }
+
+    function notePreview(n) {
+      const line = fillVars(n.body).split(/\r?\n/).map((l) => l.trim()).find((l) => l && !l.startsWith("## ")) || "";
+      return line.replace(/^(- |> )/, "").replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[([^\]\n]+)\]\([^)\s]+\)/g, "$1");
+    }
+
+    // "2026-05-13T18:43" → "13/05/2026" and "May 13, 2026 at 6:43 PM", without time-zone surprises
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const pad = (n) => String(n).padStart(2, "0");
+    const dateParts = (s) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(s || "");
+      return m && m.slice(1).map((x) => +x || 0);
+    };
+    const listDate = (s) => {
+      const d = dateParts(s);
+      return d ? `${pad(d[2])}/${pad(d[1])}/${d[0]}` : "";
+    };
+    const stampDate = (s) => {
+      const d = dateParts(s);
+      if (!d || !MONTHS[d[1] - 1]) return "";
+      const [y, mo, day, h, mi] = d;
+      return `${MONTHS[mo - 1]} ${day}, ${y} at ${h % 12 || 12}:${pad(mi)} ${h < 12 ? "AM" : "PM"}`;
+    };
+
+    /* ==================================================================== embedded videos
+       Only these players get an iframe; any other link becomes a plain "Watch" card. */
+    function embedInfo(url, aspect) {
+      let u;
+      try { u = new URL(url); } catch { return null; }
+      if (!/^https?:$/.test(u.protocol)) return null;
+      const host = u.hostname.replace(/^(www|m)\./, "");
+      const yt = (id) => (/^[\w-]{6,}$/.test(id || "") ? `https://www.youtube-nocookie.com/embed/${id}` : null);
+      let src = null, ratio = "16:9", m;
+      if (host === "youtu.be") src = yt(u.pathname.split("/")[1]);
+      else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+        if ((m = u.pathname.match(/^\/(shorts|embed|live)\/([\w-]+)/))) {
+          src = yt(m[2]);
+          if (m[1] === "shorts") ratio = "9:16";
+        } else src = yt(u.searchParams.get("v"));
+      } else if (host === "vimeo.com" && (m = u.pathname.match(/^\/(\d+)(?:\/([\da-f]+))?/))) {
+        src = `https://player.vimeo.com/video/${m[1]}${m[2] ? "?h=" + m[2] : ""}`;
+      } else if (host === "player.vimeo.com" && (m = u.pathname.match(/^\/video\/(\d+)/))) {
+        src = `https://player.vimeo.com/video/${m[1]}${u.searchParams.get("h") ? "?h=" + encodeURIComponent(u.searchParams.get("h")) : ""}`;
+      } else if (host === "drive.google.com" && (m = u.pathname.match(/\/file\/d\/([\w-]+)/))) {
+        src = `https://drive.google.com/file/d/${m[1]}/preview`;
+      } else if (host === "instagram.com" && (m = u.pathname.match(/^\/(?:[\w.]+\/)?(p|reels?|tv)\/([\w-]+)/))) {
+        src = `https://www.instagram.com/${m[1] === "reels" ? "reel" : m[1]}/${m[2]}/embed`;
+        ratio = "4:5";
+      }
+      if (!src) return null;
+      const [w, h] = (/^\d+:\d+$/.test(aspect || "") ? aspect : ratio).split(":").map(Number);
+      return { src, ratio: `${w} / ${h}`, portrait: h > w };
+    }
+
     /* ==================================================================== desktop icons */
+    // Icon centres relative to the photo of Danny on wide screens: [0, 0] is the photo's top-left corner
+    // and [1, 1] its bottom-right, so icons keep their place around the photo at any aspect ratio.
+    // A portfolio's projects take the slots in order.
+    const SLOTS = [
+      [0.06, 0.11], [0.9, 0.09], [-0.24, 0.35], [1.19, 0.25], [1.08, 0.52], [-0.06, 0.66],
+      [-0.25, 0.06], [1.21, 0.75], [-0.27, 0.62], [0.27, 0.06], [0.69, 0.05], [1.0, 0.86],
+    ];
     let iconZ = 5;
     function thumbSize(w, h) {
       const maxW = 96, maxH = 118, r = w / h;
@@ -1409,24 +1794,33 @@
 
     function renderIcons() {
       const wrap = $("#icons");
-      PROJECTS.forEach((p, i) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "icon";
-        btn.dataset.id = p.id;
-        btn.setAttribute("aria-label", `Open ${p.title}`);
-        btn.style.setProperty("--i", i);
-        let art = ICON_SVG.folder;
-        if (!p.folder) {
-          const [tw, th] = thumbSize(p.thumb.w, p.thumb.h);
-          btn.style.setProperty("--tw", tw + "px");
-          btn.style.setProperty("--th", th + "px");
-          art = `<img src="${p.thumb.src}" width="${tw}" height="${th}" alt="" draggable="false">`;
+      wrap.replaceChildren();
+      roleProjects().forEach((p) => {
+        try {
+          const i = wrap.children.length;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "icon";
+          btn.dataset.id = p.id;
+          btn.dataset.slot = i;
+          btn.setAttribute("aria-label", `Open ${p.title}`);
+          btn.style.setProperty("--i", i);
+          let art = ICON_SVG.folder;
+          const src = p.icon !== "folder" && asset(p.thumb?.src);
+          if (src) {
+            const [tw, th] = thumbSize(num(p.thumb.w, 360), num(p.thumb.h, 270));
+            btn.style.setProperty("--tw", tw + "px");
+            btn.style.setProperty("--th", th + "px");
+            art = `<img src="${esc(src)}" width="${tw}" height="${th}" alt="" draggable="false">`;
+          }
+          btn.innerHTML = `<span class="icon-art">${art}</span><span class="icon-label">${esc(p.label || p.title)}</span>`;
+          wrap.append(btn);
+          makeIconDraggable(btn, () => openProject(p.id, btn));
+        } catch (err) {
+          console.warn("Skipped project", p?.id, err);
         }
-        btn.innerHTML = `<span class="icon-art">${art}</span><span class="icon-label">${esc(p.label)}</span>`;
-        wrap.append(btn);
-        makeIconDraggable(btn, () => openProject(p.id, btn));
       });
+      $("#empty").hidden = wrap.children.length > 0;
     }
 
     // Click opens; press-and-drag moves the icon (wide layouts only), like a real desktop.
@@ -1474,10 +1868,15 @@
       const vw = innerWidth, vh = innerHeight;
       const h = Math.min(vh * 0.92, vw * 0.88), w = h * HERO_RATIO;
       const left = (vw - w) / 2, top = vh - h;
+      const sw = $("#switcher"), sr = !sw.hidden && sw.getBoundingClientRect();
       document.querySelectorAll(".icon").forEach((el) => {
-        const [u, v] = PROJECTS.find((p) => p.id === el.dataset.id).pos;
-        el.style.setProperty("--x", clamp(left + u * w, 64, vw - 64) + "px");
-        el.style.setProperty("--y", clamp(top + v * h, 72, vh - 200) + "px");
+        const i = +el.dataset.slot, [u, v] = SLOTS[i % SLOTS.length], lap = Math.floor(i / SLOTS.length) * 0.05;
+        const x = clamp(left + (u + lap) * w, 64, vw - 64);
+        let y = clamp(top + (v + lap) * h, 72, vh - 200);
+        // keep clear of the portfolio switcher
+        if (sr && Math.abs(x - (sr.left + sr.right) / 2) < sr.width / 2 + 64 && y - 80 < sr.bottom) y = sr.bottom + 84;
+        el.style.setProperty("--x", x + "px");
+        el.style.setProperty("--y", y + "px");
         // keep icons the visitor dragged on screen
         if (el.style.left) el.style.left = clamp(parseFloat(el.style.left), 48, vw - 48) + "px";
         if (el.style.top) el.style.top = clamp(parseFloat(el.style.top), 48, vh - 48) + "px";
@@ -1630,33 +2029,52 @@
     });
 
     /* ---------------------------------------------------------------- project windows */
-    function projectBody(p) {
-      const meta = p.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
-      let media = "";
-      if (p.video) {
-        const v = p.video;
-        media = `<div class="media-video"><video src="${v.src}" poster="${v.poster}" width="${v.w}" height="${v.h}" controls playsinline muted loop autoplay preload="metadata" aria-label="${esc(v.label)}"></video></div>`;
-      } else if (p.gallery) {
-        const g = p.gallery;
-        const style = g.layout === "cards" ? ` style="--cols:${g.cols}${g.max ? `;--max:${g.max}` : ""}"` : "";
-        media = `<div class="gallery ${g.layout}"${style}>${g.items.map((it, i) =>
-          `<button class="g-item" type="button" data-i="${i}" aria-label="View larger: ${esc(it.alt)}"><img src="${it.src}" width="${it.w}" height="${it.h}" alt="${esc(it.alt)}" loading="lazy" decoding="async"></button>`).join("")}</div>`;
+    const isImage = (m) => m && (!m.type || m.type === "image") && asset(m.src);
+
+    function mediaItem(m, imageIndex) {
+      if (m.type === "video") {
+        const src = asset(m.src);
+        if (!src) return "";
+        const w = num(m.w, 16), h = num(m.h, 9), poster = asset(m.poster);
+        return `<div class="media-video${h > w ? " is-portrait" : ""}"><video src="${esc(src)}"${poster ? ` poster="${esc(poster)}"` : ""} width="${w}" height="${h}" style="aspect-ratio:${w} / ${h}" controls playsinline muted loop autoplay preload="metadata" aria-label="${esc(m.alt)}"></video></div>`;
       }
+      if (m.type === "embed") {
+        const e = embedInfo(m.url, m.aspect);
+        if (e) return `<div class="media-embed${e.portrait ? " is-portrait" : ""}" style="aspect-ratio:${e.ratio}"><iframe src="${esc(e.src)}" title="${esc(m.alt || "Video")}" loading="lazy" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+        const href = safeUrl(m.url);
+        return href ? `<a class="media-link" href="${esc(href)}" target="_blank" rel="noopener"><span>${esc(m.alt || "Watch")}</span><span aria-hidden="true">↗</span></a>` : "";
+      }
+      if (!isImage(m)) return "";
+      return `<button class="g-item" type="button" data-i="${imageIndex}" aria-label="View larger: ${esc(m.alt)}"><img src="${esc(asset(m.src))}" width="${num(m.w, 1600)}" height="${num(m.h, 1200)}" alt="${esc(m.alt)}" loading="lazy" decoding="async"></button>`;
+    }
+
+    function projectBody(p) {
+      const meta = arr(p.meta).filter((r) => Array.isArray(r) && (r[0] || r[1]))
+        .map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+      const ctas = arr(p.ctas).filter((c) => c && asset(c.href)).map((c) => `
+        <div class="p-cta">
+          <span class="p-cta-label">${esc(c.label || "Open")}</span>
+          <a class="cta-btn" href="${esc(asset(c.href))}" target="_blank" rel="noopener" aria-label="${esc(c.label || "Open")}: ${esc(p.title)} (opens in a new tab)">${ICON_SVG.arrow}</a>
+        </div>`).join("");
+      let images = 0;
+      const items = arr(p.media).map((m) => {
+        try { return m ? mediaItem(m, isImage(m) ? images++ : -1) : ""; } catch { return ""; }
+      }).join("");
+      const cols = clamp(num(p.cols, 3), 1, 6);
+      const layout = p.layout === "cards" ? "cards" : "stack";
+      const style = layout === "cards" ? ` style="--cols:${cols};--cols-narrow:${Math.min(cols, 2)}"` : "";
       return `
     <div class="win-body">
       <h2 class="p-title">${esc(p.title)}</h2>
-      <p class="p-desc">${esc(p.description)}</p>
-      <dl class="p-meta">${meta}</dl>
-      <div class="p-cta">
-        <span class="p-cta-label">${esc(p.cta.label)}</span>
-        <a class="cta-btn" href="${p.cta.href}" target="_blank" rel="noopener" aria-label="${esc(p.cta.label)}: ${esc(p.title)} (opens in a new tab)">${ICON_SVG.arrow}</a>
-      </div>
-      ${media}
+      ${p.description ? `<p class="p-desc">${esc(p.description)}</p>` : ""}
+      ${meta ? `<dl class="p-meta">${meta}</dl>` : ""}
+      ${ctas ? `<div class="p-ctas">${ctas}</div>` : ""}
+      ${items ? `<div class="gallery ${layout}"${style}>${items}</div>` : ""}
     </div>`;
     }
 
     function openProject(id, opener) {
-      const p = PROJECTS.find((x) => x.id === id);
+      const p = roleProjects().find((x) => x.id === id);
       if (!p) return;
       const existing = open.get(id);
       if (existing) {
@@ -1666,43 +2084,73 @@
         return;
       }
       const el = windowShell({ key: id, title: p.title, kind: "project", bodyHTML: projectBody(p), opener, hash: id });
-      if (p.gallery) {
+      const images = arr(p.media).filter(isImage).map((m) => ({ src: asset(m.src), alt: m.alt || "" }));
+      if (images.length) {
         el.addEventListener("click", (e) => {
           const item = e.target.closest(".g-item");
-          if (item) openLightbox(p.gallery.items, +item.dataset.i, item);
+          if (item) openLightbox(images, +item.dataset.i, item);
         });
       }
     }
 
     /* ---------------------------------------------------------------- notes window */
+    const SOCIAL = ["linkedin", "instagram"], SHOWCASE = ["behance", "dribbble", "github", "youtube"];
+    const joinWords = (items, last) => (items.length > 1 ? `${items.slice(0, -1).join(", ")} ${last} ${items.at(-1)}` : items[0]);
+
+    // "Say hi on LinkedIn or Instagram / new work goes up on Behance", from the portfolio's links
+    function callout() {
+      const a = (types) => roleLinks().filter((l) => types.includes(l.type) && linkHref(l))
+        .map((l) => `<a href="${esc(linkHref(l))}" target="_blank" rel="noopener">${esc(linkLabel(l))}</a>`);
+      const hi = a(SOCIAL), work = a(SHOWCASE);
+      const lines = [hi.length && `Say hi on ${joinWords(hi, "or")}`, work.length && `new work goes up on ${joinWords(work, "and")}`].filter(Boolean);
+      return lines.length ? `<p class="note-callout">${lines.join("<br>")}</p>` : "";
+    }
+
+    function resumeLink() {
+      if (role.resume && asset(role.resume)) return { href: asset(role.resume), text: "View my resume ↗" };
+      const li = roleLinks().find((l) => l.type === "linkedin") || arr(C.links).find((l) => l?.type === "linkedin");
+      return li && linkHref(li) ? { href: linkHref(li), text: "Full profile on LinkedIn ↗" } : null;
+    }
+
     function notesBody() {
-      const cards = NOTES.map((n) => `
-    <button class="note-card" type="button" data-note-id="${n.id}" aria-controls="note-page">
+      const cards = roleNotes().map((n) => `
+    <button class="note-card" type="button" data-note-id="${esc(n.id)}" aria-controls="note-page">
       <strong>${esc(n.title)}</strong>
-      <span class="note-sub"><time>${n.date}</time><span>${esc(n.preview)}</span></span>
+      <span class="note-sub"><time>${esc(listDate(n.date))}</time><span>${esc(notePreview(n))}</span></span>
     </button>`).join("");
+      const resume = resumeLink();
       return `
     <div class="notes-body">
       <nav class="notes-list" aria-label="Notes">
         ${cards}
-        <a class="note-card is-link" href="${PROFILE.links.linkedin}" target="_blank" rel="noopener">
+        ${resume ? `<a class="note-card is-link" href="${esc(resume.href)}" target="_blank" rel="noopener">
           <strong>RESUME</strong>
-          <span class="note-sub"><span>Full profile on LinkedIn ↗</span></span>
-        </a>
+          <span class="note-sub"><span>${resume.text}</span></span>
+        </a>` : ""}
       </nav>
       <article class="note-page" id="note-page" aria-live="polite"></article>
     </div>`;
     }
 
     function showNote(el, noteId) {
-      const note = NOTES.find((n) => n.id === noteId) || NOTES[0];
+      const notes = roleNotes();
+      const note = notes.find((n) => n.id === noteId) || notes[0];
+      if (!note) return;
       el.querySelectorAll(".note-card[data-note-id]").forEach((c) => {
         const on = c.dataset.noteId === note.id;
         c.classList.toggle("is-active", on);
         c.setAttribute("aria-current", on ? "true" : "false");
       });
       const page = $(".note-page", el);
-      page.innerHTML = `<p class="note-stamp">${note.stamp}</p>${note.html()}`;
+      const photo = note.photo && asset(note.photo.src);
+      try {
+        page.innerHTML = `<p class="note-stamp">${esc(stampDate(note.date))}</p>
+      ${photo ? `<figure class="note-photo"><img src="${esc(photo)}" width="${num(note.photo.w, 800)}" height="${num(note.photo.h, 600)}" alt="${esc(note.photo.alt)}"></figure>` : ""}
+      ${noteHTML(note.body)}
+      ${note === notes[0] ? callout() : ""}`;
+      } catch (err) {
+        console.warn("Could not render note", note.id, err);
+      }
       page.scrollTop = 0;
       const entry = open.get("notes");
       if (entry) {
@@ -1712,6 +2160,7 @@
     }
 
     function openNotes(noteId, opener) {
+      if (!roleNotes().length) return;
       const existing = open.get("notes");
       if (existing) {
         showNote(existing.el, noteId);
@@ -1728,17 +2177,114 @@
     }
 
     /* ==================================================================== dock */
+    // "About Me" opens the portfolio's first note, "Notes" its second.
     function setupDock() {
-      $("#dock-linkedin").href = PROFILE.links.linkedin;
-      $("#dock-instagram").href = PROFILE.links.instagram;
-      $("#dock-behance").href = PROFILE.links.behance;
-      document.querySelectorAll(".dock-item[data-note]").forEach((btn) => {
-        btn.addEventListener("click", () => openNotes(btn.dataset.note, btn));
+      document.querySelectorAll(".dock-item[data-note-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const notes = roleNotes(), n = notes[+btn.dataset.noteIndex] || notes[0];
+          if (n) openNotes(n.id, btn);
+        });
       });
     }
+
+    function renderDock() {
+      const dock = $("#dock");
+      dock.querySelectorAll(".dock-link").forEach((a) => a.remove());
+      const hasNotes = roleNotes().length > 0;
+      dock.querySelectorAll("[data-note-index]").forEach((b) => (b.hidden = !hasNotes));
+      roleLinks().forEach((l) => {
+        const href = linkHref(l);
+        if (!href) return;
+        const a = document.createElement("a");
+        a.className = "dock-item dock-link";
+        a.href = href;
+        if (!href.startsWith("mailto:")) {
+          a.target = "_blank";
+          a.rel = "noopener";
+        }
+        a.setAttribute("aria-label", linkLabel(l));
+        a.innerHTML = `<span class="dock-tile">${(LINK_TYPES[l.type] || LINK_TYPES.website).svg}</span><span class="tip" aria-hidden="true">${esc(linkLabel(l))}</span>`;
+        dock.append(a);
+      });
+      const hasLinks = !!dock.querySelector(".dock-link");
+      $("#dock-divider").hidden = !hasNotes || !hasLinks;
+      dock.hidden = !hasNotes && !hasLinks;
+      syncDock();
+    }
+
     function syncDock() {
       const running = open.has("notes");
-      document.querySelectorAll(".dock-item[data-note]").forEach((b) => b.classList.toggle("running", running));
+      document.querySelectorAll(".dock-item[data-note-index]").forEach((b) => b.classList.toggle("running", running));
+    }
+
+    /* ==================================================================== portfolio switcher */
+    function renderSwitcher() {
+      const nav = $("#switcher");
+      const shown = ROLES.filter((r) => r.listed !== false || r.id === role.id);
+      nav.hidden = C.settings?.showSwitcher === false || shown.length < 2;
+      document.body.classList.toggle("has-switcher", !nav.hidden);
+      if (nav.hidden) return;
+      const key = shown.map((r) => r.id).join();
+      const rebuild = nav.dataset.key !== key; // keep the links when the set is the same, so the pill can slide
+      if (rebuild) {
+        nav.dataset.key = key;
+        nav.innerHTML = `<span class="switcher-pill" aria-hidden="true"></span>` +
+          shown.map((r) => `<a href="${esc(roleHref(r.id))}" data-role="${esc(r.id)}">${esc(r.label)}</a>`).join("");
+      }
+      nav.querySelectorAll("a").forEach((a) => {
+        if (a.dataset.role === role.id) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      movePill(!rebuild);
+    }
+
+    function movePill(animate) {
+      const nav = $("#switcher"), a = $('[aria-current="page"]', nav), pill = $(".switcher-pill", nav);
+      if (!a || !pill) return;
+      pill.style.transition = animate ? "" : "none";
+      pill.style.width = a.offsetWidth + "px";
+      pill.style.transform = `translateX(${a.offsetLeft}px)`;
+      if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: animate ? "smooth" : "auto" });
+    }
+
+    $("#switcher").addEventListener("click", (e) => {
+      const a = e.target.closest("a[data-role]");
+      if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      switchRole(a.dataset.role);
+    });
+    addEventListener("resize", () => movePill(false));
+    document.fonts?.ready.then(() => movePill(false));
+
+    function switchRole(id) {
+      const next = ROLES.find((r) => r.id === id);
+      if (!next || next.id === role.id) return;
+      [...open.keys()].forEach((k) => closeWindow(k));
+      role = next;
+      try { history.replaceState(null, "", roleHref(role.id)); } catch { }
+      applyRole(true);
+    }
+
+    let switching = 0; // only the latest switch gets to draw its icons
+    function applyRole(animate) {
+      const who = PROFILE.nickname || PROFILE.name;
+      document.title = `${who} Here (${role.label} Portfolio)`;
+      $('meta[name="description"]')?.setAttribute("content", `Hi there, ${who}${PROFILE.name && PROFILE.nickname ? ` (${PROFILE.name})` : ""} here: ${tagline()} Check out my ${role.label.toLowerCase()} portfolio.`);
+      $("#h1").textContent = `${who}${PROFILE.name && PROFILE.nickname ? ` (${PROFILE.name})` : ""}: ${tagline()}`;
+      applyTheme();
+      renderSwitcher();
+      renderDock();
+      const icons = $("#icons"), token = ++switching;
+      const show = () => {
+        if (token !== switching) return;
+        icons.classList.toggle("is-switched", !!animate);
+        renderIcons();
+        layoutIcons();
+      };
+      if (!animate || reducedMotion.matches || !icons.children.length) return show();
+      // fade the old icons out first (WAAPI: a CSS transition would lose to the icons' entrance animation)
+      [...icons.children].forEach((el) => el.animate({ opacity: [1, 0], scale: [1, .9] }, { duration: 140, easing: "ease-in", fill: "forwards" }));
+      setTimeout(show, 140);
     }
 
     /* ==================================================================== lightbox */
@@ -1808,15 +2354,15 @@
     })();
 
     /* ==================================================================== boot */
-    renderIcons();
-    layoutIcons();
+    $("#preview-badge").hidden = !PREVIEW;
     setupDock();
+    applyRole();
     (function openFromHash() {
       const id = decodeURIComponent(location.hash.slice(1));
       if (!id) return;
-      if (id === "about") openNotes("about");
+      if (id === "about") openNotes(roleNotes()[0]?.id);
       else if (id.startsWith("note-")) openNotes(id.slice(5));
-      else if (PROJECTS.some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${id}"]`));
+      else if (roleProjects().some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${CSS.escape(id)}"]`));
     })();
   </script>
 </body>

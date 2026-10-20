@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfolio Admin</title>
+  <link rel="icon" href="assets/img/favicon.png">
+  <style>
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url("assets/fonts/inter-latin.woff2") format("woff2");
+    }
+
+    :root {
+      color-scheme: light;
+      --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --page: #f5f5f7;
+      --card: #fff;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --faint: #8e8e93;
+      --line: #e5e5ea;
+      --field: #d2d2d7;
+      --hover: #f0f0f3;
+      --blue: #0a84ff;
+      --blue-ink: #0066cc;
+      --red: #e5372b;
+      --warn-bg: #fff4d6;
+      --warn-ink: #8a5a00;
+      --ok: #1f9d55;
+      --radius: 14px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font: 15px/1.45 var(--font);
+      color: var(--ink);
+      background: var(--page);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: -.015em;
+    }
+
+    /* ---------------------------------------------------------------- controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 7px 14px;
+      border: 1px solid var(--field);
+      border-radius: 10px;
+      background: #fff;
+      font-weight: 500;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color .15s, border-color .15s, opacity .15s;
+    }
+
+    .btn:hover {
+      background: var(--hover);
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: default;
+    }
+
+    .btn.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn.primary:hover:not(:disabled) {
+      background: #0070e0;
+    }
+
+    .btn.danger {
+      color: var(--red);
+    }
+
+    .btn.ghost {
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .btn.ghost:hover {
+      background: var(--hover);
+    }
+
+    .btn.small {
+      min-height: 30px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .btn.icon-only {
+      width: 30px;
+      padding: 0;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="password"],
+    input[type="datetime-local"],
+    input:not([type]),
+    select,
+    textarea {
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 11px;
+      border: 1px solid var(--field);
+      border-radius: 10px;
+      background: #fff;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    textarea.tall {
+      min-height: 300px;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(10, 132, 255, .18);
+      outline: none;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--blue);
+      flex: none;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .row.nowrap {
+      flex-wrap: nowrap;
+    }
+
+    .grow {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px 6px 9px;
+      border: 1px solid var(--field);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .chip-check:has(input:checked) {
+      border-color: var(--blue);
+      background: #eaf3ff;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--hover);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .chip.warn {
+      background: var(--warn-bg);
+      color: var(--warn-ink);
+    }
+
+    .chip.default {
+      background: #eaf3ff;
+      color: var(--blue-ink);
+    }
+
+    /* ---------------------------------------------------------------- login */
+    .login {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .login-card {
+      display: grid;
+      gap: 16px;
+      width: min(100%, 380px);
+      padding: 32px 28px 28px;
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 20px 50px rgba(0, 0, 0, .08);
+      text-align: center;
+    }
+
+    .login-card img {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto;
+      border-radius: 50%;
+    }
+
+    .login-card h1 {
+      font-size: 22px;
+    }
+
+    .login-card p {
+      margin: -8px 0 0;
+      color: var(--muted);
+    }
+
+    .login-card .field {
+      text-align: left;
+    }
+
+    .form-error {
+      margin: 0 !important;
+      color: var(--red) !important;
+      font-size: 14px;
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    /* ---------------------------------------------------------------- app shell */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 60px;
+      padding: 10px max(16px, env(safe-area-inset-left));
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .85);
+      backdrop-filter: saturate(1.6) blur(16px);
+      -webkit-backdrop-filter: saturate(1.6) blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .status {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .status.dirty::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 7px;
+      border-radius: 50%;
+      background: #ff9f0a;
+      vertical-align: 1px;
+    }
+
+    .status.ok {
+      color: var(--ok);
+    }
+
+    .status.err {
+      color: var(--red);
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 24px;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 24px max(16px, env(safe-area-inset-left)) 80px;
+    }
+
+    .tabs {
+      position: sticky;
+      top: 84px;
+      align-self: start;
+      display: grid;
+      gap: 2px;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      border: 0;
+      border-radius: 10px;
+      background: none;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .tab:hover {
+      background: rgba(0, 0, 0, .04);
+    }
+
+    .tab[aria-current="page"] {
+      background: #fff;
+      box-shadow: 0 0 0 1px var(--line);
+    }
+
+    .tab svg {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      color: var(--blue);
+    }
+
+    .tab .count {
+      margin-left: auto;
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    .page-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .page-head h1 {
+      font-size: 26px;
+    }
+
+    .page-head p {
+      max-width: 640px;
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    .card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .card+.card {
+      margin-top: 14px;
+    }
+
+    .card h2 {
+      margin-bottom: 14px;
+      font-size: 17px;
+    }
+
+    .card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .card-head h2 {
+      margin: 0;
+    }
+
+    .empty {
+      padding: 36px 20px;
+      border: 1px dashed var(--field);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    /* ---------------------------------------------------------------- portfolios */
+    .portfolio-card .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .portfolio-card .title-row input {
+      flex: 1;
+      min-width: 180px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .share {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--page);
+    }
+
+    .share code {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      font: 500 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .themes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .theme-opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px 6px 6px;
+      border: 1px solid var(--field);
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .theme-opt:has(input:checked) {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 1px var(--blue);
+    }
+
+    .theme-opt input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .theme-opt:has(input:focus-visible) {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .swatch {
+      width: 34px;
+      height: 26px;
+      border-radius: 8px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    }
+
+    .swatch.light {
+      background: radial-gradient(circle at 50% 70%, #1c1c1e 0 22%, transparent 23%), linear-gradient(#fbfbfb, #e2e2e2);
+    }
+
+    .swatch.dark {
+      background: radial-gradient(circle at 50% 70%, #1c1c1e 0 22%, #d8d8dc 23% 34%, transparent 62%), linear-gradient(#1b1b1f, #060607);
+    }
+
+    .swatch.midnight {
+      background: radial-gradient(circle at 50% 70%, #1c1c1e 0 22%, #b0c4fc 23% 34%, transparent 62%), linear-gradient(#17254f, #050a1b);
+    }
+
+    .swatch.red {
+      background: radial-gradient(circle at 50% 70%, #1c1c1e 0 18%, transparent 19%), radial-gradient(circle at 50% 55%, #fff 0 18%, rgba(255, 255, 255, .55) 34%, transparent 58%), linear-gradient(#d22a3d, #7e1322);
+    }
+
+    .meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ---------------------------------------------------------------- list + editor */
+    .split {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .list-pane {
+      position: sticky;
+      top: 84px;
+      display: grid;
+      gap: 10px;
+      max-height: calc(100vh - 104px);
+      overflow: auto;
+      padding: 2px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter {
+      padding: 4px 11px;
+      border: 1px solid var(--field);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .filter[aria-pressed="true"] {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .item:hover {
+      border-color: var(--field);
+    }
+
+    .item[aria-current="true"] {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 1px var(--blue);
+    }
+
+    .thumb {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      flex: none;
+      overflow: hidden;
+      border-radius: 10px;
+      background: var(--hover);
+      color: var(--faint);
+      font-size: 20px;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item-text {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .item-text strong {
+      overflow: hidden;
+      font-weight: 600;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .item-moves {
+      display: grid;
+      gap: 2px;
+    }
+
+    .back {
+      display: none;
+    }
+
+    /* rows of small inputs (details, buttons, links) */
+    .rows {
+      display: grid;
+      gap: 8px;
+    }
+
+    .pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .row-tools {
+      display: flex;
+      gap: 2px;
+    }
+
+    /* media */
+    .media-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .media {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 14px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .media-preview {
+      display: grid;
+      place-items: center;
+      width: 120px;
+      height: 90px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .media-preview img,
+    .media-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-fields {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .media-kind {
+      margin-right: auto;
+      color: var(--muted);
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .add-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .upload-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .thumb-edit {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .thumb-edit .thumb {
+      width: 84px;
+      height: 84px;
+    }
+
+    .cheatsheet {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--page);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .cheatsheet code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      font: 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .link-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    .link-row+.link-row {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr) 170px auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ---------------------------------------------------------------- toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      z-index: 50;
+      max-width: min(560px, calc(100vw - 32px));
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #1d1d1f;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+      font-size: 14px;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .25s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast.error {
+      background: #b3261e;
+    }
+
+    /* ---------------------------------------------------------------- smaller screens */
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        padding-top: 12px;
+      }
+
+      .tabs {
+        position: static;
+        display: flex;
+        gap: 6px;
+        margin: 0 -16px;
+        padding: 2px 16px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .tab {
+        width: auto;
+        flex: none;
+        padding: 7px 12px;
+      }
+
+      .tab .count {
+        display: none;
+      }
+
+      .list-pane {
+        top: 72px;
+        max-height: calc(100vh - 92px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .split.editing .list-pane,
+      .split:not(.editing) .editor-pane {
+        display: none;
+      }
+
+      .list-pane {
+        position: static;
+        max-height: none;
+      }
+
+      .back {
+        display: inline-flex;
+        margin-bottom: 12px;
+      }
+
+      .link-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        flex-wrap: wrap;
+        gap: 8px 10px;
+      }
+
+      .status {
+        order: 3;
+        flex-basis: 100%;
+      }
+
+      .top-actions {
+        margin-left: auto;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .two-col,
+      .link-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .pair {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .pair> :nth-child(2) {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .pair> :nth-child(3) {
+        grid-row: 1 / span 2;
+        grid-column: 2;
+      }
+
+      .media {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .media-preview {
+        width: 100%;
+        height: 160px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="login" id="login" hidden>
+    <form class="login-card" id="login-form">
+      <img src="assets/img/avatar-duotone.png" alt="" width="72" height="72">
+      <h1>Portfolio admin</h1>
+      <p>Sign in to edit your portfolio.</p>
+      <label class="field"><span class="field-label">Password</span>
+        <input type="password" id="password" autocomplete="current-password" required></label>
+      <p class="form-error" id="login-error" role="alert"></p>
+      <button class="btn primary" type="submit" id="login-btn">Sign in</button>
+    </form>
+  </main>
+
+  <div id="app" hidden>
+    <header class="topbar">
+      <a class="brand" href="/" target="_blank" rel="noopener" title="Open your site">
+        <img src="assets/img/avatar-duotone.png" alt="" width="30" height="30"><span>Portfolio admin</span>
+      </a>
+      <span class="status" id="status" aria-live="polite"></span>
+      <div class="row nowrap top-actions">
+        <button class="btn" type="button" id="preview-btn">Preview</button>
+        <button class="btn primary" type="button" id="publish-btn">Publish</button>
+        <button class="btn ghost small" type="button" id="logout-btn">Log out</button>
+      </div>
+    </header>
+    <div class="shell">
+      <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+      <main id="content"></main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ==================================================================== rules shared with the site and /api/admin */
+    const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+    const RESERVED = new Set(["admin", "api", "assets", "content", "dev", "index"]);
+    const THEMES = [["light", "Light"], ["dark", "Dark"], ["midnight", "Midnight"], ["red", "Red & white"]];
+    const LINK_TYPES = { linkedin: "LinkedIn", instagram: "Instagram", behance: "Behance", github: "GitHub", youtube: "YouTube", dribbble: "Dribbble", website: "Website", email: "Email" };
+    const MAX_UPLOAD = 3300000;
+    const FIT = { gallery: [2000, 2000], thumb: [360, 480], photo: [1200, 1200], poster: [1200, 1200] };
+
+    /* ==================================================================== state */
+    const S = {
+      password: "",
+      content: null,
+      baseSha: "",
+      blobs: {}, // path -> object URL, to show uploads before they are live
+      pending: {}, // path -> git blob sha, uploaded but not published yet
+      uploading: 0,
+      dirty: false,
+      tab: "portfolios",
+      selected: { projects: null, notes: null },
+      filter: "all",
+    };
+    const C = () => S.content;
+    const roles = () => S.content.roles;
+
+    /* ==================================================================== small helpers */
+    const $ = (sel, root = document) => root.querySelector(sel);
+    function h(tag, props, ...kids) {
+      const el = document.createElement(tag);
+      for (const [k, v] of Object.entries(props || {})) {
+        if (v == null || v === false) continue;
+        if (k === "class") el.className = v;
+        else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+        else if (k in el && !k.includes("-") && k !== "list" && k !== "form") el[k] = v;
+        else el.setAttribute(k, v === true ? "" : v);
+      }
+      for (const kid of kids.flat(Infinity)) {
+        if (kid == null || kid === false) continue;
+        el.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+      }
+      return el;
+    }
+    // replaceChildren that skips false/null/"" like h() does
+    const fill = (el, ...kids) => el.replaceChildren(...kids.flat(Infinity).filter((k) => k != null && k !== false && k !== ""));
+    const slugify = (s) => String(s || "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40).replace(/-+$/, "");
+    function uniqueId(text, taken, fallback) {
+      let base = slugify(text) || fallback;
+      if (RESERVED.has(base)) base += "-1";
+      let id = base;
+      for (let n = 2; taken.has(id); n++) id = `${base}-${n}`;
+      return id;
+    }
+    const move = (list, i, d) => {
+      const j = i + d;
+      if (j < 0 || j >= list.length) return false;
+      [list[i], list[j]] = [list[j], list[i]];
+      return true;
+    };
+    const roleLabel = (id) => roles().find((r) => r.id === id)?.label || id;
+    const isAbs = (u) => /^(https?:|blob:|data:)/i.test(u);
+    const srcOf = (path) => (!path ? "" : S.blobs[path] || (isAbs(path) ? path : "/" + path.replace(/^\/+/, "")));
+    const nowLocal = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    const prettyName = (file) => file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+    const siteUrl = (id) => `${location.origin}/${id === roles()[0]?.id ? "" : id}`;
+
+    function toast(msg, kind) {
+      const t = $("#toast");
+      t.textContent = msg;
+      t.className = "toast show" + (kind === "error" ? " error" : "");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => (t.className = "toast"), kind === "error" ? 7000 : 3500);
+    }
+
+    function setStatus(text, kind = "") {
+      const el = $("#status");
+      el.textContent = text;
+      el.className = "status " + kind;
+    }
+
+    function syncStatus() {
+      $("#publish-btn").disabled = !S.dirty || S.uploading > 0;
+      if (S.uploading) setStatus(`Uploading ${S.uploading} file${S.uploading > 1 ? "s" : ""}…`);
+      else if (S.dirty) setStatus("Unpublished changes", "dirty");
+      else if (!$("#status").classList.contains("ok")) setStatus(lastPublished());
+    }
+    const lastPublished = () => {
+      const t = Date.parse(S.content?.updatedAt || "");
+      return t ? `Last published ${new Date(t).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}` : "";
+    };
+
+    function changed() {
+      S.dirty = true;
+      syncStatus();
+    }
+
+    addEventListener("beforeunload", (e) => {
+      if (S.dirty || S.uploading) e.preventDefault();
+    });
+
+    /* ==================================================================== API */
+    async function api(method, body) {
+      let res;
+      try {
+        res = await fetch("/api/admin", {
+          method,
+          headers: { Authorization: `Bearer ${S.password}`, ...(body && { "Content-Type": "application/json" }) },
+          body: body && JSON.stringify(body),
+        });
+      } catch {
+        throw new Error("Can't reach the server. Check your internet connection and try again.");
+      }
+      let data = null;
+      try { data = await res.json(); } catch { }
+      if (!res.ok) {
+        const msg = data?.error
+          || (res.status === 413 ? "That file is too big to upload here (max 3.3 MB)."
+            : res.status === 404 ? "The admin server isn't running on this address."
+              : `Something went wrong (error ${res.status}). Try again.`);
+        throw Object.assign(new Error(msg), { status: res.status, code: data?.code });
+      }
+      return data;
+    }
+
+    /* ==================================================================== login */
+    async function login(password) {
+      S.password = password;
+      const data = await api("GET");
+      S.content = normalize(data.content);
+      S.baseSha = data.contentSha;
+      S.dirty = false;
+      S.pending = {};
+      try { sessionStorage.setItem("admin-pw", password); } catch { }
+      $("#login").hidden = true;
+      $("#app").hidden = false;
+      render();
+      syncStatus();
+    }
+
+    $("#login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = $("#login-btn"), err = $("#login-error");
+      btn.disabled = true;
+      err.textContent = "";
+      try {
+        await login($("#password").value);
+      } catch (ex) {
+        err.textContent = ex.message + (ex.status === 503
+          ? "\n\nOn Vercel, open Project → Settings → Environment Variables and add ADMIN_PASSWORD, GITHUB_TOKEN, GITHUB_REPO (and GITHUB_BRANCH if it isn't main), then redeploy."
+          : "");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    $("#logout-btn").addEventListener("click", () => {
+      if (S.dirty && !confirm("You have unpublished changes. Log out and lose them?")) return;
+      S.dirty = false;
+      try { sessionStorage.removeItem("admin-pw"); } catch { }
+      location.reload();
+    });
+
+    /* ==================================================================== content shape
+       Fill in anything missing so the editors never trip over old or hand-edited content. */
+    function normalize(c) {
+      const arr = (v) => (Array.isArray(v) ? v : []);
+      const str = (v) => (typeof v === "string" ? v : "");
+      c = c && typeof c === "object" ? c : {};
+      c.settings = { showSwitcher: true, ...c.settings };
+      c.profile = { name: "", nickname: "", ...c.profile };
+      c.roles = arr(c.roles).filter(Boolean).map((r) => ({
+        ...r, id: str(r.id), label: str(r.label), tagline: str(r.tagline), resume: str(r.resume), listed: r.listed !== false,
+        theme: THEMES.some(([t]) => t === r.theme) ? r.theme : "light",
+      }));
+      c.links = arr(c.links).filter(Boolean).map((l) => ({ ...l, type: LINK_TYPES[l.type] ? l.type : "website", url: str(l.url), label: str(l.label), roles: arr(l.roles) }));
+      c.projects = arr(c.projects).filter(Boolean).map((p) => ({
+        ...p, id: str(p.id), title: str(p.title), label: str(p.label), icon: p.icon === "folder" ? "folder" : "thumb", thumb: p.thumb?.src ? p.thumb : null,
+        description: str(p.description), layout: p.layout === "cards" ? "cards" : "stack", cols: Math.min(6, Math.max(1, Math.round(+p.cols) || 3)),
+        roles: arr(p.roles), meta: arr(p.meta).filter(Array.isArray), ctas: arr(p.ctas).filter(Boolean), media: arr(p.media).filter(Boolean),
+      }));
+      c.notes = arr(c.notes).filter(Boolean).map((n) => ({ ...n, id: str(n.id), title: str(n.title), date: str(n.date), body: str(n.body), photo: n.photo?.src ? n.photo : null, roles: arr(n.roles) }));
+      return c;
+    }
+
+    function validate(c) {
+      if (!c.roles.length) return "Add at least one portfolio.";
+      const ids = new Set();
+      for (const r of c.roles) {
+        if (!r.label.trim()) return "Every portfolio needs a name.";
+        if (!SLUG.test(r.id)) return `Portfolio "${r.label}" has an invalid link name.`;
+        if (RESERVED.has(r.id)) return `"${r.id}" is reserved. Pick another link name for "${r.label}".`;
+        if (ids.has(r.id)) return `Two portfolios use the link name "${r.id}".`;
+        ids.add(r.id);
+      }
+      for (const [list, what] of [[c.projects, "Project"], [c.notes, "Note"]]) {
+        const seen = new Set();
+        for (const [i, it] of list.entries()) {
+          if (!it.title.trim()) return `${what} #${i + 1} needs a title.`;
+          if (!SLUG.test(it.id) || seen.has(it.id)) return `${what} "${it.title}" has a broken id. Duplicate it and delete the original.`;
+          seen.add(it.id);
+        }
+      }
+      for (const l of c.links) if (!l.url.trim()) return `Your ${LINK_TYPES[l.type]} link needs a URL (or remove it).`;
+      return "";
+    }
+
+    // Uploaded files still referenced somewhere in the content (removed ones are simply not committed).
+    const referencedPending = (c) => {
+      const json = JSON.stringify(c);
+      return Object.entries(S.pending).filter(([path]) => json.includes(JSON.stringify(path))).map(([path, sha]) => ({ path, sha }));
+    };
+
+    /* ==================================================================== uploads */
+    const blobToBase64 = (blob) => new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(",")[1] || "");
+      r.onerror = () => reject(new Error("Couldn't read the file."));
+      r.readAsDataURL(blob);
+    });
+
+    const fitInside = (w, h, maxW, maxH) => {
+      const s = Math.min(1, maxW / w, maxH / h);
+      return [Math.max(1, Math.round(w * s)), Math.max(1, Math.round(h * s))];
+    };
+
+    async function encode(canvas) {
+      let blob = await new Promise((r) => canvas.toBlob(r, "image/webp", 0.86));
+      if (!blob || blob.type !== "image/webp") blob = await new Promise((r) => canvas.toBlob(r, "image/jpeg", 0.86));
+      return blob;
+    }
+
+    // resize + re-encode as WebP (GIFs stay as they are so they keep animating)
+    async function prepareImage(file, [maxW, maxH]) {
+      let bmp;
+      try {
+        bmp = await createImageBitmap(file);
+      } catch {
+        throw new Error(`Couldn't open "${file.name}". Use a JPG, PNG or WebP image.`);
+      }
+      const [w, h] = fitInside(bmp.width, bmp.height, maxW, maxH);
+      if (file.type === "image/gif") return { blob: file, w: bmp.width, h: bmp.height };
+      const c = document.createElement("canvas");
+      c.width = w;
+      c.height = h;
+      c.getContext("2d").drawImage(bmp, 0, 0, w, h);
+      bmp.close?.();
+      return { blob: await encode(c), w, h };
+    }
+
+    async function upload(blob, name) {
+      if (blob.size > MAX_UPLOAD) {
+        throw new Error(`"${name}" is too big to upload here (${(blob.size / 1e6).toFixed(1)} MB, max 3.3 MB).` +
+          (blob.type.startsWith("video/") ? " Put the video on YouTube or Vimeo and add the link instead." : ""));
+      }
+      const { path, sha } = await api("POST", { action: "upload", type: blob.type, data: await blobToBase64(blob) });
+      S.pending[path] = sha;
+      S.blobs[path] ||= URL.createObjectURL(blob);
+      return path;
+    }
+
+    // runs an upload job with the status line + publish lock; returns null (after a toast) on failure
+    async function uploading(job) {
+      S.uploading++;
+      syncStatus();
+      try {
+        return await job();
+      } catch (e) {
+        toast(e.message, "error");
+        return null;
+      } finally {
+        S.uploading--;
+        syncStatus();
+      }
+    }
+
+    function pickFiles(accept, multiple) {
+      return new Promise((resolve) => {
+        const input = h("input", { type: "file", accept, multiple });
+        input.addEventListener("change", () => resolve([...input.files]));
+        input.click();
+      });
+    }
+
+    async function uploadImage(file, fit) {
+      const img = await prepareImage(file, fit);
+      return { src: await upload(img.blob, file.name), w: img.w, h: img.h };
+    }
+
+    async function uploadVideo(file) {
+      if (!/^video\/(mp4|webm)$/.test(file.type)) throw new Error(`"${file.name}" isn't an MP4 or WebM video. Export it as MP4, or add a YouTube/Vimeo link instead.`);
+      if (file.size > MAX_UPLOAD) await upload(file, file.name); // throws the friendly "too big" error
+      const url = URL.createObjectURL(file);
+      const v = h("video", { muted: true, playsInline: true, preload: "auto", src: url });
+      await new Promise((resolve, reject) => {
+        v.onloadedmetadata = resolve;
+        v.onerror = () => reject(new Error(`Couldn't read "${file.name}".`));
+      });
+      const w = v.videoWidth || 16, hgt = v.videoHeight || 9;
+      let poster = "";
+      try { // a still from half a second in, for the poster
+        v.currentTime = Math.min(0.5, (v.duration || 1) / 2);
+        await new Promise((resolve, reject) => {
+          v.onseeked = resolve;
+          setTimeout(reject, 4000);
+        });
+        const [pw, ph] = fitInside(w, hgt, ...FIT.poster);
+        const c = h("canvas", { width: pw, height: ph });
+        c.getContext("2d").drawImage(v, 0, 0, pw, ph);
+        poster = await upload(await encode(c), file.name + " poster");
+      } catch { }
+      const src = await upload(file, file.name);
+      URL.revokeObjectURL(url);
+      return { type: "video", src, poster, w, h: hgt, alt: prettyName(file) };
+    }
+
+    /* ==================================================================== preview + publish */
+    $("#preview-btn").addEventListener("click", () => {
+      try {
+        localStorage.setItem("portfolio-preview", JSON.stringify({ content: S.content, blobs: S.blobs }));
+      } catch {
+        return toast("Your browser blocked the preview. Allow site data for this page and try again.", "error");
+      }
+      const role = S.tab === "projects" && S.filter !== "all" && S.filter !== "hidden" ? S.filter : roles()[0]?.id;
+      open(`/${role === roles()[0]?.id ? "" : role}?preview`, "portfolio-preview");
+    });
+
+    $("#publish-btn").addEventListener("click", publish);
+
+    async function publish() {
+      const problem = validate(S.content);
+      if (problem) return toast(problem, "error");
+      const btn = $("#publish-btn");
+      btn.disabled = true;
+      setStatus("Publishing…");
+      try {
+        const r = await api("POST", { action: "publish", content: S.content, baseSha: S.baseSha, files: referencedPending(S.content) });
+        S.baseSha = r.contentSha;
+        S.content.updatedAt = r.updatedAt;
+        S.pending = {};
+        S.dirty = false;
+        setStatus("Published. Going live in about a minute…", "ok");
+        syncStatus();
+        waitUntilLive(r.updatedAt);
+      } catch (e) {
+        setStatus("Not published", "err");
+        if (e.code === "conflict") {
+          if (confirm(e.message + "\n\nReload now? Changes you haven't published here will be lost.")) {
+            S.dirty = false;
+            location.reload();
+          }
+        } else toast(e.message, "error");
+        syncStatus();
+      }
+    }
+
+    // Vercel redeploys after each publish; watch content.js until the new version is served.
+    async function waitUntilLive(stamp) {
+      for (let i = 0; i < 45; i++) {
+        try {
+          const text = await fetch(`/content.js?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.text());
+          if (text.includes(stamp)) {
+            if (!S.dirty) setStatus("Live ✓ Your site is up to date.", "ok");
+            return;
+          }
+        } catch { }
+        await new Promise((r) => setTimeout(r, 4000));
+      }
+      if (!S.dirty) setStatus("Still deploying. Check your site again in a minute.", "");
+    }
+
+    /* ==================================================================== layout */
+    const TABS = [
+      ["portfolios", "Portfolios", '<path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h3l2 2h8A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/>'],
+      ["projects", "Projects", '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/>'],
+      ["notes", "Notes", '<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/>'],
+      ["links", "Links", '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'],
+      ["settings", "Settings", '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'],
+    ];
+    const VIEWS = { portfolios: viewPortfolios, projects: viewProjects, notes: viewNotes, links: viewLinks, settings: viewSettings };
+
+    function render() {
+      const counts = { portfolios: roles().length, projects: C().projects.length, notes: C().notes.length, links: C().links.length };
+      $("#tabs").replaceChildren(...TABS.map(([id, label, icon]) => {
+        const b = h("button", { class: "tab", type: "button", "aria-current": S.tab === id ? "page" : null, onclick: () => { S.tab = id; render(); scrollTo(0, 0); } },
+          label, counts[id] != null && h("span", { class: "count" }, counts[id]));
+        b.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>`);
+        return b;
+      }));
+      $("#content").replaceChildren(VIEWS[S.tab]());
+    }
+
+    const pageHead = (title, text, ...actions) =>
+      h("div", { class: "page-head" }, h("div", null, h("h1", null, title), text && h("p", null, text)), actions.length > 0 && h("div", { class: "row" }, actions));
+
+    /* ---------------------------------------------------------------- shared field builders */
+    function input(obj, key, { after, ...attrs } = {}) {
+      return h(attrs.rows ? "textarea" : "input", {
+        type: attrs.rows ? null : attrs.type || "text", value: obj[key] ?? "", ...attrs,
+        oninput: (e) => { obj[key] = e.target.value; changed(); after?.(); },
+      });
+    }
+
+    const field = (label, control, help) =>
+      h("label", { class: "field" }, h("span", { class: "field-label" }, label), control, help && h("span", { class: "help" }, help));
+
+    // portfolio checkboxes for one item; [] = hidden everywhere
+    function rolesPicker(item, after) {
+      const box = h("div", { class: "stack", style: "gap:8px" });
+      const draw = () => {
+        fill(box, 
+          h("div", { class: "chips" },
+            roles().map((r) => h("label", { class: "chip-check" },
+              h("input", {
+                type: "checkbox", checked: item.roles.includes(r.id), onchange: (e) => {
+                  item.roles = e.target.checked ? [...new Set([...item.roles, r.id])] : item.roles.filter((x) => x !== r.id);
+                  changed(); draw(); after?.();
+                },
+              }), r.label)),
+            h("button", { class: "btn small", type: "button", onclick: () => { item.roles = roles().map((r) => r.id); changed(); draw(); after?.(); } }, "All portfolios")),
+          !item.roles.length && h("span", { class: "chip warn", style: "justify-self:start" }, "Hidden: tick a portfolio to show it"),
+        );
+      };
+      draw();
+      return box;
+    }
+
+    const roleChips = (item) => h("div", { class: "chips" }, item.roles.length
+      ? item.roles.map((id) => h("span", { class: "chip" }, roleLabel(id)))
+      : h("span", { class: "chip warn" }, "Hidden"));
+
+    function moveButtons(list, i, after) {
+      return h("span", { class: "row-tools" },
+        h("button", { class: "btn ghost small icon-only", type: "button", title: "Move up", "aria-label": "Move up", disabled: i === 0, onclick: (e) => { e.stopPropagation(); if (move(list, i, -1)) { changed(); after(); } } }, "↑"),
+        h("button", { class: "btn ghost small icon-only", type: "button", title: "Move down", "aria-label": "Move down", disabled: i === list.length - 1, onclick: (e) => { e.stopPropagation(); if (move(list, i, 1)) { changed(); after(); } } }, "↓"));
+    }
+
+    // label/value rows (project details, buttons)
+    function pairRows(list, [a, b], [pa, pb], make, after) {
+      const wrap = h("div", { class: "rows" });
+      const draw = () => {
+        fill(wrap, ...list.map((row, i) => h("div", { class: "pair" },
+          h("input", { type: "text", value: row[a] ?? "", placeholder: pa, "aria-label": pa, oninput: (e) => { row[a] = e.target.value; changed(); } }),
+          h("input", { type: "text", value: row[b] ?? "", placeholder: pb, "aria-label": pb, oninput: (e) => { row[b] = e.target.value; changed(); } }),
+          h("span", { class: "row-tools" }, moveButtons(list, i, draw),
+            h("button", { class: "btn ghost small icon-only danger", type: "button", title: "Remove", "aria-label": "Remove row", onclick: () => { list.splice(i, 1); changed(); draw(); } }, "✕")))),
+        h("div", null, h("button", { class: "btn small", type: "button", onclick: () => { list.push(make()); changed(); draw(); [...wrap.querySelectorAll(".pair")].at(-1)?.querySelector("input")?.focus(); } }, "+ Add")));
+        after?.();
+      };
+      draw();
+      return wrap;
+    }
+
+    function fileButton(label, accept, multiple, onFiles) {
+      return h("button", { class: "btn small", type: "button", onclick: async () => { const files = await pickFiles(accept, multiple); if (files.length) onFiles(files); } }, label);
+    }
+
+    /* ==================================================================== Portfolios */
+    function viewPortfolios() {
+      const wrap = h("div");
+      const list = roles().map((r, i) => portfolioCard(r, i));
+      wrap.append(
+        pageHead("Portfolios", "Each portfolio is its own link you can send when you apply. Pick what shows in each one under Projects, Notes and Links."),
+        ...list,
+        addPortfolioCard(),
+      );
+      return wrap;
+    }
+
+    function portfolioCard(r, i) {
+      const counts = ["projects", "notes", "links"].map((k) => `${C()[k].filter((x) => x.roles.includes(r.id)).length} ${k}`).join(" · ");
+      const link = h("code", null, siteUrl(r.id).replace(/^https?:\/\//, ""));
+      const card = h("section", { class: "card portfolio-card" },
+        h("div", { class: "title-row" },
+          h("input", { type: "text", value: r.label, "aria-label": "Portfolio name", oninput: (e) => { r.label = e.target.value; changed(); } }),
+          i === 0 && h("span", { class: "chip default" }, "Main link"),
+          !r.listed && h("span", { class: "chip warn" }, "Not in switcher")),
+        h("div", { class: "stack" },
+          h("div", { class: "share" }, link,
+            h("button", { class: "btn small", type: "button", onclick: () => copy(siteUrl(r.id)) }, "Copy link"),
+            h("a", { class: "btn small", href: siteUrl(r.id), target: "_blank", rel: "noopener" }, "Open ↗"),
+            h("button", { class: "btn small ghost", type: "button", onclick: () => renameRole(r) }, "Change link name")),
+          field("Tagline", input(r, "tagline", { rows: 2, placeholder: "e.g. video editor shaping stories through rhythm and motion." }),
+            "One line about you for this portfolio. Notes can show it with {tagline}."),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Theme"),
+            h("div", { class: "themes", role: "radiogroup", "aria-label": "Theme" }, THEMES.map(([t, name]) => h("label", { class: "theme-opt" },
+              h("input", { type: "radio", name: "theme-" + i, checked: r.theme === t, onchange: () => { r.theme = t; changed(); } }),
+              h("span", { class: `swatch ${t}`, "aria-hidden": "true" }), name))),
+            h("span", { class: "help" }, "The look of the whole site when this portfolio is open.")),
+          resumeField(r),
+          h("label", { class: "check" }, h("input", { type: "checkbox", checked: r.listed, onchange: (e) => { r.listed = e.target.checked; changed(); render(); } }),
+            "Show in the switcher at the top of the site"),
+        ),
+        h("div", { class: "meta-line" },
+          h("span", { class: "help" }, counts),
+          h("div", { class: "row" },
+            moveButtons(roles(), i, render),
+            h("button", { class: "btn small danger", type: "button", onclick: () => deleteRole(r) }, "Delete"))),
+      );
+      return card;
+    }
+
+    function resumeField(r) {
+      const box = h("div", { class: "field" });
+      const draw = () => fill(box, 
+        h("span", { class: "field-label" }, "Resume"),
+        h("div", { class: "row nowrap" },
+          h("input", { type: "text", class: "grow", value: r.resume, placeholder: "Paste a link, or upload a PDF", "aria-label": "Resume link", oninput: (e) => { r.resume = e.target.value.trim(); changed(); } }),
+          fileButton("Upload PDF", "application/pdf", false, async ([file]) => {
+            const path = await uploading(() => {
+              if (file.type !== "application/pdf") throw new Error("Pick a PDF file.");
+              return upload(file, file.name);
+            });
+            if (path) { r.resume = path; changed(); draw(); toast("Resume uploaded. Publish to make it live."); }
+          }),
+          r.resume && h("a", { class: "btn small ghost", href: srcOf(r.resume), target: "_blank", rel: "noopener" }, "View")),
+        h("span", { class: "help" }, "Opens from the RESUME card in Notes. Empty = your LinkedIn profile."));
+      draw();
+      return box;
+    }
+
+    function addPortfolioCard() {
+      const name = h("input", { type: "text", placeholder: "e.g. Motion Designer", "aria-label": "New portfolio name" });
+      const from = h("select", { "aria-label": "Start with items from" },
+        h("option", { value: "" }, "Start empty"),
+        roles().map((r) => h("option", { value: r.id }, `Copy what's in ${r.label}`)));
+      return h("section", { class: "card" },
+        h("h2", null, "Add a portfolio"),
+        h("div", { class: "two-col" }, field("Name", name), field("Start with", from, "Copying ticks the same projects, notes and links. You can change them after.")),
+        h("div", { class: "add-bar" }, h("button", {
+          class: "btn primary", type: "button", onclick: () => {
+            const label = name.value.trim();
+            if (!label) return name.focus();
+            const id = uniqueId(label, new Set(roles().map((r) => r.id)), "portfolio");
+            roles().push({ id, label, tagline: "", resume: "", listed: true, theme: "light" });
+            if (from.value) for (const k of ["projects", "notes", "links"]) for (const it of C()[k]) if (it.roles.includes(from.value)) it.roles.push(id);
+            changed();
+            render();
+            toast(`Added "${label}". Its link is ${siteUrl(id)}`);
+          },
+        }, "Add portfolio")));
+    }
+
+    function renameRole(r) {
+      const next = prompt(`New link name for "${r.label}" (lowercase letters, numbers and dashes).\nOld links to /${r.id} will stop working.`, r.id);
+      if (next == null) return;
+      const id = slugify(next);
+      if (!SLUG.test(id) || RESERVED.has(id)) return toast(`"${next}" can't be used as a link name.`, "error");
+      if (id === r.id) return;
+      if (roles().some((x) => x.id === id)) return toast(`Another portfolio already uses "${id}".`, "error");
+      for (const k of ["projects", "notes", "links"]) for (const it of C()[k]) it.roles = it.roles.map((x) => (x === r.id ? id : x));
+      if (S.filter === r.id) S.filter = id;
+      r.id = id;
+      changed();
+      render();
+    }
+
+    function deleteRole(r) {
+      if (roles().length === 1) return toast("You need at least one portfolio.", "error");
+      const orphans = ["projects", "notes", "links"].reduce((n, k) => n + C()[k].filter((it) => it.roles.length === 1 && it.roles[0] === r.id).length, 0);
+      if (!confirm(`Delete the "${r.label}" portfolio?` + (orphans ? `\n\n${orphans} item(s) only show in it and will become hidden (not deleted).` : ""))) return;
+      for (const k of ["projects", "notes", "links"]) for (const it of C()[k]) it.roles = it.roles.filter((x) => x !== r.id);
+      S.content.roles = roles().filter((x) => x !== r);
+      if (S.filter === r.id) S.filter = "all";
+      changed();
+      render();
+    }
+
+    async function copy(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("Link copied");
+      } catch {
+        prompt("Copy this link:", text);
+      }
+    }
+
+    /* ==================================================================== Projects + Notes (list | editor) */
+    function splitView(kind, { title, text, items, newItem, itemThumb, editor, emptyText }) {
+      const visible = items.filter((it) => S.filter === "all" || (S.filter === "hidden" ? !it.roles.length : it.roles.includes(S.filter)));
+      const sel = items.find((it) => it.id === S.selected[kind]);
+      const listPane = h("div", { class: "list-pane" },
+        h("div", { class: "filters", role: "group", "aria-label": "Show" },
+          [["all", "All"], ...roles().map((r) => [r.id, r.label]), ["hidden", "Hidden"]].map(([id, label]) =>
+            h("button", { class: "filter", type: "button", "aria-pressed": String(S.filter === id), onclick: () => { S.filter = id; render(); } }, label))),
+        h("button", {
+          class: "btn primary", type: "button", onclick: () => {
+            const it = newItem();
+            items.push(it);
+            S.selected[kind] = it.id;
+            changed();
+            render();
+            $(".editor-pane input")?.select();
+          },
+        }, `+ New ${kind === "projects" ? "project" : "note"}`),
+        visible.length ? visible.map((it) => {
+          const i = items.indexOf(it);
+          return h("div", {
+            class: "item", role: "button", tabIndex: 0, "aria-current": String(it === sel),
+            onclick: () => { S.selected[kind] = it.id; render(); scrollTo(0, 0); },
+            onkeydown: (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.currentTarget.click(); } },
+          },
+            h("span", { class: "thumb", "aria-hidden": "true" }, itemThumb(it)),
+            h("span", { class: "item-text" }, h("strong", null, it.title || "Untitled"), roleChips(it)),
+            S.filter === "all" && h("span", { class: "item-moves" }, moveButtons(items, i, render)));
+        }) : h("p", { class: "empty" }, "Nothing here yet."));
+
+      const editorPane = h("div", { class: "editor-pane" },
+        sel ? [h("button", { class: "btn small back", type: "button", onclick: () => { S.selected[kind] = null; render(); } }, "← All " + kind), editor(sel)]
+          : h("div", { class: "empty" }, emptyText));
+
+      return h("div", null, pageHead(title, text), h("div", { class: "split" + (sel ? " editing" : "") }, listPane, editorPane));
+    }
+
+    const defaultRoles = () => (S.filter !== "all" && S.filter !== "hidden" ? [S.filter] : roles().map((r) => r.id));
+
+    /* ---------------------------------------------------------------- Projects */
+    function viewProjects() {
+      return splitView("projects", {
+        title: "Projects",
+        text: "The icons on your desktop. Each portfolio shows the projects ticked for it, in this order.",
+        items: C().projects,
+        emptyText: "Pick a project on the left, or make a new one.",
+        newItem: () => ({
+          id: uniqueId("new-project", new Set(C().projects.map((p) => p.id)), "project"),
+          title: "New project", label: "", roles: defaultRoles(), icon: "thumb", thumb: null, description: "",
+          meta: [["Client", ""], ["Year", String(new Date().getFullYear())], ["Project type", ""], ["Softwares", ""]],
+          ctas: [], layout: "stack", cols: 3, media: [],
+        }),
+        itemThumb: (p) => (p.icon === "folder" ? "📁" : p.thumb?.src ? h("img", { src: srcOf(p.thumb.src), alt: "" }) : "▢"),
+        editor: projectEditor,
+      });
+    }
+
+    function projectEditor(p) {
+      const relist = () => {
+        const item = $(".item[aria-current='true'] .item-text");
+        if (item) item.replaceChildren(h("strong", null, p.title || "Untitled"), roleChips(p));
+      };
+      return h("div", null,
+        h("section", { class: "card stack" },
+          field("Title", input(p, "title", { after: relist, placeholder: "Project name" })),
+          field("Desktop label", input(p, "label", { placeholder: p.title || "Same as the title" }), "The name under the icon. Leave empty to use the title."),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Show in"), rolesPicker(p, relist)),
+        ),
+        h("section", { class: "card" }, h("h2", null, "Desktop icon"), iconEditor(p)),
+        h("section", { class: "card stack" },
+          field("Description", input(p, "description", { rows: 4, placeholder: "What it is, who it was for, what you did." })),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Details"),
+            pairRows(p.meta, [0, 1], ["Label (e.g. Client)", "Value"], () => ["", ""])),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Buttons"),
+            h("span", { class: "help" }, "Red arrow buttons, e.g. “Project In Detail” → your Behance page, or “Live site”, “GitHub”."),
+            pairRows(p.ctas, ["label", "href"], ["Button text", "https://…"], () => ({ label: "Project In Detail", href: "" }))),
+        ),
+        h("section", { class: "card" }, mediaEditor(p)),
+        h("section", { class: "card" },
+          h("div", { class: "row" },
+            h("button", {
+              class: "btn", type: "button", onclick: () => {
+                const copyOf = structuredClone(p);
+                copyOf.id = uniqueId(p.id + "-copy", new Set(C().projects.map((x) => x.id)), "project");
+                copyOf.title = p.title + " copy";
+                C().projects.splice(C().projects.indexOf(p) + 1, 0, copyOf);
+                S.selected.projects = copyOf.id;
+                changed();
+                render();
+              },
+            }, "Duplicate"),
+            h("button", {
+              class: "btn danger", type: "button", onclick: () => {
+                if (!confirm(`Delete "${p.title}"? This can't be undone after you publish.`)) return;
+                C().projects.splice(C().projects.indexOf(p), 1);
+                S.selected.projects = null;
+                changed();
+                render();
+              },
+            }, "Delete project"),
+            h("span", { class: "help" }, `Link to it: /${p.roles[0] && p.roles[0] !== roles()[0]?.id ? p.roles[0] : ""}#${p.id}`))),
+      );
+    }
+
+    function iconEditor(p) {
+      const box = h("div", { class: "stack" });
+      const draw = () => fill(box, 
+        h("div", { class: "row", role: "radiogroup", "aria-label": "Icon style" },
+          [["thumb", "Thumbnail picture"], ["folder", "Blue folder"]].map(([v, label]) => h("label", { class: "check", style: "margin-right:14px" },
+            h("input", { type: "radio", name: "icon-" + p.id, checked: p.icon === v, onchange: () => { p.icon = v; changed(); draw(); render(); } }), label))),
+        p.icon === "thumb" && h("div", { class: "thumb-edit" },
+          h("span", { class: "thumb" }, p.thumb?.src ? h("img", { src: srcOf(p.thumb.src), alt: "" }) : "▢"),
+          h("div", { class: "stack", style: "gap:6px" },
+            h("div", { class: "row" },
+              fileButton(p.thumb ? "Change picture" : "Upload picture", "image/*", false, async ([file]) => {
+                const t = await uploading(() => uploadImage(file, FIT.thumb));
+                if (t) { p.thumb = t; changed(); draw(); render(); }
+              }),
+              p.thumb && h("button", { class: "btn small ghost", type: "button", onclick: () => { p.thumb = null; changed(); draw(); render(); } }, "Remove")),
+            h("span", { class: "help" }, "Shown on the desktop. Adding the first image to the project also sets this if it's empty."))),
+      );
+      draw();
+      return box;
+    }
+
+    // which players the site can embed (keep in step with embedInfo() in index.html)
+    function embedKind(url) {
+      let u;
+      try { u = new URL(url); } catch { return ""; }
+      const host = u.hostname.replace(/^(www|m)\./, "");
+      if (host === "youtu.be" || host === "youtube.com" || host === "youtube-nocookie.com") return "YouTube";
+      if (host === "vimeo.com" || host === "player.vimeo.com") return "Vimeo";
+      if (host === "drive.google.com" && u.pathname.includes("/file/d/")) return "Google Drive";
+      if (host === "instagram.com" && /\/(p|reels?|tv)\//.test(u.pathname)) return "Instagram";
+      return "";
+    }
+
+    function mediaEditor(p) {
+      const box = h("div");
+      const note = h("p", { class: "upload-note", "aria-live": "polite" });
+      const setThumbFrom = async (file) => {
+        if (p.icon !== "thumb" || p.thumb) return;
+        const t = await uploading(() => uploadImage(file, FIT.thumb));
+        if (t && !p.thumb) p.thumb = t;
+      };
+      const draw = () => fill(box, 
+        h("div", { class: "card-head" }, h("h2", null, "Pictures & videos"),
+          h("div", { class: "row" },
+            [["stack", "One under another"], ["cards", "Grid"]].map(([v, label]) => h("label", { class: "check", style: "margin-right:10px" },
+              h("input", { type: "radio", name: "layout-" + p.id, checked: p.layout === v, onchange: () => { p.layout = v; changed(); draw(); } }), label)),
+            p.layout === "cards" && h("select", { "aria-label": "Columns", style: "width:auto", onchange: (e) => { p.cols = +e.target.value; changed(); } },
+              [1, 2, 3, 4, 5, 6].map((n) => h("option", { value: n, selected: p.cols === n }, `${n} column${n > 1 ? "s" : ""}`))))),
+        p.media.length ? h("div", { class: "media-list" }, p.media.map((m, i) => mediaRow(p, m, i, draw)))
+          : h("p", { class: "empty" }, "No pictures or videos yet."),
+        h("div", { class: "add-bar" },
+          fileButton("+ Add pictures", "image/*", true, async (files) => {
+            for (const [n, file] of files.entries()) {
+              note.textContent = `Uploading ${file.name} (${n + 1} of ${files.length})…`;
+              const img = await uploading(() => uploadImage(file, FIT.gallery));
+              if (!img) continue;
+              p.media.push({ type: "image", ...img, alt: prettyName(file) });
+              changed();
+              draw();
+              await setThumbFrom(file);
+            }
+            note.textContent = "";
+            render();
+          }),
+          fileButton("+ Add video file", "video/mp4,video/webm", false, async ([file]) => {
+            note.textContent = `Uploading ${file.name}…`;
+            const v = await uploading(() => uploadVideo(file));
+            note.textContent = "";
+            if (v) { p.media.push(v); changed(); draw(); }
+          }),
+          h("button", {
+            class: "btn small", type: "button", onclick: () => {
+              const url = prompt("Paste a YouTube, Vimeo, Google Drive or Instagram link:");
+              if (!url?.trim()) return;
+              if (!/^https?:\/\//i.test(url.trim())) return toast("That doesn't look like a link. It should start with https://", "error");
+              p.media.push({ type: "embed", url: url.trim(), aspect: "", alt: "" });
+              changed();
+              draw();
+            },
+          }, "+ Add video link")),
+        h("p", { class: "upload-note" }, "Pictures are resized and compressed for you. Video files must be under 3.3 MB; for anything bigger, upload to YouTube or Vimeo and add the link."),
+        note,
+      );
+      draw();
+      return box;
+    }
+
+    function mediaRow(p, m, i, redraw) {
+      let preview, extra = null, kind;
+      if (m.type === "video") {
+        kind = "Video file";
+        preview = h("video", { src: srcOf(m.src), poster: srcOf(m.poster) || null, muted: true, playsInline: true, preload: "metadata" });
+      } else if (m.type === "embed") {
+        const k = embedKind(m.url);
+        kind = k ? `${k} video` : "Link";
+        preview = h("span", null, k ? `▶ ${k}` : "↗ Link");
+        extra = h("div", { class: "row nowrap" },
+          input(m, "url", { type: "url", class: "grow", "aria-label": "Video link", after: () => redraw() }),
+          h("select", { "aria-label": "Shape", style: "width:auto", onchange: (e) => { m.aspect = e.target.value; changed(); } },
+            [["", "Auto shape"], ["16:9", "Wide 16:9"], ["9:16", "Tall 9:16"], ["4:5", "Portrait 4:5"], ["1:1", "Square"]].map(([v, l]) => h("option", { value: v, selected: (m.aspect || "") === v }, l))));
+        if (!k) extra = [extra, h("span", { class: "help" }, "This site can't play this link inline, so it shows as a button that opens it.")];
+      } else {
+        kind = "Picture";
+        preview = h("img", { src: srcOf(m.src), alt: "", loading: "lazy" });
+      }
+      return h("div", { class: "media" },
+        h("div", { class: "media-preview" }, preview),
+        h("div", { class: "media-fields" },
+          h("div", { class: "row" }, h("span", { class: "media-kind" }, kind),
+            m.type !== "embed" && m.type !== "video" && p.icon === "thumb" && h("button", {
+              class: "btn ghost small", type: "button", onclick: async () => {
+                const file = await fetch(srcOf(m.src)).then((r) => r.blob()).catch(() => null);
+                const t = file && await uploading(() => uploadImage(new File([file], "thumb", { type: file.type }), FIT.thumb));
+                if (t) { p.thumb = t; changed(); render(); toast("Thumbnail updated"); }
+              },
+            }, "Use as thumbnail"),
+            moveButtons(p.media, i, redraw),
+            h("button", { class: "btn ghost small icon-only danger", type: "button", title: "Remove", "aria-label": "Remove", onclick: () => { p.media.splice(i, 1); changed(); redraw(); } }, "✕")),
+          extra,
+          input(m, "alt", { placeholder: m.type === "embed" ? "Title (e.g. Showreel 2026)" : "Describe it (helps screen readers and search)", "aria-label": "Description" })));
+    }
+
+    /* ---------------------------------------------------------------- Notes */
+    function viewNotes() {
+      return splitView("notes", {
+        title: "Notes",
+        text: "Pages in the Notes window. In each portfolio, the first note opens from your photo in the dock (About Me) and the second from the Notes icon.",
+        items: C().notes,
+        emptyText: "Pick a note on the left, or write a new one.",
+        newItem: () => ({
+          id: uniqueId("note", new Set(C().notes.map((n) => n.id)), "note"),
+          title: "New note", date: nowLocal(), roles: defaultRoles(), photo: null, body: "## Heading\nWrite something here.",
+        }),
+        itemThumb: (n) => (n.photo?.src ? h("img", { src: srcOf(n.photo.src), alt: "" }) : "✎"),
+        editor: noteEditor,
+      });
+    }
+
+    function noteEditor(n) {
+      const relist = () => {
+        const item = $(".item[aria-current='true'] .item-text");
+        if (item) item.replaceChildren(h("strong", null, n.title || "Untitled"), roleChips(n));
+      };
+      const photo = h("div");
+      const drawPhoto = () => photo.replaceChildren(h("div", { class: "thumb-edit" },
+        h("span", { class: "thumb" }, n.photo ? h("img", { src: srcOf(n.photo.src), alt: "" }) : "–"),
+        h("div", { class: "stack", style: "gap:8px;flex:1" },
+          h("div", { class: "row" },
+            fileButton(n.photo ? "Change photo" : "Add a photo", "image/*", false, async ([file]) => {
+              const img = await uploading(() => uploadImage(file, FIT.photo));
+              if (img) { n.photo = { ...img, alt: n.photo?.alt || prettyName(file) }; changed(); drawPhoto(); render(); }
+            }),
+            n.photo && h("button", { class: "btn small ghost", type: "button", onclick: () => { n.photo = null; changed(); drawPhoto(); render(); } }, "Remove")),
+          n.photo && input(n.photo, "alt", { placeholder: "Describe the photo", "aria-label": "Photo description" }))));
+      drawPhoto();
+
+      return h("div", null,
+        h("section", { class: "card stack" },
+          h("div", { class: "two-col" },
+            field("Title", input(n, "title", { after: relist })),
+            field("Date", input(n, "date", { type: "datetime-local" }), "Shown at the top of the note.")),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Show in"), rolesPicker(n, relist)),
+          h("div", { class: "field" }, h("span", { class: "field-label" }, "Photo (optional)"), photo),
+        ),
+        h("section", { class: "card stack" },
+          field("Text", input(n, "body", { rows: 16, class: "tall", spellcheck: true })),
+          cheatsheet()),
+        h("section", { class: "card" }, h("div", { class: "row" },
+          h("button", {
+            class: "btn danger", type: "button", onclick: () => {
+              if (!confirm(`Delete the note "${n.title}"?`)) return;
+              C().notes.splice(C().notes.indexOf(n), 1);
+              S.selected.notes = null;
+              changed();
+              render();
+            },
+          }, "Delete note"))),
+      );
+    }
+
+    function cheatsheet() {
+      const code = (t) => h("code", null, t);
+      return h("p", { class: "cheatsheet" },
+        "Formatting: ", code("## Heading"), " · ", code("- list item"), " · ", code("**bold**"), " · ", code("[link text](https://…)"),
+        " · ", code("> heads-up box"), " · empty line = new paragraph.", h("br"),
+        "Filled in for each portfolio: ", code("{name}"), " ", code("{nickname}"), " ", code("{role}"), " ", code("{tagline}"), ".");
+    }
+
+    /* ==================================================================== Links */
+    function viewLinks() {
+      const wrap = h("div");
+      const draw = () => fill(wrap, 
+        pageHead("Links", "The app icons on the right of the dock. A note's “Say hi on…” line is made from these too."),
+        h("section", { class: "card" },
+          C().links.length ? C().links.map((l, i) => h("div", { class: "link-row" },
+            h("div", { class: "link-grid" },
+              h("select", { "aria-label": "Type", onchange: (e) => { l.type = e.target.value; changed(); draw(); } },
+                Object.entries(LINK_TYPES).map(([v, label]) => h("option", { value: v, selected: l.type === v }, label))),
+              input(l, "url", { type: l.type === "email" ? "text" : "url", placeholder: l.type === "email" ? "you@example.com" : "https://…", "aria-label": "URL" }),
+              input(l, "label", { placeholder: `Tooltip: ${LINK_TYPES[l.type]}`, "aria-label": "Tooltip" }),
+              h("span", { class: "row-tools" }, moveButtons(C().links, i, draw),
+                h("button", { class: "btn ghost small icon-only danger", type: "button", title: "Remove", "aria-label": "Remove link", onclick: () => { C().links.splice(i, 1); changed(); draw(); } }, "✕"))),
+            rolesPicker(l))) : h("p", { class: "empty" }, "No links yet."),
+          h("div", { class: "add-bar" }, h("button", { class: "btn primary", type: "button", onclick: () => { C().links.push({ type: "github", url: "", label: "", roles: defaultRoles() }); changed(); draw(); } }, "+ Add link"))),
+      );
+      draw();
+      return wrap;
+    }
+
+    /* ==================================================================== Settings */
+    function viewSettings() {
+      const backup = () => {
+        const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(S.content, null, 2)], { type: "application/json" })), download: `portfolio-backup-${nowLocal().slice(0, 10)}.json` });
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      };
+      return h("div", null,
+        pageHead("Settings"),
+        h("section", { class: "card stack" },
+          h("h2", { style: "margin:0" }, "You"),
+          h("div", { class: "two-col" },
+            field("Full name", input(C().profile, "name"), "Shown as {name} in notes."),
+            field("Nickname", input(C().profile, "nickname"), "Used in the browser tab title: “Danny Here”."))),
+        h("section", { class: "card stack" },
+          h("h2", { style: "margin:0" }, "Switcher"),
+          h("label", { class: "check" }, h("input", { type: "checkbox", checked: C().settings.showSwitcher, onchange: (e) => { C().settings.showSwitcher = e.target.checked; changed(); } }),
+            "Show the portfolio switcher to visitors"),
+          h("span", { class: "help" }, "Turn this off to show each visitor only the portfolio in the link you sent them.")),
+        h("section", { class: "card stack" },
+          h("h2", { style: "margin:0" }, "Backup"),
+          h("span", { class: "help" }, "Every publish is saved in your site's history on GitHub. You can also keep a copy of everything here."),
+          h("div", null, h("button", { class: "btn", type: "button", onclick: backup }, "Download backup"))),
+      );
+    }
+
+    /* ==================================================================== boot */
+    (async function boot() {
+      const saved = (() => { try { return sessionStorage.getItem("admin-pw"); } catch { return null; } })();
+      if (saved) {
+        try {
+          return await login(saved);
+        } catch (e) {
+          $("#login-error").textContent = e.status === 401 ? "" : e.message;
+        }
+      }
+      $("#login").hidden = false;
+      $("#password").focus();
+    })();
+  </script>
+</body>
+
+</html>
