@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const RESERVED = new Set(["admin", "api", "assets", "content", "dev", "index"]);
-const THEMES = ["light", "dark", "midnight", "red"]; // must match THEMES in index.html
+const THEMES = ["light", "dark", "midnight", "red"]; // must match THEMES in app.html
 const TYPES = {
   "image/webp": "webp", "image/jpeg": "jpg", "image/png": "png", "image/gif": "gif", "image/avif": "avif",
   "video/mp4": "mp4", "video/webm": "webm", "application/pdf": "pdf",

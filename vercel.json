@@ -2,8 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/:role([a-z0-9-]+)", "destination": "/" }
+    { "source": "/", "destination": "/api/page" },
+    { "source": "/:role([a-z0-9-]+)", "destination": "/api/page?role=:role" }
   ],
+  "functions": {
+    "api/page.js": { "includeFiles": "{app.html,content.js,404.html}" }
+  },
   "headers": [
     {
       "source": "/(.*)",

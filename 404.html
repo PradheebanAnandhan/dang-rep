@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Not found · Danny Here</title>
+  <link rel="icon" href="/assets/img/favicon.png">
+  <style>
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400 700;
+      font-display: swap;
+      src: url("/assets/fonts/inter-latin.woff2") format("woff2");
+    }
+
+    :root {
+      color-scheme: light;
+      --spring: cubic-bezier(.3, 1.4, .55, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      overflow: hidden;
+      font: 15px/1.45 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1c1c1e;
+      background: linear-gradient(180deg, #fbfbfb 0%, #eeeeee 58%, #e2e2e2 100%) fixed;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* a ghost of the portrait, like the desktop behind a dialog */
+    .ghost {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      height: min(92vh, 88vw);
+      transform: translateX(-50%);
+      opacity: .08;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .dialog {
+      position: relative;
+      width: min(100%, 380px);
+      padding: 28px 24px 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .10), 0 30px 80px rgba(0, 0, 0, .14);
+      text-align: center;
+      animation: pop .5s var(--spring) both;
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.85);
+      }
+    }
+
+    .file {
+      width: 72px;
+      height: 88px;
+      margin: 0 auto 16px;
+      animation: shake .6s .35s ease-in-out both;
+    }
+
+    @keyframes shake {
+
+      20%,
+      60% {
+        transform: rotate(-6deg);
+      }
+
+      40%,
+      80% {
+        transform: rotate(6deg);
+      }
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: #6e6e73;
+      font-size: 14px;
+    }
+
+    code {
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, .05);
+      font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      word-break: break-all;
+    }
+
+    .buttons {
+      display: grid;
+      gap: 8px;
+    }
+
+    .btn {
+      display: block;
+      padding: 9px 14px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, .06);
+      color: inherit;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color .15s;
+    }
+
+    .btn:hover {
+      background: rgba(0, 0, 0, .1);
+    }
+
+    .btn.primary {
+      background: #0a84ff;
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      background: #0070e0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    :focus-visible {
+      outline: 2px solid #0a84ff;
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .dialog,
+      .file {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <img class="ghost" src="/assets/img/hero-900.webp" alt="" width="900" height="810">
+  <main class="dialog" role="alertdialog" aria-labelledby="t" aria-describedby="d">
+    <svg class="file" viewBox="0 0 72 88" aria-hidden="true">
+      <path d="M8 2h38l24 24v54a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6V8a6 6 0 0 1 6-6z" fill="#fff" stroke="#d1d1d6" stroke-width="2" />
+      <path d="M46 2v18a6 6 0 0 0 6 6h18" fill="#f2f2f7" stroke="#d1d1d6" stroke-width="2" stroke-linejoin="round" />
+      <circle cx="36" cy="56" r="15" fill="#ef5350" />
+      <path d="M36 47v11" stroke="#fff" stroke-width="3.4" stroke-linecap="round" />
+      <circle cx="36" cy="64" r="2" fill="#fff" />
+    </svg>
+    <h1 id="t">This page couldn't be found</h1>
+    <p id="d"><code id="path"></code> isn't here. It may have been moved or renamed.</p>
+    <div class="buttons">
+      <a class="btn primary" href="/">Open the portfolio</a>
+      <a class="btn" href="javascript:history.back()" id="back">Go back</a>
+    </div>
+  </main>
+  <script>
+    document.getElementById("path").textContent = decodeURIComponent(location.pathname);
+    if (history.length < 2) document.getElementById("back").hidden = true;
+  </script>
+</body>
+
+</html>

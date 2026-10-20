@@ -13,6 +13,10 @@ One site, several portfolios. Each has its own link to send when applying, and i
 | `/digital-marketing` | Digital Marketing | Red & white |
 | `/developer` | Developer | Midnight |
 
+Pages are served by `api/page.js`, which fills in the title and link-preview tags (WhatsApp, LinkedIn…)
+for the portfolio in the link; the page itself is `app.html`, preview images are `assets/og/og-<theme>.jpg`,
+and unknown links get `404.html`. Visitor numbers: turn on Web Analytics in Vercel (Project → Analytics).
+
 Visitors can switch between portfolios with the switcher at the top. Everything on the site (portfolios,
 projects, notes, dock links) lives in `content.js`. Edit it at `/admin` rather than by hand.
 

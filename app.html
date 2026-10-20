@@ -4,12 +4,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- filled in per portfolio by api/page.js, so link previews (WhatsApp, LinkedIn…) match the link sent -->
   <title>Danny Here (Portfolio Website)</title>
-  <meta name="description"
-    content="Hi there, Danny (Aathma Naban) here: creative director crafting visuals, motion & stories with intention. Check out my portfolio.">
+  <meta name="description" content="Hi there, Danny (Aathma Naban) here: creative director crafting visuals, motion &amp; stories with intention. Check out my portfolio.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Danny Here">
   <meta property="og:title" content="Danny Here (Portfolio Website)">
-  <meta property="og:description" content="Creative director crafting visuals, motion & stories with intention.">
+  <meta property="og:description" content="Creative director crafting visuals, motion &amp; stories with intention.">
+  <meta property="og:image" content="assets/og/og-light.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#f4f4f4">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/avatar-duotone.png">
@@ -1449,6 +1455,14 @@
   </style>
   <script src="content.js"></script>
   <script>
+    if (/^https:$/.test(location.protocol) && !/^(localhost|127.)/.test(location.hostname)) {
+      const s = document.createElement("script");
+      s.defer = true;
+      s.src = "/_vercel/insights/script.js";
+      document.head.append(s);
+    }
+  </script>
+  <script>
     /* ==================================================================== content
        Everything on the page comes from content.js (edit it at /admin), or from the admin's unpublished
        draft when the URL has ?preview. Runs in <head> so the portfolio's theme is set before the first paint. */
@@ -2266,6 +2280,19 @@
       role = next;
       try { history.replaceState(null, "", roleHref(role.id)); } catch { }
       applyRole(true);
+      autoOpen(700);
+    }
+
+    // A portfolio can open one project by itself, e.g. the Video Editor showreel. Not on phones, where
+    // the window would cover the whole site, and never over something the visitor already opened.
+    let autoTimer = 0;
+    function autoOpen(delay) {
+      clearTimeout(autoTimer);
+      const r = role, id = r.autoOpen;
+      if (!id || phone.matches || open.size || !roleProjects().some((p) => p.id === id)) return;
+      autoTimer = setTimeout(() => {
+        if (role === r && !open.size) openProject(id, document.querySelector(`.icon[data-id="${CSS.escape(id)}"]`));
+      }, delay);
     }
 
     let switching = 0; // only the latest switch gets to draw its icons
@@ -2367,6 +2394,7 @@
       else if (id.startsWith("note-")) openNotes(id.slice(5));
       else if (roleProjects().some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${CSS.escape(id)}"]`));
     })();
+    autoOpen(1300); // after the icons' entrance
   </script>
 </body>
 

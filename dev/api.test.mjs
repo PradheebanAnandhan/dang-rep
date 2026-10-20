@@ -117,12 +117,24 @@ test("rejects invalid content and files", async () => {
 });
 
 test("static routing mirrors vercel.json", async () => {
-  const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
-  assert.equal((await get("/")).text, index);
-  assert.equal((await get("/designer")).text, index);
+  // pages come from api/page.js with link-preview tags for the portfolio in the URL
+  const home = await get("/");
+  assert.equal(home.status, 200);
+  assert.match(home.text, /<title>[^<]* Here \(Designer Portfolio\)<\/title>/); // an earlier test renames Danny
+  assert.match(home.text, /<meta property="og:image" content="http:\/\/127\.0\.0\.1:\d+\/assets\/og\/og-light\.jpg">/);
+  const video = await get("/video-editor");
+  assert.match(video.text, /<title>[^<]* Here \(Video Editor Portfolio\)<\/title>/);
+  assert.match(video.text, /<html lang="en" data-theme="dark">/);
+  assert.match(video.text, /og:url" content="http:\/\/127\.0\.0\.1:\d+\/video-editor"/);
+  assert.match(video.text, /id="switcher"/);
+  assert.match((await get("/developer")).text, /og-midnight\.jpg/);
+  const unknown = await get("/no-such-portfolio");
+  assert.equal(unknown.status, 404);
+  assert.match(unknown.text, /couldn't be found/);
   assert.equal((await get("/content.js")).status, 200);
   if (fs.existsSync(path.join(root, "admin.html"))) assert.match((await get("/admin")).text, /<title>/);
   assert.equal((await get("/nope/deeper")).status, 404);
+  for (const theme of ["light", "dark", "midnight", "red"]) assert.equal((await get(`/assets/og/og-${theme}.jpg`)).status, 200, theme);
   assert.equal((await get("/%2e%2e/%2e%2e/etc/passwd")).status, 404);
   const range = await fetch(srv.url + "/content.js", { headers: { Range: "bytes=0-9" } });
   assert.equal(range.status, 206);

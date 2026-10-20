@@ -11,6 +11,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const HANDLER = path.join(REPO, "api", "admin.js");
+const PAGE = path.join(REPO, "api", "page.js");
 const require = createRequire(import.meta.url);
 const TYPES = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8",
@@ -39,16 +40,16 @@ const sendJSON = (res, status, obj) => {
 };
 
 /* ---------------------------------------------------------------- static files */
-// vercel.json: cleanUrls, "/" → index.html, and /:role([a-z0-9-]+) → index.html when no file matches
+// vercel.json: cleanUrls; "/" and /:role([a-z0-9-]+) (when no file matches) go to api/page.js
 function resolveStatic(root, pathname) {
   let rel;
   try { rel = decodeURIComponent(pathname); } catch { return null; }
-  if (rel === "/") return path.join(root, "index.html");
+  if (rel === "/") return { page: "" };
   const p = !rel.includes("\0") && inside(root, "." + rel);
   if (!p) return null;
   if (isFile(p)) return p;
   if (isFile(p + ".html")) return p + ".html";
-  if (/^\/[a-z0-9-]+$/.test(rel)) return path.join(root, "index.html");
+  if (/^\/[a-z0-9-]+$/.test(rel)) return { page: rel.slice(1) };
   return null;
 }
 
@@ -179,9 +180,16 @@ export async function startDevServer({ root = REPO, port = 3000, password = proc
       }
       if (req.method !== "GET" && req.method !== "HEAD") return sendJSON(res, 405, { error: "Method not allowed" });
       const file = resolveStatic(root, pathname);
+      if (file?.page !== undefined) {
+        process.env.SITE_ROOT = root;
+        req.query = file.page ? { role: file.page } : {};
+        delete require.cache[PAGE];
+        return require(PAGE)(req, res);
+      }
       if (!file) {
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        return res.end("Not found");
+        const notFound = path.join(root, "404.html");
+        res.writeHead(404, { "Content-Type": isFile(notFound) ? "text/html; charset=utf-8" : "text/plain", "Cache-Control": "no-store" });
+        return res.end(isFile(notFound) ? fs.readFileSync(notFound) : "Not found");
       }
       sendFile(req, res, file);
     } catch (err) {
