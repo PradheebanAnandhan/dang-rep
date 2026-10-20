@@ -138,7 +138,9 @@ async function publish(cfg, { content, baseSha, files = [], message }) {
 module.exports = async function handler(req, res) {
   const e = process.env;
   const cfg = {
-    token: e.GITHUB_TOKEN, repo: e.GITHUB_REPO, branch: e.GITHUB_BRANCH || "main",
+    // GITHUB_REPO may be pasted as a full URL: keep just owner/name
+    token: e.GITHUB_TOKEN, repo: String(e.GITHUB_REPO || "").trim().replace(/^(https?:\/\/)?(www\.)?github\.com\//i, "").replace(/\.git$|\/+$/g, ""),
+    branch: e.GITHUB_BRANCH || "main",
     api: (e.GITHUB_API_URL || "https://api.github.com").replace(/\/+$/, ""),
   };
   try {
