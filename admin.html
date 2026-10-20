@@ -1767,7 +1767,18 @@
               changed();
               draw();
             },
-          }, "+ Add video link")),
+          }, "+ Add video link"),
+          h("button", {
+            class: "btn small", type: "button", onclick: () => {
+              let url = prompt("Paste the website link (e.g. https://example.com):");
+              if (!url?.trim()) return;
+              url = url.trim();
+              if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+              p.media.push({ type: "website", url, alt: "" });
+              changed();
+              draw();
+            },
+          }, "+ Add website link")),
         h("p", { class: "upload-note" }, "Pictures are resized and compressed for you. Video files must be under 3.3 MB; for anything bigger, upload to YouTube or Vimeo and add the link."),
         note,
       );
@@ -1777,7 +1788,11 @@
 
     function mediaRow(p, m, i, redraw) {
       let preview, extra = null, kind;
-      if (m.type === "video") {
+      if (m.type === "website") {
+        kind = "Website";
+        preview = /^https?:/i.test(m.url) ? h("img", { src: "https://api.microlink.io/?url=" + encodeURIComponent(m.url) + "&screenshot=true&meta=false&embed=screenshot.url", alt: "", loading: "lazy" }) : h("span", null, "🌐");
+        extra = input(m, "url", { type: "url", class: "grow", "aria-label": "Website link", placeholder: "https://…" });
+      } else if (m.type === "video") {
         kind = "Video file";
         preview = h("video", { src: srcOf(m.src), poster: srcOf(m.poster) || null, muted: true, playsInline: true, preload: "metadata" });
       } else if (m.type === "embed") {
@@ -1807,7 +1822,7 @@
             moveButtons(p.media, i, redraw),
             h("button", { class: "btn ghost small icon-only danger", type: "button", title: "Remove", "aria-label": "Remove", onclick: () => { p.media.splice(i, 1); changed(); redraw(); } }, "✕")),
           extra,
-          input(m, "alt", { placeholder: m.type === "embed" ? "Title (e.g. Showreel 2026)" : "Describe it (helps screen readers and search)", "aria-label": "Description" })));
+          input(m, "alt", { placeholder: m.type === "website" ? "Title (e.g. Kerala Jewellers website)" : m.type === "embed" ? "Title (e.g. Showreel 2026)" : "Describe it (helps screen readers and search)", "aria-label": "Description" })));
     }
 
     /* ---------------------------------------------------------------- Notes */

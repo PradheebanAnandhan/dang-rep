@@ -800,6 +800,42 @@
       border: 0;
     }
 
+    .media-site {
+      display: block;
+      overflow: hidden;
+      border-radius: 16px;
+      background: var(--fill);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .media-site img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: top;
+      background: var(--hover);
+      transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .media-site:hover img {
+      transform: scale(1.015);
+    }
+
+    .media-site span {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: 16px;
+    }
+
+    .media-site em {
+      color: var(--muted);
+      font-style: normal;
+    }
+
     .media-link {
       display: flex;
       justify-content: space-between;
@@ -2054,6 +2090,14 @@
         if (!src) return "";
         const w = num(m.w, 16), h = num(m.h, 9), poster = asset(m.poster);
         return `<div class="media-video${h > w ? " is-portrait" : ""}"><video src="${esc(src)}"${poster ? ` poster="${esc(poster)}"` : ""} width="${w}" height="${h}" style="aspect-ratio:${w} / ${h}" playsinline muted loop autoplay preload="metadata" aria-label="${esc(m.alt)}"></video></div>`;
+      }
+      if (m.type === "website") { // live screenshot of the site, opens it
+        const href = safeUrl(m.url);
+        if (!/^https?:/i.test(href)) return "";
+        let host = "";
+        try { host = new URL(href).hostname.replace(/^www\./, ""); } catch { }
+        const shot = "https://api.microlink.io/?url=" + encodeURIComponent(href) + "&screenshot=true&meta=false&embed=screenshot.url";
+        return `<a class="media-site" href="${esc(href)}" target="_blank" rel="noopener"><img src="${esc(shot)}" width="1280" height="800" alt="${esc(m.alt || host)}" loading="lazy"><span><b>${esc(m.alt || host)}</b><em>${esc(host)} ↗</em></span></a>`;
       }
       if (m.type === "embed") {
         const e = embedInfo(m.url, m.aspect);
