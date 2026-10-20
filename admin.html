@@ -1180,7 +1180,7 @@
       c.profile = { name: "", nickname: "", ...c.profile };
       c.roles = arr(c.roles).filter(Boolean).map((r) => ({
         ...r, id: str(r.id), label: str(r.label), tagline: str(r.tagline), resume: str(r.resume), listed: r.listed !== false,
-        theme: THEMES.some(([t]) => t === r.theme) ? r.theme : "light", autoOpen: str(r.autoOpen),
+        theme: THEMES.some(([t]) => t === r.theme) ? r.theme : "light",
       }));
       c.links = arr(c.links).filter(Boolean).map((l) => ({ ...l, type: LINK_TYPES[l.type] ? l.type : "website", url: str(l.url), label: str(l.label), roles: arr(l.roles) }));
       c.projects = arr(c.projects).filter(Boolean).map((p) => ({
@@ -1496,10 +1496,6 @@
               h("input", { type: "radio", name: "theme-" + i, checked: r.theme === t, onchange: () => { r.theme = t; changed(); } }),
               h("span", { class: `swatch ${t}`, "aria-hidden": "true" }), name))),
             h("span", { class: "help" }, "The look of the whole site when this portfolio is open.")),
-          field("Opens by itself", h("select", { onchange: (e) => { r.autoOpen = e.target.value; changed(); } },
-            h("option", { value: "" }, "Nothing"),
-            C().projects.filter((p) => p.roles.includes(r.id)).map((p) => h("option", { value: p.id, selected: r.autoOpen === p.id }, p.title))),
-            "A project that pops open a second after someone arrives, like a showreel. Not on phones."),
           resumeField(r),
           h("label", { class: "check" }, h("input", { type: "checkbox", checked: r.listed, onchange: (e) => { r.listed = e.target.checked; changed(); render(); } }),
             "Show in the switcher at the top of the site"),

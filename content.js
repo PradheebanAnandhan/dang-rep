@@ -24,8 +24,7 @@ window.CONTENT = {
       "tagline": "video editor and motion designer creating dynamic video content with storytelling at its core.",
       "resume": "",
       "listed": true,
-      "theme": "dark",
-      "autoOpen": "tools-expertise"
+      "theme": "dark"
     },
     {
       "id": "digital-marketing",

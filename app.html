@@ -2053,7 +2053,7 @@
         const src = asset(m.src);
         if (!src) return "";
         const w = num(m.w, 16), h = num(m.h, 9), poster = asset(m.poster);
-        return `<div class="media-video${h > w ? " is-portrait" : ""}"><video src="${esc(src)}"${poster ? ` poster="${esc(poster)}"` : ""} width="${w}" height="${h}" style="aspect-ratio:${w} / ${h}" controls playsinline muted loop autoplay preload="metadata" aria-label="${esc(m.alt)}"></video></div>`;
+        return `<div class="media-video${h > w ? " is-portrait" : ""}"><video src="${esc(src)}"${poster ? ` poster="${esc(poster)}"` : ""} width="${w}" height="${h}" style="aspect-ratio:${w} / ${h}" playsinline muted loop autoplay preload="metadata" aria-label="${esc(m.alt)}"></video></div>`;
       }
       if (m.type === "embed") {
         const e = embedInfo(m.url, m.aspect);
@@ -2280,20 +2280,8 @@
       role = next;
       try { history.replaceState(null, "", roleHref(role.id)); } catch { }
       applyRole(true);
-      autoOpen(700);
     }
 
-    // A portfolio can open one project by itself, e.g. the Video Editor showreel. Not on phones, where
-    // the window would cover the whole site, and never over something the visitor already opened.
-    let autoTimer = 0;
-    function autoOpen(delay) {
-      clearTimeout(autoTimer);
-      const r = role, id = r.autoOpen;
-      if (!id || phone.matches || open.size || !roleProjects().some((p) => p.id === id)) return;
-      autoTimer = setTimeout(() => {
-        if (role === r && !open.size) openProject(id, document.querySelector(`.icon[data-id="${CSS.escape(id)}"]`));
-      }, delay);
-    }
 
     let switching = 0; // only the latest switch gets to draw its icons
     function applyRole(animate) {
@@ -2394,7 +2382,6 @@
       else if (id.startsWith("note-")) openNotes(id.slice(5));
       else if (roleProjects().some((p) => p.id === id)) openProject(id, document.querySelector(`.icon[data-id="${CSS.escape(id)}"]`));
     })();
-    autoOpen(1300); // after the icons' entrance
   </script>
 </body>
 
