@@ -1,7 +1,7 @@
 // Portfolio content. Edit it at /admin. Hand edits must keep the object below valid JSON.
 window.CONTENT = {
   "version": 1,
-  "updatedAt": "2026-10-20T12:41:26.736Z",
+  "updatedAt": "2026-10-20T12:47:54.899Z",
   "settings": {
     "showSwitcher": true
   },
@@ -461,6 +461,52 @@ window.CONTENT = {
           "w": 720,
           "h": 900,
           "alt": "Tools Expertise motion piece: the card deck fans out on red"
+        }
+      ]
+    },
+    {
+      "id": "new-project",
+      "title": "New project",
+      "label": "",
+      "roles": [
+        "designer",
+        "video-editor",
+        "digital-marketing",
+        "developer"
+      ],
+      "icon": "thumb",
+      "thumb": {
+        "src": "assets/uploads/592f943c66d42b50.webp",
+        "w": 360,
+        "h": 300
+      },
+      "description": "pebbles \nservice-based apartments ",
+      "meta": [
+        [
+          "Client",
+          ""
+        ],
+        [
+          "Year",
+          "2026"
+        ],
+        [
+          "Project type",
+          ""
+        ],
+        [
+          "Softwares",
+          ""
+        ]
+      ],
+      "ctas": [],
+      "layout": "stack",
+      "cols": 3,
+      "media": [
+        {
+          "type": "website",
+          "url": "https://www.pebblesserviceapartments.com/",
+          "alt": ""
         }
       ]
     }
