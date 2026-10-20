@@ -77,6 +77,7 @@
       --seg-track: rgba(120, 120, 128, .12);
       --seg-border: rgba(0, 0, 0, .04);
       --seg-text: #3c3c43;
+      --seg-hover: #000;
       --seg-active: #1c1c1e;
       --seg-pill: #fff;
       --glass: rgba(255, 255, 255, .72);
@@ -122,6 +123,7 @@
       --seg-track: rgba(118, 118, 128, .24);
       --seg-border: rgba(255, 255, 255, .06);
       --seg-text: rgba(235, 235, 245, .62);
+      --seg-hover: #fff;
       --glass: rgba(44, 44, 46, .72);
       --glow-1: rgba(238, 238, 240, .98);
       --glow-2: rgba(222, 222, 226, .94);
@@ -162,6 +164,7 @@
       --seg-track: rgba(0, 0, 0, .14);
       --seg-border: rgba(255, 255, 255, .12);
       --seg-text: rgba(255, 255, 255, .88);
+      --seg-hover: #fff;
       --glass: rgba(255, 255, 255, .8);
       --glow-1: rgba(255, 255, 255, .98);
       --glow-2: rgba(252, 236, 238, .94);
@@ -1033,7 +1036,10 @@
       transition: color .42s cubic-bezier(.22, 1, .36, 1);
     }
 
-    .switcher a:hover,
+    .switcher a:hover {
+      color: var(--seg-hover);
+    }
+
     .switcher a[aria-current="page"] {
       color: var(--seg-active);
     }
