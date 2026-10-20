@@ -1,7 +1,7 @@
 // Portfolio content. Edit it at /admin. Hand edits must keep the object below valid JSON.
 window.CONTENT = {
   "version": 1,
-  "updatedAt": "2026-10-20T12:47:54.899Z",
+  "updatedAt": "2026-10-20T12:48:01.286Z",
   "settings": {
     "showSwitcher": true
   },
@@ -469,9 +469,6 @@ window.CONTENT = {
       "title": "New project",
       "label": "",
       "roles": [
-        "designer",
-        "video-editor",
-        "digital-marketing",
         "developer"
       ],
       "icon": "thumb",
