@@ -1535,7 +1535,7 @@
           height="256"></span>
       <span class="tip" aria-hidden="true">About Me</span>
     </button>
-    <button class="dock-item" type="button" data-note-index="1" aria-label="Notes">
+    <button class="dock-item" type="button" data-note-index="0" aria-label="Notes">
       <span class="dock-tile">
         <svg viewBox="0 0 60 60" aria-hidden="true">
           <defs>
@@ -2194,7 +2194,7 @@
     }
 
     /* ==================================================================== dock */
-    // "About Me" opens the portfolio's first note, "Notes" its second.
+    // "About Me" and "Notes" both open the portfolio's first note.
     function setupDock() {
       document.querySelectorAll(".dock-item[data-note-index]").forEach((btn) => {
         btn.addEventListener("click", () => {
