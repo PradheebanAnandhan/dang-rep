@@ -1,7 +1,7 @@
 // Portfolio content. Edit it at /admin. Hand edits must keep the object below valid JSON.
 window.CONTENT = {
   "version": 1,
-  "updatedAt": "2026-10-20T12:48:01.286Z",
+  "updatedAt": "2026-10-21T05:02:41.712Z",
   "settings": {
     "showSwitcher": true
   },
@@ -503,6 +503,135 @@ window.CONTENT = {
         {
           "type": "website",
           "url": "https://www.pebblesserviceapartments.com/",
+          "alt": ""
+        }
+      ]
+    },
+    {
+      "id": "new-project-2",
+      "title": "ruha-jewels",
+      "label": "project ruha ",
+      "roles": [
+        "developer"
+      ],
+      "icon": "thumb",
+      "thumb": {
+        "src": "assets/uploads/ac2f55eb81d34cb7.webp",
+        "w": 360,
+        "h": 214
+      },
+      "description": "Ruha Silvers E-Commerce Platform\n\nDeveloped a fully functional Shopify storefront optimized for conversion and mobile responsiveness.\n\nImplemented custom product organization structures covering bestsellers, new arrivals, and tiered gift guides (e.g., Under ₹999 and Under ₹2,999).\n\nIntegrated promotional UX components including exit-intent/newsletter discount modals and coupon-backed pricing models to maximize conversion rates.",
+      "meta": [
+        [
+          "Client",
+          "ruha"
+        ],
+        [
+          "Year",
+          "2026"
+        ],
+        [
+          "Project type",
+          "e commerce project "
+        ],
+        [
+          "Softwares",
+          "2 lakhs "
+        ]
+      ],
+      "ctas": [],
+      "layout": "stack",
+      "cols": 3,
+      "media": [
+        {
+          "type": "website",
+          "url": "https://iksax0-rb.myshopify.com/",
+          "alt": "ruhajewels "
+        }
+      ]
+    },
+    {
+      "id": "new-project-3",
+      "title": "Ayswariya Mahal",
+      "label": "Premium Wedding & Event Venue Platform",
+      "roles": [
+        "developer"
+      ],
+      "icon": "thumb",
+      "thumb": {
+        "src": "assets/uploads/30dec000ad382fc7.webp",
+        "w": 360,
+        "h": 238
+      },
+      "description": "Ayswariya Mahal is a fully responsive, high-end digital web presence designed for a premier 25-year-old landmark wedding and event destination in Chennai. The platform showcases luxury banquet facilities, historic milestones, dual-venue spaces (Ayswariya Mahal and Sowbhagya Mahal), and comprehensive guest amenities to drive client inquiries and event bookings.",
+      "meta": [
+        [
+          "Client",
+          "7.5 lakhs "
+        ],
+        [
+          "Year",
+          "2026"
+        ],
+        [
+          "Project type",
+          "portfolio website for an brand "
+        ],
+        [
+          "Softwares",
+          ""
+        ]
+      ],
+      "ctas": [],
+      "layout": "stack",
+      "cols": 3,
+      "media": [
+        {
+          "type": "website",
+          "url": "https://ayswariyamahal.com/",
+          "alt": ""
+        }
+      ]
+    },
+    {
+      "id": "new-project-4",
+      "title": "Kerala Jewellers",
+      "label": "",
+      "roles": [
+        "developer"
+      ],
+      "icon": "thumb",
+      "thumb": {
+        "src": "assets/uploads/7f045532b8d3b41f.webp",
+        "w": 360,
+        "h": 228
+      },
+      "description": "Kerala Jewellers is an upscale digital platform built for a heritage retail jewelry brand. The project bridges traditional craftsmanship with modern e-commerce, creating an immersive online storefront designed to showcase exquisite gold, diamond, platinum, and silver collections, streamline customer engagement, and elevate the brand's digital footprint.",
+      "meta": [
+        [
+          "Client",
+          ""
+        ],
+        [
+          "Year",
+          "2026"
+        ],
+        [
+          "Project type",
+          ""
+        ],
+        [
+          "Softwares",
+          ""
+        ]
+      ],
+      "ctas": [],
+      "layout": "stack",
+      "cols": 3,
+      "media": [
+        {
+          "type": "website",
+          "url": "https://www.keralajewellers.in/",
           "alt": ""
         }
       ]
